@@ -1,0 +1,13 @@
+<resources>
+    <string name="invoke_success">invoke success.</string>
+    <string name="invoke_error">invoke error.</string>
+    <string name="response_error">response error.</string>
+    <string name="internet_auth_not_granted">Please check you internet authority.</string>
+
+    <string name="app_name">LichKin</string>
+    <string name="title_navigation_menu_home">Home</string>
+    <string name="title_navigation_menu_my">My</string>
+    <string name="title_navigation_menu_1">Menu1</string>
+    <string name="title_navigation_menu_2">Menu2</string>
+    <string name="title_navigation_menu_3">Menu3</string>
+</resources>

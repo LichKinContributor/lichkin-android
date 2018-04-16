@@ -1,2 +1,2 @@
 # lichkin-android
-基础但android框架
+基础的android框架
