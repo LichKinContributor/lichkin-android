@@ -9,15 +9,19 @@ import java.util.Set;
 
 /**
  * 存储文件
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKSharedPreferences {
 
     /** UUID存储键 */
     public static final String UUID = "lichkin.framework.app.uuid";
+
     /** 令牌存储键 */
     public static final String TOKEN = "lichkin.framework.app.token";
+
     /** 存储文件名 */
     private static final String SHARED_PREFERENCES_NAME = "LichKin";
+
     /** 存储对象 */
     private static final SharedPreferences preferences;
 

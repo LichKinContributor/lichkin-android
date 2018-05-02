@@ -1,4 +1,4 @@
-package com.lichkin.application.activities;
+package com.lichkin.framework.app.android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

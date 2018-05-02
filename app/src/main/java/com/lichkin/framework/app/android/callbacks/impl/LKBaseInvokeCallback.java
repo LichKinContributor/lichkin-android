@@ -2,10 +2,11 @@ package com.lichkin.framework.app.android.callbacks.impl;
 
 import android.content.Context;
 
-import com.lichkin.demo.R;
+import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.callbacks.LKInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKToast;
+import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKRequestBean;
 
 /**
@@ -50,7 +51,20 @@ public class LKBaseInvokeCallback<In extends LKRequestBean, Out> implements LKIn
      * @param errorMessage 错误提示信息
      */
     protected void busError(Context context, In in, int errorCode, String errorMessage) {
-        LKToast.showError(context, errorMessage);
+        if (errorMessage.contains(LKFrameworkStatics.SPLITOR)) {
+            if (errorMessage.contains(LKFrameworkStatics.SPLITOR_FIELDS)) {
+                String[] errorMessages = errorMessage.split(LKFrameworkStatics.SPLITOR_FIELDS);
+                for (String msg : errorMessages) {
+                    String[] msges = msg.split(LKFrameworkStatics.SPLITOR);
+                    LKToast.showError(context, msges[0] + " -> " + msges[1]);
+                }
+            } else {
+                String[] msges = errorMessage.split(LKFrameworkStatics.SPLITOR);
+                LKToast.showError(context, msges[0] + " -> " + msges[1]);
+            }
+        } else {
+            LKToast.showError(context, errorMessage);
+        }
     }
 
 

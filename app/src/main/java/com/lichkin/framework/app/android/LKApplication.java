@@ -4,6 +4,7 @@ import android.app.Application;
 
 /**
  * 应用实例对象
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKApplication extends Application {
 

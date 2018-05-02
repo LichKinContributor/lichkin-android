@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 
 /**
  * View控件帮助类
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKViewHelper {
 

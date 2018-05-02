@@ -16,14 +16,19 @@ public class GetLastAppVersionIn extends LKRequestBean {
 
     /** 客户端系统版本 */
     private String osVersion;
+
     /** 生产厂商 */
     private String brand;
+
     /** 机型信息 */
     private String model;
+
     /** 设备唯一标识 */
     private String uuid;
+
     /** 屏幕宽 */
     private Short screenWidth;
+
     /** 屏幕高 */
     private Short screenHeight;
 

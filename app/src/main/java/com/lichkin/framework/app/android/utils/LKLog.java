@@ -7,6 +7,7 @@ import android.util.Log;
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKLog {
+
     /** 日志标识 */
     private static final String TAG = "LichKin";
 

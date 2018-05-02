@@ -1,11 +1,15 @@
 package com.lichkin.framework.app.android.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.lichkin.framework.app.android.LKApplication;
 
+import java.util.Locale;
+
 /**
  * 常用工具类
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKAndroidUtils {
 
@@ -28,5 +32,19 @@ public class LKAndroidUtils {
         return context.getString(resId);
     }
 
+
+    /**
+     * 获取国际化类型
+     * @return 国际化类型
+     */
+    public static String getLocale() {
+        Resources res = LKApplication.getInstance().getResources();
+        Locale locale = res.getConfiguration().locale;
+
+        if (locale.equals(Locale.CHINA)) {
+            return Locale.CHINA.toString();
+        }
+        return Locale.ENGLISH.toString();
+    }
 
 }

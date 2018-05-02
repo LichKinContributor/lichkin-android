@@ -1,23 +1,27 @@
 package com.lichkin.application.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
-import com.lichkin.demo.R;
+import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
+import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
 
 /**
@@ -25,14 +29,6 @@ import com.lichkin.framework.app.android.utils.LKViewHelper;
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public abstract class MainActivity extends LKAppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-
-    protected static final int NAVIGATION_MENU_GROUP_ID = Menu.NONE;
-    protected static final int NAVIGATION_MENU_ITEM_ID_HOME = 0;
-    protected static final int NAVIGATION_MENU_ITEM_ID_1 = 1;
-    protected static final int NAVIGATION_MENU_ITEM_ID_2 = 2;
-    protected static final int NAVIGATION_MENU_ITEM_ID_3 = 3;
-    protected static final int NAVIGATION_MENU_ITEM_ID_MY = 9;
-    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,33 +78,70 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         }
     }
 
+    /** 导航栏菜单ID */
+    private static final int NAVIGATION_MENU_GROUP_ID = Menu.NONE;
+    /** 主页菜单ID */
+    private static final int NAVIGATION_MENU_ITEM_ID_HOME = 0;
+    /** 菜单1菜单ID */
+    private static final int NAVIGATION_MENU_ITEM_ID_1 = 1;
+    /** 菜单2菜单ID */
+    private static final int NAVIGATION_MENU_ITEM_ID_2 = 2;
+    /** 菜单3菜单ID */
+    private static final int NAVIGATION_MENU_ITEM_ID_3 = 3;
+    /** 我的菜单ID */
+    private static final int NAVIGATION_MENU_ITEM_ID_MY = 9;
+    /** 导航栏对象 */
+    private BottomNavigationView navigation;
 
-    protected abstract void onMenuHomeSelected();
+    /**
+     * 获取最新客户端版本信息
+     */
+    private void getLastAppVersion() {
+        //强制使用主线程
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-    protected abstract void onMenuMySelected();
+        //请求参数
+        GetLastAppVersionIn in = new GetLastAppVersionIn();
 
-    protected abstract void onMenu1Selected();
+        //创建请求对象
+        LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
 
-    protected abstract void onMenu2Selected();
+        //执行请求
+        retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
 
-    protected abstract void onMenu3Selected();
+            @Override
+            protected void success(Context context, GetLastAppVersionIn getLastAppVersionIn, GetLastAppVersionOut responseDatas) {
+                boolean forceUpdate = responseDatas.isForceUpdate();
+                String tip = responseDatas.getTip();
+                // TODO
+                LKToast.showTip(context, tip);
+                if (forceUpdate) {
+                    LKLog.w(tip);
+                } else {
+                    LKLog.i(tip);
+                }
+            }
+
+            @Override
+            protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, String errorMessage) {
+                switch (errorCode) {
+                    case 10000://没有可用版本，不处理。
+                        break;
+                    default:
+                        super.busError(context, getLastAppVersionIn, errorCode, errorMessage);
+                        break;
+                }
+            }
+
+        });
+    }
 
     /**
      * 初始化导航栏
      */
     private void initBottomNavigationView() {
         navigation = findViewById(R.id.navigation);
-        //动态创建导航菜单
-        Menu menu = navigation.getMenu();
-        //增加固定的主页菜单和我的菜单
-        menu.add(NAVIGATION_MENU_GROUP_ID, NAVIGATION_MENU_ITEM_ID_HOME, NAVIGATION_MENU_ITEM_ID_HOME, LKAndroidUtils.getString(R.string.title_navigation_menu_home)).setIcon(R.drawable.ic_navigation_menu_home);
-        menu.add(NAVIGATION_MENU_GROUP_ID, NAVIGATION_MENU_ITEM_ID_MY, NAVIGATION_MENU_ITEM_ID_MY, LKAndroidUtils.getString(R.string.title_navigation_menu_my)).setIcon(R.drawable.ic_navigation_menu_my);
-        //增加其它菜单
-        menu.add(NAVIGATION_MENU_GROUP_ID, NAVIGATION_MENU_ITEM_ID_1, NAVIGATION_MENU_ITEM_ID_1, LKAndroidUtils.getString(R.string.title_navigation_menu_1)).setIcon(R.drawable.ic_navigation_menu_1);
-        menu.add(NAVIGATION_MENU_GROUP_ID, NAVIGATION_MENU_ITEM_ID_2, NAVIGATION_MENU_ITEM_ID_2, LKAndroidUtils.getString(R.string.title_navigation_menu_2)).setIcon(R.drawable.ic_navigation_menu_2);
-        menu.add(NAVIGATION_MENU_GROUP_ID, NAVIGATION_MENU_ITEM_ID_3, NAVIGATION_MENU_ITEM_ID_3, LKAndroidUtils.getString(R.string.title_navigation_menu_3)).setIcon(R.drawable.ic_navigation_menu_3);
-        //禁用mShiftingMode
-        LKViewHelper.disableShiftingMode(navigation);
         //为导航栏增加监听事件
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -139,20 +172,135 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     }
 
     /**
-     * 获取最新客户端版本信息
+     * 主页菜单点击事件
      */
-    private void getLastAppVersion() {
-        //请求参数
-        GetLastAppVersionIn in = new GetLastAppVersionIn();
+    protected void onMenuHomeSelected() {
+    }
 
-        //创建请求对象
-        LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
+    /**
+     * 我的菜单点击事件
+     */
+    protected void onMenuMySelected() {
+    }
 
-        //执行请求
-        retrofit.callAsync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
+    /**
+     * 菜单1菜单点击事件
+     */
+    protected void onMenu1Selected() {
+    }
 
+    /**
+     * 菜单2菜单点击事件
+     */
+    protected void onMenu2Selected() {
+    }
 
-        });
+    /**
+     * 菜单3菜单点击事件
+     */
+    protected void onMenu3Selected() {
+    }
+
+    /**
+     * 显示菜单
+     * @param menuId 菜单ID
+     * @param titleId 标题ID
+     * @param iconId 图标ID
+     */
+    private void showMenu(int menuId, int titleId, int iconId) {
+        Menu menu = navigation.getMenu();
+        MenuItem item = menu.findItem(menuId);
+        if (item == null) {
+            //增加菜单
+            menu.add(NAVIGATION_MENU_GROUP_ID, menuId, menuId, LKAndroidUtils.getString(titleId)).setIcon(iconId);
+            //禁用mShiftingMode
+            LKViewHelper.disableShiftingMode(navigation);
+        }
+    }
+
+    /**
+     * 显示主页菜单
+     */
+    protected void showMenuHome() {
+        showMenu(NAVIGATION_MENU_ITEM_ID_HOME, R.string.title_navigation_menu_home, R.drawable.ic_navigation_menu_home);
+    }
+
+    /**
+     * 显示我的菜单
+     */
+    protected void showMenuMy() {
+        showMenu(NAVIGATION_MENU_ITEM_ID_MY, R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my);
+    }
+
+    /**
+     * 显示菜单1菜单
+     */
+    protected void showMenu1() {
+        showMenu(NAVIGATION_MENU_ITEM_ID_1, R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1);
+    }
+
+    /**
+     * 显示菜单2菜单
+     */
+    protected void showMenu2() {
+        showMenu(NAVIGATION_MENU_ITEM_ID_2, R.string.title_navigation_menu_2, R.drawable.ic_navigation_menu_2);
+    }
+
+    /**
+     * 显示菜单3菜单
+     */
+    protected void showMenu3() {
+        showMenu(NAVIGATION_MENU_ITEM_ID_3, R.string.title_navigation_menu_3, R.drawable.ic_navigation_menu_3);
+    }
+
+    /**
+     * 隐藏菜单
+     * @param menuId 菜单ID
+     */
+    private void hideMenu(int menuId) {
+        Menu menu = navigation.getMenu();
+        MenuItem item = menu.findItem(menuId);
+        if (item != null) {
+            //移除菜单
+            menu.removeItem(menuId);
+            //禁用mShiftingMode
+            LKViewHelper.disableShiftingMode(navigation);
+        }
+    }
+
+    /**
+     * 隐藏主页菜单
+     */
+    protected void hideMenuHome() {
+        hideMenu(NAVIGATION_MENU_ITEM_ID_HOME);
+    }
+
+    /**
+     * 隐藏我的菜单
+     */
+    protected void hideMenuMy() {
+        hideMenu(NAVIGATION_MENU_ITEM_ID_MY);
+    }
+
+    /**
+     * 隐藏菜单1菜单
+     */
+    protected void hideMenu1() {
+        hideMenu(NAVIGATION_MENU_ITEM_ID_1);
+    }
+
+    /**
+     * 隐藏菜单2菜单
+     */
+    protected void hideMenu2() {
+        hideMenu(NAVIGATION_MENU_ITEM_ID_2);
+    }
+
+    /**
+     * 隐藏菜单3菜单
+     */
+    protected void hideMenu3() {
+        hideMenu(NAVIGATION_MENU_ITEM_ID_3);
     }
 
 }

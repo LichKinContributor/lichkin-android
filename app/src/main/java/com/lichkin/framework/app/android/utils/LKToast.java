@@ -7,6 +7,7 @@ import com.lichkin.framework.app.android.LKApplication;
 
 /**
  * 提示工具类
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKToast {
 
@@ -114,7 +115,7 @@ public class LKToast {
      */
     @SuppressWarnings("deprecation")
     public static void showError(final Context context, final CharSequence text) {
-        makeTextAndShow(context, text, Toast.LENGTH_SHORT);
+        makeTextAndShow(context, text, Toast.LENGTH_LONG);
     }
 
     /**
@@ -125,7 +126,7 @@ public class LKToast {
      */
     @SuppressWarnings("deprecation")
     public static void showError(final Context context, final int resId) {
-        makeTextAndShow(context, resId, Toast.LENGTH_SHORT);
+        makeTextAndShow(context, resId, Toast.LENGTH_LONG);
     }
 
     /**
@@ -135,7 +136,7 @@ public class LKToast {
      */
     @SuppressWarnings("deprecation")
     public static void showError(final CharSequence text) {
-        makeTextAndShow(text, Toast.LENGTH_SHORT);
+        makeTextAndShow(text, Toast.LENGTH_LONG);
     }
 
     /**
@@ -145,7 +146,7 @@ public class LKToast {
      */
     @SuppressWarnings("deprecation")
     public static void showError(final int resId) {
-        makeTextAndShow(resId, Toast.LENGTH_SHORT);
+        makeTextAndShow(resId, Toast.LENGTH_LONG);
     }
 
 }

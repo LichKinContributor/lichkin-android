@@ -6,33 +6,46 @@ import java.util.UUID;
 
 /**
  * 静态值，所有设置方法由框架实现，开发人员应只调用获取方法。
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public class LKAndroidStatics {
 
     /** 客户端唯一标识 */
     private static String appKey;
+
     /** 客户端版本号（大版本号） */
     private static Byte versionX;
+
     /** 客户端版本号（中版本号） */
     private static Byte versionY;
+
     /** 客户端版本号（小版本号） */
     private static Short versionZ;
+
     /** 客户端系统版本 */
     private static String osVersion = android.os.Build.VERSION.RELEASE;
+
     /** 客户端SDK版本 */
     private static int targetSdkVersion;
+
     /** 生产厂商 */
     private static String brand = android.os.Build.BRAND;
+
     /** 机型信息 */
     private static String model = android.os.Build.MODEL;
+
     /** 设备标识 */
     private static String uuid;
+
     /** 设备标识已读 */
     private static boolean uuidLoaded = false;
+
     /** 屏幕宽度 */
     private static Short screenWidth;
+
     /** 屏幕高度 */
     private static Short screenHeight;
+
     /** 令牌 */
     private static String token;
 

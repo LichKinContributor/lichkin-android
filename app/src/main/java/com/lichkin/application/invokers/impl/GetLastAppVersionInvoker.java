@@ -2,6 +2,7 @@ package com.lichkin.application.invokers.impl;
 
 import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 
 import retrofit2.Call;
@@ -14,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface GetLastAppVersionInvoker {
 
-    @POST("/API/GetLastAppVersion")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + "GetLastAppVersion")
     Call<LKResponseBean<GetLastAppVersionOut>> invoke(@Body GetLastAppVersionIn in);
 
 }

@@ -3,7 +3,7 @@ package com.lichkin.framework.app.android.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.lichkin.demo.R;
+import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.LKApplication;
 import com.lichkin.framework.app.android.callbacks.LKInvokeCallback;
 import com.lichkin.framework.defines.beans.LKRequestBean;
@@ -28,11 +28,13 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
 
     /** 环境上下文 */
     private Context context;
+
     /** 请求ID */
     private String requestId = LKRandomUtils.create(32);
 
     /**
      * 构造方法
+     * @param context 环境上下文
      * @param invokerClass 请求方法类型
      */
     public LKRetrofit(Context context, Class<?> invokerClass) {
@@ -162,13 +164,13 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         call.enqueue(new Callback<LKResponseBean<Out>>() {
 
             @Override
-            public void onResponse(Call<LKResponseBean<Out>> call, Response<LKResponseBean<Out>> response) {
+            public void onResponse(@NonNull Call<LKResponseBean<Out>> call, @NonNull Response<LKResponseBean<Out>> response) {
                 // 处理响应信息
                 handleResponse(requestId, in, callback, response);
             }
 
             @Override
-            public void onFailure(@NonNull Call<LKResponseBean<Out>> call, Throwable e) {
+            public void onFailure(@NonNull Call<LKResponseBean<Out>> call, @NonNull Throwable e) {
                 // 此时发生异常是请求失败了，有可能时网络不通等导致，也有可能是服务器端异常处理问题没有返回200状态导致。业务代码需要处理异常。
                 callback.error(context, requestId, in, e);
             }
