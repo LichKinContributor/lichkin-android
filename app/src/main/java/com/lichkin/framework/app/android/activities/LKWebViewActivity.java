@@ -2,6 +2,7 @@ package com.lichkin.framework.app.android.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -9,18 +10,25 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.utils.LKLog;
 
 public class LKWebViewActivity extends AppCompatActivity {
 
-    private WebView webView;
+    private BridgeWebView webView;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //引用布局文件
         setContentView(R.layout.activity_webview);
+
+        //只使用竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         webView = findViewById(R.id.webview_container);
 
         webView.setWebViewClient(new WebViewClient() {
