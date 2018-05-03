@@ -1,14 +1,19 @@
 package com.lichkin.framework.app.android.utils;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
 import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.LKApplication;
+import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.LKInvokeCallback;
+import com.lichkin.framework.app.android.widgets.LKDialog;
 import com.lichkin.framework.defines.beans.LKRequestBean;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 import com.lichkin.framework.utils.LKRandomUtils;
+
+import java.net.SocketTimeoutException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,6 +126,38 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
     }
 
     /**
+     * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
+     * @param callback 回调方法
+     * @param context 环境上下文
+     * @param requestId 请求ID
+     * @param in 请求参数
+     * @param e 异常对象
+     */
+    private void handleError(final LKInvokeCallback<In, Out> callback, Context context, final String requestId, final In in, Throwable e) {
+        if (e instanceof java.net.ConnectException) {
+            LKDialog dlg = new LKDialog(context, R.string.internet_auth_not_granted).setCancelable(false);
+            dlg.setPositiveButton(new LKBtnCallback() {
+                @Override
+                public void call(Context context, DialogInterface dialog) {
+                    callback.connectError(context, requestId, in, dialog);
+                }
+            });
+            dlg.show();
+        } else if (e instanceof SocketTimeoutException) {
+            LKDialog dlg = new LKDialog(context, R.string.invoke_timeout).setCancelable(false);
+            dlg.setPositiveButton(new LKBtnCallback() {
+                @Override
+                public void call(Context context, DialogInterface dialog) {
+                    callback.timeoutError(context, requestId, in, dialog);
+                }
+            });
+            dlg.show();
+        } else {
+            callback.error(context, requestId, in, e);
+        }
+    }
+
+    /**
      * 同步调用接口
      * @param in 请求参数
      * @param callback 回调方法
@@ -141,7 +178,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             handleResponse(requestId, in, callback, response);
         } catch (Throwable e) {
             // 此时发生异常是请求失败了，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。业务代码需要处理异常。
-            callback.error(context, requestId, in, e);
+            handleError(callback, context, requestId, in, e);
         }
     }
 
@@ -172,7 +209,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             @Override
             public void onFailure(@NonNull Call<LKResponseBean<Out>> call, @NonNull Throwable e) {
                 // 此时发生异常是请求失败了，有可能时网络不通等导致，也有可能是服务器端异常处理问题没有返回200状态导致。业务代码需要处理异常。
-                callback.error(context, requestId, in, e);
+                handleError(callback, context, requestId, in, e);
             }
 
         });

@@ -1,6 +1,7 @@
 package com.lichkin.framework.app.android.callbacks.impl;
 
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.callbacks.LKInvokeCallback;
@@ -73,21 +74,16 @@ public class LKBaseInvokeCallback<In extends LKRequestBean, Out> implements LKIn
     public void error(Context context, String requestId, In in, Throwable e) {
         // 这是不应该发生的错误，默认处理不应提示用户，只做日志记录。
         LKLog.e(String.format("error -> requestId[%s] -> requestDatas[%s]", requestId, in.toString()), e);
-        if (e instanceof java.net.ConnectException) {
-            LKToast.showError(context, R.string.internet_auth_not_granted);
-        } else {
-            LKToast.showError(context, R.string.invoke_error);
-        }
-        error(context, in, e);
+        LKToast.showError(context, R.string.invoke_error);
     }
 
-    /**
-     * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
-     * @param context 环境上下文
-     * @param in 请求参数
-     * @param e 异常对象
-     */
-    protected void error(Context context, In in, Throwable e) {
+    @Override
+    public void connectError(Context context, String requestId, In in, DialogInterface dialog) {
+        //TODO
     }
 
+    @Override
+    public void timeoutError(Context context, String requestId, In in, DialogInterface dialog) {
+//TODO
+    }
 }

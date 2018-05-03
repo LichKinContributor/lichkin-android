@@ -2,6 +2,7 @@ package com.lichkin.application.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -17,12 +18,14 @@ import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
 import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
+import com.lichkin.framework.app.android.activities.LKWebViewActivity;
+import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
-import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
+import com.lichkin.framework.app.android.widgets.LKDialog;
 
 /**
  * 基础MainAcitivity功能实现类
@@ -65,17 +68,111 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         }
     }
 
+    /** 更新对话框开启过 */
+    private boolean dlgUpdateOpened = false;
+    /** 更新对话框关闭过 */
+    private boolean dlgUpdateClosed = false;
+
     @Override
     protected void onRequestPermissionResultNotGranted(String permissionName) {
         super.onRequestPermissionResultNotGranted(permissionName);
         switch (permissionName) {
             case Manifest.permission.INTERNET:
                 //无网络权限则重启
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                restart();
                 break;
         }
+    }
+
+    /**
+     * 重启
+     */
+    private void restart() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    /**
+     * 获取最新客户端版本信息
+     */
+    private void getLastAppVersion() {
+        //开启过或者关闭过都不再执行版本更新操作
+        if (dlgUpdateOpened || dlgUpdateClosed) {
+            return;
+        }
+
+        //强制使用主线程
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        //请求参数
+        GetLastAppVersionIn in = new GetLastAppVersionIn();
+
+        //创建请求对象
+        final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
+
+        //执行请求
+        retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
+
+            @Override
+            protected void success(Context context, GetLastAppVersionIn getLastAppVersionIn, final GetLastAppVersionOut responseDatas) {
+                boolean forceUpdate = responseDatas.isForceUpdate();
+                String tip = responseDatas.getTip();
+                LKDialog dlg = new LKDialog(context, tip).setTitle(R.string.dlg_tip_title_update).setCancelable(false);
+                dlg.setPositiveButton(R.string.btn_positive_name_update, new LKBtnCallback() {
+                    @Override
+                    public void call(Context context, DialogInterface dialog) {
+                        dlgUpdateClosed = true;
+                        Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
+                        intent.putExtra("url", responseDatas.getUrl());
+                        startActivity(intent);
+                    }
+                });
+                if (forceUpdate) {
+                    LKLog.w(tip);
+                    dlg.show();
+                } else {
+                    LKLog.i(tip);
+                    dlg.setNegativeButton(new LKBtnCallback() {
+                        @Override
+                        public void call(Context context, DialogInterface dialog) {
+                            dlgUpdateClosed = true;
+                        }
+                    }).show();
+                }
+                dlgUpdateOpened = true;
+            }
+
+            @Override
+            protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, String errorMessage) {
+                switch (errorCode) {
+                    case 10000://没有可用版本，不处理。
+                        break;
+                    default:
+                        // 版本获取失败重启
+                        restart();
+                        break;
+                }
+            }
+
+            @Override
+            public void connectError(Context context, String requestId, GetLastAppVersionIn getLastAppVersionIn, DialogInterface dialog) {
+                if (dlgUpdateOpened || dlgUpdateClosed) {
+                    return;
+                }
+                restart();
+            }
+
+            @Override
+            public void timeoutError(Context context, String requestId, GetLastAppVersionIn getLastAppVersionIn, DialogInterface dialog) {
+                if (dlgUpdateOpened || dlgUpdateClosed) {
+                    return;
+                }
+                restart();
+            }
+
+        });
     }
 
     /** 导航栏菜单ID */
@@ -93,49 +190,6 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     /** 导航栏对象 */
     private BottomNavigationView navigation;
 
-    /**
-     * 获取最新客户端版本信息
-     */
-    private void getLastAppVersion() {
-        //强制使用主线程
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        //请求参数
-        GetLastAppVersionIn in = new GetLastAppVersionIn();
-
-        //创建请求对象
-        LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
-
-        //执行请求
-        retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
-
-            @Override
-            protected void success(Context context, GetLastAppVersionIn getLastAppVersionIn, GetLastAppVersionOut responseDatas) {
-                boolean forceUpdate = responseDatas.isForceUpdate();
-                String tip = responseDatas.getTip();
-                // TODO
-                LKToast.showTip(context, tip);
-                if (forceUpdate) {
-                    LKLog.w(tip);
-                } else {
-                    LKLog.i(tip);
-                }
-            }
-
-            @Override
-            protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, String errorMessage) {
-                switch (errorCode) {
-                    case 10000://没有可用版本，不处理。
-                        break;
-                    default:
-                        super.busError(context, getLastAppVersionIn, errorCode, errorMessage);
-                        break;
-                }
-            }
-
-        });
-    }
 
     /**
      * 初始化导航栏
