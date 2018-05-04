@@ -19,6 +19,7 @@ import com.lichkin.framework.app.android.widgets.LKDialog;
 import com.lichkin.framework.defines.beans.LKCallJsFuncBean;
 import com.lichkin.framework.defines.beans.LKCallJsFuncCallbackBean;
 import com.lichkin.framework.defines.beans.LKLogBean;
+import com.lichkin.framework.defines.beans.LKToastBean;
 import com.lichkin.framework.json.LKJsonUtils;
 
 /**
@@ -42,6 +43,9 @@ public class LKWebViewActivity extends Activity {
 
         //引用webview控件
         webView = findViewById(R.id.webview_container);
+
+        //禁用缓存
+        //webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         //读取页面地址并加载页面
         Intent intent = getIntent();
@@ -111,8 +115,15 @@ public class LKWebViewActivity extends Activity {
         webView.registerHandler("toast", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
-                LKToast.showTip(data);
-                function.onCallBack(data);
+                LKToastBean bean = LKJsonUtils.toObj(data, LKToastBean.class);
+
+                String msg = bean.getMsg();
+                if (bean.isJsonMsg()) {
+                    msg = msg.replaceAll("\\\"", "\"");
+                }
+
+                //noinspection deprecation
+                LKToast.makeTextAndShow(LKWebViewActivity.this, msg, bean.getTimeout());
             }
         });
 

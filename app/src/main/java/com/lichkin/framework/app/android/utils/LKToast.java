@@ -20,7 +20,14 @@ public class LKToast {
      * @deprecated 使用showTip或showError
      */
     @Deprecated
-    public static void makeTextAndShow(final Context context, final CharSequence text, final int duration) {
+    public static void makeTextAndShow(final Context context, final CharSequence text, int duration) {
+        //TODO 自定义实现时长
+        if (duration > 2000) {
+            duration = Toast.LENGTH_LONG;
+        } else {
+            duration = Toast.LENGTH_SHORT;
+        }
+
         Toast.makeText(context, text, duration).show();
     }
 
