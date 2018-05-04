@@ -23,6 +23,7 @@ import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKLog;
+import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
 import com.lichkin.framework.app.android.widgets.LKDialog;
@@ -50,6 +51,13 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (LKPropertiesLoader.testWebView) {
+            Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
+            intent.putExtra("url", LKPropertiesLoader.baseUrl + "/test/app/index.html");
+            startActivity(intent);
+            return;
+        }
 
         if (dontNeedRequestPermission(Manifest.permission.INTERNET)) {
             //有权限请求接口
