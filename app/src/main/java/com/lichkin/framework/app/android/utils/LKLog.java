@@ -12,6 +12,23 @@ public class LKLog {
     private static final String TAG = "LichKin";
 
     /**
+     * verbose日志
+     * @param msg 日志内容
+     */
+    public static void v(String msg) {
+        Log.v(TAG, msg);
+    }
+
+    /**
+     * verbose日志
+     * @param msg 日志内容
+     * @param t 异常对象
+     */
+    public static void v(String msg, Throwable t) {
+        Log.v(TAG, msg, t);
+    }
+
+    /**
      * debug日志
      * @param msg 日志内容
      */

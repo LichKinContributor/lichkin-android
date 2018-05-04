@@ -87,6 +87,9 @@ public class LKWebViewActivity extends Activity {
                 }
 
                 switch (bean.getType()) {
+                    case "verbose":
+                        LKLog.v(info);
+                        break;
                     case "debug":
                         LKLog.d(info);
                         break;
@@ -97,9 +100,9 @@ public class LKWebViewActivity extends Activity {
                         LKLog.w(info);
                         break;
                     case "error":
-                        LKLog.e(info);
-                        break;
+                    case "assert":
                     default:
+                        LKLog.e(info);
                         break;
                 }
             }
