@@ -16,6 +16,7 @@ import com.lichkin.framework.app.android.callbacks.LKCallJsFuncCallback;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.app.android.widgets.LKDialog;
+import com.lichkin.framework.defines.beans.LKAlertBean;
 import com.lichkin.framework.defines.beans.LKCallJsFuncBean;
 import com.lichkin.framework.defines.beans.LKCallJsFuncCallbackBean;
 import com.lichkin.framework.defines.beans.LKLogBean;
@@ -130,11 +131,18 @@ public class LKWebViewActivity extends Activity {
         webView.registerHandler("alert", new BridgeHandler() {
             @Override
             public void handler(final String data, final CallBackFunction function) {
-                LKDialog dlg = new LKDialog(LKWebViewActivity.this, data).setCancelable(false);
+                LKAlertBean bean = LKJsonUtils.toObj(data, LKAlertBean.class);
+
+                String msg = bean.getMsg();
+                if (bean.isJsonMsg()) {
+                    msg = msg.replaceAll("\\\"", "\"");
+                }
+
+                LKDialog dlg = new LKDialog(LKWebViewActivity.this, msg).setCancelable(false);
                 dlg.setPositiveButton(new LKBtnCallback() {
                     @Override
                     public void call(Context context, DialogInterface dialog) {
-                        function.onCallBack(data);
+                        function.onCallBack(null);
                     }
                 });
                 dlg.show();
