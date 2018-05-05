@@ -1,7 +1,7 @@
 package com.lichkin.framework.app.android.utils;
 
-import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 import com.lichkin.framework.app.android.LKApplication;
 
@@ -14,22 +14,31 @@ import java.util.Locale;
 public class LKAndroidUtils {
 
     /**
+     * 获取资源
+     * @return 资源
+     */
+    private static Resources getResources() {
+        return LKApplication.getInstance().getResources();
+    }
+
+
+    /**
      * 获取字符串内容
      * @param resId 资源ID
      * @return 字符串内容
      */
     public static String getString(int resId) {
-        return LKApplication.getInstance().getString(resId);
+        return getResources().getString(resId);
     }
 
+
     /**
-     * 获取字符串内容
-     * @param context 环境上下文
+     * 获取图片资源
      * @param resId 资源ID
-     * @return 字符串内容
+     * @return 图片资源
      */
-    public static String getString(Context context, int resId) {
-        return context.getString(resId);
+    public static Drawable getDrawable(int resId) {
+        return getResources().getDrawable(resId);
     }
 
 

@@ -6,4 +6,8 @@
 
     <color name="colorLoadingBackground">#aacacaca</color>
     <color name="colorLoadingFront">#88bb66</color>
+
+    <color name="colorProgressStart">#999933</color>
+    <color name="colorProgressCenter">#339977</color>
+    <color name="colorProgressEnd">#88bb66</color>
 </resources>

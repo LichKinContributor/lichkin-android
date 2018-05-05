@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
-import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
@@ -18,6 +17,7 @@ import com.lichkin.framework.app.android.callbacks.LKCallJsFuncCallback;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.app.android.widgets.LKDialog;
+import com.lichkin.framework.app.android.widgets.LKProgressBridgeWebView;
 import com.lichkin.framework.defines.beans.LKAlertBean;
 import com.lichkin.framework.defines.beans.LKCallJsFuncBean;
 import com.lichkin.framework.defines.beans.LKCallJsFuncCallbackBean;
@@ -33,7 +33,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 public class LKWebViewActivity extends Activity {
 
     /** JsBridge对象 */
-    private BridgeWebView webView;
+    private LKProgressBridgeWebView webView;
 
     /** loading遮罩对象 */
     private TextView loadingMask;

@@ -12,7 +12,7 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
-        <com.github.lzyzsd.jsbridge.BridgeWebView
+        <com.lichkin.framework.app.android.widgets.LKProgressBridgeWebView
             android:id="@+id/webview_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
