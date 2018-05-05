@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -22,6 +24,7 @@ import com.lichkin.framework.defines.beans.LKCallJsFuncCallbackBean;
 import com.lichkin.framework.defines.beans.LKLogBean;
 import com.lichkin.framework.defines.beans.LKToastBean;
 import com.lichkin.framework.json.LKJsonUtils;
+import com.wang.avi.AVLoadingIndicatorView;
 
 /**
  * HTML交互实现类
@@ -31,6 +34,12 @@ public class LKWebViewActivity extends Activity {
 
     /** JsBridge对象 */
     private BridgeWebView webView;
+
+    /** loading遮罩对象 */
+    private TextView loadingMask;
+
+    /** loading对象 */
+    private AVLoadingIndicatorView loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,12 @@ public class LKWebViewActivity extends Activity {
 
         //引用webview控件
         webView = findViewById(R.id.webview_container);
+
+        //引用loading遮罩控件
+        loadingMask = findViewById(R.id.loading_mask);
+
+        //引用loading控件
+        loading = findViewById(R.id.loading);
 
         //禁用缓存
         //webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -146,6 +161,22 @@ public class LKWebViewActivity extends Activity {
                     }
                 });
                 dlg.show();
+            }
+        });
+
+        webView.registerHandler("showLoading", new BridgeHandler() {
+            @Override
+            public void handler(final String data, final CallBackFunction function) {
+                loadingMask.setVisibility(View.VISIBLE);
+                loading.show();
+            }
+        });
+
+        webView.registerHandler("closeLoading", new BridgeHandler() {
+            @Override
+            public void handler(final String data, final CallBackFunction function) {
+                loading.hide();
+                loadingMask.setVisibility(View.GONE);
             }
         });
     }
