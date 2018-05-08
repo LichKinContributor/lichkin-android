@@ -41,6 +41,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
     /** API配置键 */
     private String apiKey;
 
+
     /**
      * 构造方法
      * @param context 环境上下文
@@ -51,52 +52,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         this.context = context;
         this.invokerClass = invokerClass;
     }
-    /** 测试结果 */
-    private List<LKResponseBean<Out>> testResponseBeans = new ArrayList<>();
-    /** 模拟服务器异常 */
-    private boolean error_INTERNAL_SERVER_ERROR = false;
-    /** 模拟地址错误 */
-    private boolean error_NOT_FOUND = false;
-    /** 模拟配置错误 */
-    private boolean error_CONFIG_ERROR = false;
-    /** 模拟参数错误 */
-    private boolean error_PARAM_ERROR = false;
 
-
-    /**
-     * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
-     * @param callback 回调方法
-     * @param context 环境上下文
-     * @param requestId 请求ID
-     * @param in 请求参数
-     * @param e 异常对象
-     */
-    private void handleError(final LKInvokeCallback<In, Out> callback, Context context, final String requestId, final In in, Throwable e) {
-        if (e instanceof java.net.ConnectException) {
-            LKDialog dlg = new LKDialog(context, R.string.internet_auth_not_granted).setCancelable(false);
-            dlg.setPositiveButton(new LKBtnCallback() {
-                @Override
-                public void call(Context context, DialogInterface dialog) {
-                    callback.connectError(context, requestId, in, dialog);
-                }
-            });
-            dlg.show();
-        } else if (e instanceof SocketTimeoutException) {
-            LKDialog dlg = new LKDialog(context, R.string.invoke_timeout).setCancelable(false);
-            dlg.setPositiveButton(new LKBtnCallback() {
-                @Override
-                public void call(Context context, DialogInterface dialog) {
-                    callback.timeoutError(context, requestId, in, dialog);
-                }
-            });
-            dlg.show();
-        } else {
-            callback.error(context, requestId, in, e);
-        }
-    }
-
-    /** 模拟存表参数错误 */
-    private boolean error_DB_VALIDATE_ERROR = false;
 
     /**
      * 构造方法
@@ -108,6 +64,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         this(context, invokerClass);
         this.apiKey = apiKey;
     }
+
 
     /**
      * 同步调用接口
@@ -138,6 +95,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             handleError(callback, context, requestId, in, e);
         }
     }
+
 
     /**
      * 异步调用接口
@@ -176,6 +134,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         });
     }
 
+
     /**
      * 初始化调用对象
      * @param in 请求参数
@@ -195,6 +154,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             return null;
         }
     }
+
 
     /**
      * 处理响应信息
@@ -225,12 +185,61 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         }
     }
 
+
+    /**
+     * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
+     * @param callback 回调方法
+     * @param context 环境上下文
+     * @param requestId 请求ID
+     * @param in 请求参数
+     * @param e 异常对象
+     */
+    private void handleError(final LKInvokeCallback<In, Out> callback, Context context, final String requestId, final In in, Throwable e) {
+        if (e instanceof java.net.ConnectException) {
+            LKDialog dlg = new LKDialog(context, R.string.internet_auth_not_granted).setCancelable(false);
+            dlg.setPositiveButton(new LKBtnCallback() {
+                @Override
+                public void call(Context context, DialogInterface dialog) {
+                    callback.connectError(context, requestId, in, dialog);
+                }
+            });
+            dlg.show();
+        } else if (e instanceof SocketTimeoutException) {
+            LKDialog dlg = new LKDialog(context, R.string.invoke_timeout).setCancelable(false);
+            dlg.setPositiveButton(new LKBtnCallback() {
+                @Override
+                public void call(Context context, DialogInterface dialog) {
+                    callback.timeoutError(context, requestId, in, dialog);
+                }
+            });
+            dlg.show();
+        } else {
+            callback.error(context, requestId, in, e);
+        }
+    }
+
+
+    /** 测试结果 */
+    private List<LKResponseBean<Out>> testResponseBeans = new ArrayList<>();
+    /** 模拟服务器异常 */
+    private boolean error_INTERNAL_SERVER_ERROR = false;
+    /** 模拟地址错误 */
+    private boolean error_NOT_FOUND = false;
+    /** 模拟配置错误 */
+    private boolean error_CONFIG_ERROR = false;
+    /** 模拟参数错误 */
+    private boolean error_PARAM_ERROR = false;
+    /** 模拟存表参数错误 */
+    private boolean error_DB_VALIDATE_ERROR = false;
+
+
     /**
      * 增加模拟服务器异常
      */
     public void addTest_INTERNAL_SERVER_ERROR() {
         error_INTERNAL_SERVER_ERROR = true;
     }
+
 
     /**
      * 增加模拟地址错误
@@ -239,12 +248,14 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         error_NOT_FOUND = true;
     }
 
+
     /**
      * 增加模拟配置错误
      */
     public void addTest_CONFIG_ERROR() {
         error_CONFIG_ERROR = true;
     }
+
 
     /**
      * 增加模拟参数错误
@@ -253,12 +264,14 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         error_PARAM_ERROR = true;
     }
 
+
     /**
      * 增加模拟存表参数错误
      */
     public void addTest_DB_VALIDATE_ERROR() {
         error_DB_VALIDATE_ERROR = true;
     }
+
 
     /**
      * 添加测试响应结果
@@ -268,6 +281,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         testResponseBeans.add(new LKResponseBean<>(responseDatas));
     }
 
+
     /**
      * 添加测试响应结果
      * @param errorCode 错误编码
@@ -276,6 +290,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
     public void addTestResponseBeans(int errorCode, String errorMessage) {
         testResponseBeans.add(new LKResponseBean<Out>(errorCode, errorMessage));
     }
+
 
     /**
      * 获取测试结果

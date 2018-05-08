@@ -32,6 +32,7 @@ public class LKPropertiesLoader {
     /** 属性配置 */
     private static final Properties prop;
 
+
     static {
         prop = new Properties();
         try {
@@ -48,6 +49,7 @@ public class LKPropertiesLoader {
         testRetrofit = getBoolean("lichkin.framework.test.retrofit");
     }
 
+
     /**
      * 获取字符串
      * @param key 键
@@ -57,6 +59,7 @@ public class LKPropertiesLoader {
         return prop.getProperty(key);
     }
 
+
     /**
      * 获取整数
      * @param key 键
@@ -65,6 +68,7 @@ public class LKPropertiesLoader {
     public static int getInteger(String key) {
         return Integer.parseInt(getString(key));
     }
+
 
     /**
      * 获取布尔

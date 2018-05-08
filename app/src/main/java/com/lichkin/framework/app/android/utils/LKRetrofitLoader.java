@@ -29,6 +29,7 @@ class LKRetrofitLoader {
     /** retrofit实例 */
     private static final Retrofit retrofit;
 
+
     static {
         retrofit = createRetrofit(LKPropertiesLoader.baseUrl, LKPropertiesLoader.timeout);
 
@@ -40,6 +41,7 @@ class LKRetrofitLoader {
             }
         }
     }
+
 
     /**
      * 创建Retrofit实例对象
