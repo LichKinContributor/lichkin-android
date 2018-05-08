@@ -29,8 +29,11 @@ public class LKPropertiesLoader {
     /** 测试接口请求 */
     public static final boolean testRetrofit;
 
+    /** 属性配置 */
+    private static final Properties prop;
+
     static {
-        Properties prop = new Properties();
+        prop = new Properties();
         try {
             @Cleanup
             InputStream is = LKApplication.getInstance().getAssets().open("lichkin.properties");
@@ -39,10 +42,37 @@ public class LKPropertiesLoader {
             e.printStackTrace();
         }
 
-        baseUrl = prop.getProperty("lichkin.framework.api.baseUrl");
-        timeout = Integer.parseInt(prop.getProperty("lichkin.framework.api.timeout"));
-        testWebView = Boolean.parseBoolean(prop.getProperty("lichkin.framework.test.webView"));
-        testRetrofit = Boolean.parseBoolean(prop.getProperty("lichkin.framework.test.retrofit"));
+        baseUrl = getString("lichkin.framework.api.baseUrl");
+        timeout = getInteger("lichkin.framework.api.timeout");
+        testWebView = getBoolean("lichkin.framework.test.webView");
+        testRetrofit = getBoolean("lichkin.framework.test.retrofit");
+    }
+
+    /**
+     * 获取字符串
+     * @param key 键
+     * @return 值
+     */
+    public static String getString(String key) {
+        return prop.getProperty(key);
+    }
+
+    /**
+     * 获取整数
+     * @param key 键
+     * @return 值
+     */
+    public static int getInteger(String key) {
+        return Integer.parseInt(getString(key));
+    }
+
+    /**
+     * 获取布尔
+     * @param key 键
+     * @return 值
+     */
+    public static boolean getBoolean(String key) {
+        return Boolean.parseBoolean(getString(key));
     }
 
 }

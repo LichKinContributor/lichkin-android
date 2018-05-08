@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.framework.app.android.LKApplication;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.LKInvokeCallback;
 import com.lichkin.framework.app.android.widgets.LKDialog;
@@ -39,6 +38,9 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
     /** 请求ID */
     private String requestId = LKRandomUtils.create(32);
 
+    /** API配置键 */
+    private String apiKey;
+
     /**
      * 构造方法
      * @param context 环境上下文
@@ -49,54 +51,17 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         this.context = context;
         this.invokerClass = invokerClass;
     }
-
-
-    /**
-     * 构造方法
-     * @param invokerClass 请求方法类型
-     */
-    public LKRetrofit(Class<?> invokerClass) {
-        super();
-        this.context = LKApplication.getInstance();
-        this.invokerClass = invokerClass;
-    }
-
-    /**
-     * 调用接口
-     * @param sync 是否同步
-     * @param in 请求参数
-     * @param callback 回调方法
-     */
-    public void call(boolean sync, In in, LKInvokeCallback<In, Out> callback) {
-        if (sync) {
-            callSync(in, callback);
-        } else {
-            callAsync(in, callback);
-        }
-    }
-
-    /**
-     * 初始化调用对象
-     * @param in 请求参数
-     * @param callback 回调方法
-     * @return 调用对象
-     */
-    @SuppressWarnings("unchecked")
-    private Call<LKResponseBean<Out>> initCall(In in, LKInvokeCallback<In, Out> callback) {
-        // 创建请求类类对象
-        Object invoker = LKRetrofitLoader.getInstance().create(invokerClass);
-
-        // 通过反射创建调用对象
-        try {
-            return (Call<LKResponseBean<Out>>) invokerClass.getMethod(METHOD_NAME, in.getClass()).invoke(invoker, in);
-        } catch (Throwable e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     /** 测试结果 */
     private List<LKResponseBean<Out>> testResponseBeans = new ArrayList<>();
+    /** 模拟服务器异常 */
+    private boolean error_INTERNAL_SERVER_ERROR = false;
+    /** 模拟地址错误 */
+    private boolean error_NOT_FOUND = false;
+    /** 模拟配置错误 */
+    private boolean error_CONFIG_ERROR = false;
+    /** 模拟参数错误 */
+    private boolean error_PARAM_ERROR = false;
+
 
     /**
      * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
@@ -130,39 +95,18 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         }
     }
 
-    private boolean error_INTERNAL_SERVER_ERROR = false;
-    private boolean error_NOT_FOUND = false;
-    private boolean error_CONFIG_ERROR = false;
-    private boolean error_PARAM_ERROR = false;
+    /** 模拟存表参数错误 */
     private boolean error_DB_VALIDATE_ERROR = false;
 
     /**
-     * 处理响应信息
-     * @param requestId 请求ID
-     * @param in 请求参数
-     * @param callback 回调方法
-     * @param responseBean 响应信息
+     * 构造方法
+     * @param context 环境上下文
+     * @param invokerClass 请求方法类型
+     * @param apiKey API配置键
      */
-    private void handleResponse(String requestId, In in, LKInvokeCallback<In, Out> callback, LKResponseBean<Out> responseBean) {
-        if (responseBean == null) {
-            // 没有响应对象，不应该出现的情况。
-            callback.busError(context, requestId, in, -1, context.getString(R.string.response_error));
-            return;
-        }
-
-        // 提取响应对象
-        int errorCode = responseBean.getErrorCode();
-        String errorMessage = responseBean.getErrorMessage();
-        Out responseDatas = responseBean.getDatas();
-
-        // 首先判断错误编码
-        if (errorCode == 0) {
-            // errorCode为0时，表示请求成功，并且业务也是成功的。则业务代码仅需处理响应数据即可。
-            callback.success(context, requestId, in, responseDatas);
-        } else {
-            // errorCode不为0时，表示请求成功，但是业务失败了。则业务代码需要处理错误内容。通常只需要提示错误信息即可。
-            callback.busError(context, requestId, in, errorCode, errorMessage);
-        }
+    public LKRetrofit(Context context, Class<?> invokerClass, String apiKey) {
+        this(context, invokerClass);
+        this.apiKey = apiKey;
     }
 
     /**
@@ -230,6 +174,55 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             }
 
         });
+    }
+
+    /**
+     * 初始化调用对象
+     * @param in 请求参数
+     * @param callback 回调方法
+     * @return 调用对象
+     */
+    @SuppressWarnings("unchecked")
+    private Call<LKResponseBean<Out>> initCall(In in, LKInvokeCallback<In, Out> callback) {
+        // 创建请求类类对象
+        Object invoker = LKRetrofitLoader.getInstance(apiKey).create(invokerClass);
+
+        // 通过反射创建调用对象
+        try {
+            return (Call<LKResponseBean<Out>>) invokerClass.getMethod(METHOD_NAME, in.getClass()).invoke(invoker, in);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 处理响应信息
+     * @param requestId 请求ID
+     * @param in 请求参数
+     * @param callback 回调方法
+     * @param responseBean 响应信息
+     */
+    private void handleResponse(String requestId, In in, LKInvokeCallback<In, Out> callback, LKResponseBean<Out> responseBean) {
+        if (responseBean == null) {
+            // 没有响应对象，不应该出现的情况。
+            callback.busError(context, requestId, in, -1, context.getString(R.string.response_error));
+            return;
+        }
+
+        // 提取响应对象
+        int errorCode = responseBean.getErrorCode();
+        String errorMessage = responseBean.getErrorMessage();
+        Out responseDatas = responseBean.getDatas();
+
+        // 首先判断错误编码
+        if (errorCode == 0) {
+            // errorCode为0时，表示请求成功，并且业务也是成功的。则业务代码仅需处理响应数据即可。
+            callback.success(context, requestId, in, responseDatas);
+        } else {
+            // errorCode不为0时，表示请求成功，但是业务失败了。则业务代码需要处理错误内容。通常只需要提示错误信息即可。
+            callback.busError(context, requestId, in, errorCode, errorMessage);
+        }
     }
 
     /**
