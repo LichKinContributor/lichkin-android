@@ -14,6 +14,8 @@ import com.lichkin.framework.defines.beans.LKResponseBean;
 import com.lichkin.framework.utils.LKRandomUtils;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,37 +95,8 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         }
     }
 
-    /**
-     * 处理响应信息
-     * @param requestId 请求ID
-     * @param in 请求参数
-     * @param callback 回调方法
-     * @param response 响应信息
-     */
-    private void handleResponse(String requestId, In in, LKInvokeCallback<In, Out> callback, Response<LKResponseBean<Out>> response) {
-        // 解析响应内容取得响应对象
-        LKResponseBean<Out> bean = response.body();
-
-        if (bean == null) {
-            // errorCode不为0时，表示请求成功，但是业务失败了。则业务代码需要处理错误内容。通常只需要提示错误信息即可。
-            callback.busError(context, requestId, in, -1, context.getString(R.string.response_error));
-            return;
-        }
-
-        // 提取响应对象
-        int errorCode = bean.getErrorCode();
-        String errorMessage = bean.getErrorMessage();
-        Out responseDatas = bean.getDatas();
-
-        // 首先判断错误编码
-        if (errorCode == 0) {
-            // errorCode为0时，表示请求成功，并且业务也是成功的。则业务代码仅需处理响应数据即可。
-            callback.success(context, requestId, in, responseDatas);
-        } else {
-            // errorCode不为0时，表示请求成功，但是业务失败了。则业务代码需要处理错误内容。通常只需要提示错误信息即可。
-            callback.busError(context, requestId, in, errorCode, errorMessage);
-        }
-    }
+    /** 测试结果 */
+    private List<LKResponseBean<Out>> testResponseBeans = new ArrayList<>();
 
     /**
      * 请求失败，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。
@@ -157,6 +130,41 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         }
     }
 
+    private boolean error_INTERNAL_SERVER_ERROR = false;
+    private boolean error_NOT_FOUND = false;
+    private boolean error_CONFIG_ERROR = false;
+    private boolean error_PARAM_ERROR = false;
+    private boolean error_DB_VALIDATE_ERROR = false;
+
+    /**
+     * 处理响应信息
+     * @param requestId 请求ID
+     * @param in 请求参数
+     * @param callback 回调方法
+     * @param responseBean 响应信息
+     */
+    private void handleResponse(String requestId, In in, LKInvokeCallback<In, Out> callback, LKResponseBean<Out> responseBean) {
+        if (responseBean == null) {
+            // 没有响应对象，不应该出现的情况。
+            callback.busError(context, requestId, in, -1, context.getString(R.string.response_error));
+            return;
+        }
+
+        // 提取响应对象
+        int errorCode = responseBean.getErrorCode();
+        String errorMessage = responseBean.getErrorMessage();
+        Out responseDatas = responseBean.getDatas();
+
+        // 首先判断错误编码
+        if (errorCode == 0) {
+            // errorCode为0时，表示请求成功，并且业务也是成功的。则业务代码仅需处理响应数据即可。
+            callback.success(context, requestId, in, responseDatas);
+        } else {
+            // errorCode不为0时，表示请求成功，但是业务失败了。则业务代码需要处理错误内容。通常只需要提示错误信息即可。
+            callback.busError(context, requestId, in, errorCode, errorMessage);
+        }
+    }
+
     /**
      * 同步调用接口
      * @param in 请求参数
@@ -164,6 +172,11 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
      */
     public void callSync(In in, LKInvokeCallback<In, Out> callback) {
         LKLog.i(String.format("callSync -> requestId[%s] -> requestDatas[%s]", requestId, in.toString()));
+
+        if (LKPropertiesLoader.testRetrofit) {
+            handleResponse(requestId, in, callback, getTestResponseBean());
+            return;
+        }
 
         // 初始化调用对象
         Call<LKResponseBean<Out>> call = initCall(in, callback);
@@ -175,13 +188,12 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         try {
             Response<LKResponseBean<Out>> response = call.execute();
             // 处理响应信息
-            handleResponse(requestId, in, callback, response);
+            handleResponse(requestId, in, callback, response.body());
         } catch (Throwable e) {
             // 此时发生异常是请求失败了，有可能是网络不通等导致，也有可能是服务器端异常处理没有返回200状态导致。业务代码需要处理异常。
             handleError(callback, context, requestId, in, e);
         }
     }
-
 
     /**
      * 异步调用接口
@@ -190,6 +202,11 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
      */
     public void callAsync(final In in, final LKInvokeCallback<In, Out> callback) {
         LKLog.i(String.format("callAsync -> requestId[%s] -> requestDatas[%s]", requestId, in.toString()));
+
+        if (LKPropertiesLoader.testRetrofit) {
+            handleResponse(requestId, in, callback, getTestResponseBean());
+            return;
+        }
 
         // 初始化调用对象
         Call<LKResponseBean<Out>> call = initCall(in, callback);
@@ -203,7 +220,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             @Override
             public void onResponse(@NonNull Call<LKResponseBean<Out>> call, @NonNull Response<LKResponseBean<Out>> response) {
                 // 处理响应信息
-                handleResponse(requestId, in, callback, response);
+                handleResponse(requestId, in, callback, response.body());
             }
 
             @Override
@@ -213,6 +230,85 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             }
 
         });
+    }
+
+    /**
+     * 增加模拟服务器异常
+     */
+    public void addTest_INTERNAL_SERVER_ERROR() {
+        error_INTERNAL_SERVER_ERROR = true;
+    }
+
+    /**
+     * 增加模拟地址错误
+     */
+    public void addTest_NOT_FOUND() {
+        error_NOT_FOUND = true;
+    }
+
+    /**
+     * 增加模拟配置错误
+     */
+    public void addTest_CONFIG_ERROR() {
+        error_CONFIG_ERROR = true;
+    }
+
+    /**
+     * 增加模拟参数错误
+     */
+    public void addTest_PARAM_ERROR() {
+        error_PARAM_ERROR = true;
+    }
+
+    /**
+     * 增加模拟存表参数错误
+     */
+    public void addTest_DB_VALIDATE_ERROR() {
+        error_DB_VALIDATE_ERROR = true;
+    }
+
+    /**
+     * 添加测试响应结果
+     * @param responseDatas 响应结果
+     */
+    public void addTestResponseBeans(Out responseDatas) {
+        testResponseBeans.add(new LKResponseBean<>(responseDatas));
+    }
+
+    /**
+     * 添加测试响应结果
+     * @param errorCode 错误编码
+     * @param errorMessage 错误提示信息
+     */
+    public void addTestResponseBeans(int errorCode, String errorMessage) {
+        testResponseBeans.add(new LKResponseBean<Out>(errorCode, errorMessage));
+    }
+
+    /**
+     * 获取测试结果
+     * @return 从测试结果中随机读取一个结果
+     */
+    private LKResponseBean<Out> getTestResponseBean() {
+        //模拟一些场景
+        if (error_INTERNAL_SERVER_ERROR) {
+            testResponseBeans.add(new LKResponseBean<Out>(-1, LKAndroidUtils.getString(R.string.error_INTERNAL_SERVER_ERROR)));
+        }
+        if (error_NOT_FOUND) {
+            testResponseBeans.add(new LKResponseBean<Out>(-2, LKAndroidUtils.getString(R.string.error_NOT_FOUND)));
+        }
+        if (error_CONFIG_ERROR) {
+            testResponseBeans.add(new LKResponseBean<Out>(1, LKAndroidUtils.getString(R.string.error_CONFIG_ERROR)));
+        }
+        if (error_PARAM_ERROR) {
+            testResponseBeans.add(new LKResponseBean<Out>(2, LKAndroidUtils.getString(R.string.error_PARAM_ERROR)));
+        }
+        if (error_DB_VALIDATE_ERROR) {
+            testResponseBeans.add(new LKResponseBean<Out>(3, LKAndroidUtils.getString(R.string.error_DB_VALIDATE_ERROR)));
+        }
+        if (testResponseBeans.isEmpty()) {
+            testResponseBeans.add(new LKResponseBean<Out>(null));
+        }
+        return testResponseBeans.get(LKRandomUtils.randomInRange(0, testResponseBeans.size() - 1));
     }
 
 }

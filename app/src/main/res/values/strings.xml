@@ -1,4 +1,10 @@
 <resources>
+    <string name="error_INTERNAL_SERVER_ERROR">internal server error.</string>
+    <string name="error_NOT_FOUND">not found url.</string>
+    <string name="error_CONFIG_ERROR">config error.</string>
+    <string name="error_PARAM_ERROR">param error.</string>
+    <string name="error_DB_VALIDATE_ERROR">param error.</string>
+
     <string name="invoke_success">invoke success.</string>
     <string name="invoke_error">invoke error.</string>
     <string name="response_error">response error.</string>

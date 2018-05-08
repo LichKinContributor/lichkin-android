@@ -42,14 +42,24 @@ public class LKRandomUtils {
      * @return 随机字符串
      */
     public static String create(final int length, final LKPairEnum rangeTypeEnum) {
-        final Random random = new Random();
         final String rangeStr = rangeTypeEnum.getName();
 
         final char[] result = new char[length];
         for (int i = 0; i < result.length; i++) {
-            result[i] = rangeStr.charAt(random.nextInt(rangeStr.length()));
+            result[i] = rangeStr.charAt(randomInRange(0, rangeStr.length() - 1));
         }
         return new String(result);
+    }
+
+
+    /**
+     * 生成随机值
+     * @param min 最小值
+     * @param max 最大值
+     * @return 随机值
+     */
+    public static int randomInRange(int min, int max) {
+        return new Random().nextInt((max + 1) - min) + min;
     }
 
 }

@@ -66,14 +66,25 @@ public class LKDialog {
         return setTitle(R.string.dlg_tip_title);
     }
 
+
+    /**
+     * 设置标题
+     * @param title 标题
+     * @return 对话框对象
+     */
+    public LKDialog setTitle(String title) {
+        builder.setTitle(title);
+        return this;
+    }
+
+
     /**
      * 设置标题
      * @param titleResId 标题资源ID
      * @return 对话框对象
      */
     public LKDialog setTitle(int titleResId) {
-        builder.setTitle(LKAndroidUtils.getString(titleResId));
-        return this;
+        return setTitle(LKAndroidUtils.getString(titleResId));
     }
 
 
@@ -86,14 +97,15 @@ public class LKDialog {
         return setPositiveButton(R.string.btn_positive_name, callback);
     }
 
+
     /**
      * 设置确定按钮
-     * @param btnNameResId 按钮名称资源ID
+     * @param btnName 按钮名称
      * @param callback 回调方法
      * @return 对话框对象
      */
-    public LKDialog setPositiveButton(int btnNameResId, final LKBtnCallback callback) {
-        builder.setPositiveButton(LKAndroidUtils.getString(btnNameResId), new DialogInterface.OnClickListener() {
+    public LKDialog setPositiveButton(String btnName, final LKBtnCallback callback) {
+        builder.setPositiveButton(btnName, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -102,6 +114,17 @@ public class LKDialog {
 
         });
         return this;
+    }
+
+
+    /**
+     * 设置确定按钮
+     * @param btnNameResId 按钮名称资源ID
+     * @param callback 回调方法
+     * @return 对话框对象
+     */
+    public LKDialog setPositiveButton(int btnNameResId, final LKBtnCallback callback) {
+        return setPositiveButton(LKAndroidUtils.getString(btnNameResId), callback);
     }
 
 
@@ -130,12 +153,12 @@ public class LKDialog {
 
     /**
      * 设置取消按钮
-     * @param btnNameResId 按钮名称资源ID
+     * @param btnName 按钮名称
      * @param callback 回调方法
      * @return 对话框对象
      */
-    public LKDialog setNegativeButton(int btnNameResId, final LKBtnCallback callback) {
-        builder.setNegativeButton(LKAndroidUtils.getString(btnNameResId), new DialogInterface.OnClickListener() {
+    public LKDialog setNegativeButton(String btnName, final LKBtnCallback callback) {
+        builder.setNegativeButton(btnName, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -145,6 +168,18 @@ public class LKDialog {
         });
         return this;
     }
+
+
+    /**
+     * 设置取消按钮
+     * @param btnNameResId 按钮名称资源ID
+     * @param callback 回调方法
+     * @return 对话框对象
+     */
+    public LKDialog setNegativeButton(int btnNameResId, final LKBtnCallback callback) {
+        return setNegativeButton(LKAndroidUtils.getString(btnNameResId), callback);
+    }
+
 
     /**
      * 显示对话框

@@ -26,6 +26,9 @@ public class LKPropertiesLoader {
     /** 测试交互 */
     public static final boolean testWebView;
 
+    /** 测试接口请求 */
+    public static final boolean testRetrofit;
+
     static {
         Properties prop = new Properties();
         try {
@@ -39,6 +42,7 @@ public class LKPropertiesLoader {
         baseUrl = prop.getProperty("lichkin.framework.api.baseUrl");
         timeout = Integer.parseInt(prop.getProperty("lichkin.framework.api.timeout"));
         testWebView = Boolean.parseBoolean(prop.getProperty("lichkin.framework.test.webView"));
+        testRetrofit = Boolean.parseBoolean(prop.getProperty("lichkin.framework.test.retrofit"));
     }
 
 }

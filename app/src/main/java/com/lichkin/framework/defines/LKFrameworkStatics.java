@@ -20,5 +20,7 @@ public class LKFrameworkStatics {
     public static String SYSTEM_TAG = "LichKin";
     /** 系统默认配置值：系统名称。 */
     public static String SYSTEM_NAME = "苏州鑫宏利业信息科技有限公司";
+    /** 自定义业务错误编码最小值 */
+    public static final int MIN_BUS_ERROR_CODE = 10000;
 
 }

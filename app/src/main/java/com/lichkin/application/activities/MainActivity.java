@@ -17,6 +17,7 @@ import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
+import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
@@ -27,12 +28,20 @@ import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
 import com.lichkin.framework.app.android.widgets.LKDialog;
+import com.lichkin.framework.defines.LKFrameworkStatics;
+import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 
 /**
  * 基础MainAcitivity功能实现类
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 public abstract class MainActivity extends LKAppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+
+    /** 交互测试页面 */
+    private static final String APP_TEST_BRIDGE_PAGE_URL = "/test/app/index" + LKFrameworkStatics.WEB_MAPPING_PAGES;
+
+    /** 客户端版本信息页面 */
+    private static final String APP_VERSION_PAGE_URL = "/app/version" + LKFrameworkStatics.WEB_MAPPING_PAGES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
         if (LKPropertiesLoader.testWebView) {
             Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
-            intent.putExtra("url", LKPropertiesLoader.baseUrl + "/test/app/index.html");
+            intent.putExtra("url", LKPropertiesLoader.baseUrl + APP_TEST_BRIDGE_PAGE_URL);
             startActivity(intent);
             return;
         }
@@ -120,11 +129,17 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         //创建请求对象
         final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
 
+        //测试代码
+        addGetLastAppVersionTests(retrofit);
+
         //执行请求
         retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
 
             @Override
             protected void success(Context context, GetLastAppVersionIn getLastAppVersionIn, final GetLastAppVersionOut responseDatas) {
+                if (responseDatas == null) {
+                    return;
+                }
                 boolean forceUpdate = responseDatas.isForceUpdate();
                 String tip = responseDatas.getTip();
                 LKDialog dlg = new LKDialog(context, tip).setTitle(R.string.dlg_tip_title_update).setCancelable(false);
@@ -153,16 +168,33 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
             }
 
             @Override
-            protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, String errorMessage) {
-                switch (errorCode) {
-                    case 10000://没有可用版本，不处理。
-                        break;
-                    default:
-                        // 版本获取失败重启
-                        restart();
-                        break;
+            protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                if (errorCode < LKFrameworkStatics.MIN_BUS_ERROR_CODE) {
+                    if (errorCode == 9999) {//应用已下架
+                        String[] errorMessageArr = errorBean.getErrorMessageArr();
+                        LKDialog dlg = new LKDialog(context, errorMessageArr[0]).setTitle(errorMessageArr[1]).setCancelable(false);
+                        dlg.setPositiveButton(errorMessageArr[2], new LKBtnCallback() {
+                            @Override
+                            public void call(Context context, DialogInterface dialog) {
+                                System.exit(0);
+                            }
+                        });
+                        dlg.show();
+                        return;
+                    }
+                    super.busError(context, getLastAppVersionIn, errorCode, errorType, errorBean);
+                } else {
+                    // 自定义业务错误处理
+                    switch (errorCode) {
+                        case 10000://没有可用版本，不处理。
+                            break;
+                        default:
+                            // 其它错误，待约定与实现。
+                            break;
+                    }
                 }
             }
+
 
             @Override
             public void connectError(Context context, String requestId, GetLastAppVersionIn getLastAppVersionIn, DialogInterface dialog) {
@@ -182,6 +214,64 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
         });
     }
+
+    /**
+     * 增加测试用例
+     * @param retrofit 请求对象
+     */
+    protected void addGetLastAppVersionTests(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
+        if (!LKPropertiesLoader.testRetrofit) {
+            return;
+        }
+        //模拟服务器异常
+//        retrofit.addTest_INTERNAL_SERVER_ERROR();
+        //模拟地址错误
+//        retrofit.addTest_NOT_FOUND();
+        //模拟配置错误
+//        retrofit.addTest_CONFIG_ERROR();
+        //模拟参数错误
+//        retrofit.addTest_PARAM_ERROR();
+        //模拟存表参数错误
+//        retrofit.addTest_DB_VALIDATE_ERROR();
+
+        //错误提示模拟
+//        retrofit.addTestResponseBeans(777, "简单错误提示");
+//        retrofit.addTestResponseBeans(888, String.format("多个错误提示%s第1个%s第2个%s等等等等%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR));
+//        retrofit.addTestResponseBeans(999, String.format("[msg]%s[多个带字段信息的错误提示]%s[field1]%s[字段1]%s[field2]%s[字段2]%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS));
+        //应用已下架
+//        retrofit.addTestResponseBeans(9999, "应用已下架" + LKFrameworkStatics.SPLITOR + "重要提示" + LKFrameworkStatics.SPLITOR + "心灰意冷的离去");
+        //无新版本
+//        retrofit.addTestResponseBeans(10000, "无新版本");
+        //其它错误
+//        retrofit.addTestResponseBeans(99999, "其它错误");
+        //有新版本，且强制升级。
+//        addGetLastAppVersionTest1(retrofit);
+        //有新版本，不强制升级。
+//        addGetLastAppVersionTest2(retrofit);
+    }
+
+    private void addGetLastAppVersionTest1(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
+        GetLastAppVersionOut out = new GetLastAppVersionOut();
+        out.setForceUpdate(true);
+        out.setTip("有最新版本");
+        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
+        out.setVersionX(LKAndroidStatics.versionX());
+        out.setVersionY(LKAndroidStatics.versionY());
+        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
+        retrofit.addTestResponseBeans(out);
+    }
+
+    private void addGetLastAppVersionTest2(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
+        GetLastAppVersionOut out = new GetLastAppVersionOut();
+        out.setForceUpdate(false);
+        out.setTip("有最新版本");
+        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
+        out.setVersionX(LKAndroidStatics.versionX());
+        out.setVersionY(LKAndroidStatics.versionY());
+        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
+        retrofit.addTestResponseBeans(out);
+    }
+
 
     /** 导航栏菜单ID */
     private static final int NAVIGATION_MENU_GROUP_ID = Menu.NONE;
