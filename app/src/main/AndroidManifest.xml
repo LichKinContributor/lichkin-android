@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.lichkin.application.activities.IntroActivity" />
         <activity android:name="com.lichkin.framework.app.android.activities.LKWebViewActivity" />
     </application>
 

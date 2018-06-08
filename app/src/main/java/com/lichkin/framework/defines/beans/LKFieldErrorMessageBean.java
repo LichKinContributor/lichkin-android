@@ -9,6 +9,7 @@ import lombok.Setter;
 
 /**
  * 带字段信息的错误信息对象
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
 @Setter

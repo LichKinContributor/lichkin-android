@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * 错误提示信息对象
  * 根据枚举类型取对应类型的错误提示信息
+ * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
 @Setter

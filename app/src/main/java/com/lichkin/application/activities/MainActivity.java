@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,6 +27,7 @@ import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
+import com.lichkin.framework.app.android.utils.LKSharedPreferences;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
 import com.lichkin.framework.app.android.widgets.LKDialog;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -43,9 +45,25 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     /** 客户端版本信息页面 */
     private static final String APP_VERSION_PAGE_URL = "/app/version" + LKFrameworkStatics.WEB_MAPPING_PAGES;
 
+    /** 当前对象 */
+    static MainActivity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //当前对象赋值
+        activity = this;
+
+        //启动介绍页
+        if (LKSharedPreferences.getBoolean("firstLaunch", true)) {
+            LKSharedPreferences.putBoolean("firstLaunch", false);
+            introFragmentArr = initIntroFragmentArr();
+            if (introFragmentArr != null && introFragmentArr.length != 0) {
+                Intent intent = new Intent(this, IntroActivity.class);
+                startActivity(intent);
+            }
+        }
 
         //引用布局文件
         setContentView(R.layout.activity_main);
@@ -453,6 +471,23 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      */
     protected void hideMenu3() {
         hideMenu(NAVIGATION_MENU_ITEM_ID_3);
+    }
+
+    /** 介绍页列表 */
+    private Fragment[] introFragmentArr;
+
+    /**
+     * 初始化介绍页
+     * @return 介绍页
+     */
+    protected abstract Fragment[] initIntroFragmentArr();
+
+    /**
+     * 获取介绍页列表
+     * @return 介绍页列表
+     */
+    public Fragment[] getIntroFragmentArr() {
+        return introFragmentArr;
     }
 
 }
