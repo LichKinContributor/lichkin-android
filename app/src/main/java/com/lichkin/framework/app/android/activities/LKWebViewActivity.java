@@ -32,6 +32,9 @@ import com.wang.avi.AVLoadingIndicatorView;
  */
 public class LKWebViewActivity extends Activity {
 
+    /** 页面地址键 */
+    public static final String KEY_URL = "url";
+
     /** JsBridge对象 */
     private LKProgressBridgeWebView webView;
 
@@ -65,7 +68,7 @@ public class LKWebViewActivity extends Activity {
 
         //读取页面地址并加载页面
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
+        String url = intent.getStringExtra(KEY_URL);
         LKLog.d("load url: " + url);
         webView.loadUrl(url);
 

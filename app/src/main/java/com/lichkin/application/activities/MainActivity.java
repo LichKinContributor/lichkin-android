@@ -109,7 +109,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
         if (LKPropertiesLoader.testWebView) {
             Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
-            intent.putExtra("url", LKPropertiesLoader.testWebViewUrl);
+            intent.putExtra(LKWebViewActivity.KEY_URL, LKPropertiesLoader.testWebViewUrl);
             startActivity(intent);
             return;
         }
@@ -176,9 +176,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
 
         //测试代码
-        if (!LKPropertiesLoader.testRetrofit) {
-            GetLastAppVersionTester.test(retrofit);
-        }
+        GetLastAppVersionTester.test(retrofit);
 
         //执行请求
         retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {

@@ -83,4 +83,28 @@ public class LKPropertiesLoader {
         return Boolean.parseBoolean(getString(key));
     }
 
+
+    /**
+     * 获取浮点
+     * @param key 键
+     * @return 值
+     */
+    public static double getDouble(String key) {
+        return Double.valueOf(getString(key));
+    }
+
+
+    /**
+     * 获取除法公式结果
+     * @param key 键
+     * @return 值
+     */
+    public static double getDivision(String key) {
+        String division = getString(key);
+        String[] result = division.split("/");
+        double divisor = Double.valueOf(result[0]);
+        double dividend = Double.valueOf(result[1]);
+        return divisor / dividend;
+    }
+
 }
