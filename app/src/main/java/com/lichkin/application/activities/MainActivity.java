@@ -6,19 +6,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.application.fragments.HomeFragment;
+import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
-import com.lichkin.framework.app.android.LKAndroidStatics;
+import com.lichkin.application.testers.GetLastAppVersionTester;
 import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
@@ -32,6 +38,14 @@ import com.lichkin.framework.app.android.utils.LKViewHelper;
 import com.lichkin.framework.app.android.widgets.LKDialog;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
+import com.lichkin.framework.utils.LKRandomUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 基础MainAcitivity功能实现类
@@ -39,14 +53,15 @@ import com.lichkin.framework.defines.beans.LKErrorMessageBean;
  */
 public abstract class MainActivity extends LKAppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    /** 交互测试页面 */
-    private static final String APP_TEST_BRIDGE_PAGE_URL = "/test/app/index" + LKFrameworkStatics.WEB_MAPPING_PAGES;
-
-    /** 客户端版本信息页面 */
-    private static final String APP_VERSION_PAGE_URL = "/app/version" + LKFrameworkStatics.WEB_MAPPING_PAGES;
-
     /** 当前对象 */
     static MainActivity activity;
+
+    /** 主页菜单ID */
+    public static int HOME_MENU_ID;
+    /** 我的页面菜单ID */
+    public static int MY_MENU_ID;
+    /** 首次创建 */
+    private boolean create = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +86,30 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         //只使用竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //初始化菜单页面
+        initHomePage();
+        initMenuPages();
+        initMyPage();
+
         //初始化导航栏
         initBottomNavigationView();
+
+        //初始化滑动页面
+        initViewPager();
+
+        showMenu(HOME_MENU_ID);
+        showMenu(MY_MENU_ID);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        create = false;
+
         if (LKPropertiesLoader.testWebView) {
             Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
-            intent.putExtra("url", LKPropertiesLoader.baseUrl + APP_TEST_BRIDGE_PAGE_URL);
+            intent.putExtra("url", LKPropertiesLoader.testWebViewUrl);
             startActivity(intent);
             return;
         }
@@ -148,7 +176,9 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
 
         //测试代码
-        addGetLastAppVersionTests(retrofit);
+        if (!LKPropertiesLoader.testRetrofit) {
+            GetLastAppVersionTester.test(retrofit);
+        }
 
         //执行请求
         retrofit.callSync(in, new LKBaseInvokeCallback<GetLastAppVersionIn, GetLastAppVersionOut>() {
@@ -234,78 +264,88 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     }
 
     /**
-     * 增加测试用例
-     * @param retrofit 请求对象
+     * 菜单页面对象
      */
-    protected void addGetLastAppVersionTests(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
-        if (!LKPropertiesLoader.testRetrofit) {
-            return;
+    @RequiredArgsConstructor
+    private class MenuPage {
+        /** 菜单ID */
+        private final int menuId;
+        /** 标题ID */
+        private final int titleId;
+        /** 图标ID */
+        private final int iconId;
+        /** 排序ID */
+        private final int orderId;
+        /** 页面 */
+        private final Fragment fragment;
+    }
+
+    /** 排序ID */
+    private int orderId = 0;
+    /** 菜单页面对象映射集合 */
+    private Map<Integer, MenuPage> menuPageMap = new HashMap<>();
+
+    /**
+     * 初始化主页
+     */
+    protected void initHomePage() {
+        HOME_MENU_ID = initMenuPage(R.string.title_navigation_menu_home, R.drawable.ic_navigation_menu_home, new HomeFragment());
+    }
+
+    /**
+     * 初始化菜单页面。使用initMenuPage方法进行初始化。
+     */
+    protected abstract void initMenuPages();
+
+    /**
+     * 初始化我的页面
+     */
+    protected void initMyPage() {
+        MY_MENU_ID = initMenuPage(R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my, new MyFragment());
+    }
+
+    /**
+     * 初始化对象
+     * @param titleId 标题ID
+     * @param iconId 图标ID
+     * @param fragment 页面
+     * @return 菜单ID
+     */
+    protected int initMenuPage(int titleId, int iconId, Fragment fragment) {
+        int menuId = LKRandomUtils.randomInRange(10000, 99999);
+        menuPageMap.put(menuId, new MenuPage(menuId, titleId, iconId, orderId++, fragment));
+        return menuId;
+    }
+
+    /** 适配器位置与菜单页面映射关系 */
+    private List<MenuPage> menuPageList = new ArrayList<>();
+    /** 适配器 */
+    private FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+
+        @Override
+        public Fragment getItem(int position) {
+            return menuPageList.get(position).fragment;
         }
-        //模拟服务器异常
-//        retrofit.addTest_INTERNAL_SERVER_ERROR();
-        //模拟地址错误
-//        retrofit.addTest_NOT_FOUND();
-        //模拟配置错误
-//        retrofit.addTest_CONFIG_ERROR();
-        //模拟参数错误
-//        retrofit.addTest_PARAM_ERROR();
-        //模拟存表参数错误
-//        retrofit.addTest_DB_VALIDATE_ERROR();
 
-        //错误提示模拟
-//        retrofit.addTestResponseBeans(777, "简单错误提示");
-//        retrofit.addTestResponseBeans(888, String.format("多个错误提示%s第1个%s第2个%s等等等等%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR));
-//        retrofit.addTestResponseBeans(999, String.format("[msg]%s[多个带字段信息的错误提示]%s[field1]%s[字段1]%s[field2]%s[字段2]%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS));
-        //应用已下架
-//        retrofit.addTestResponseBeans(9999, "应用已下架" + LKFrameworkStatics.SPLITOR + "重要提示" + LKFrameworkStatics.SPLITOR + "心灰意冷的离去");
-        //无新版本
-//        retrofit.addTestResponseBeans(10000, "无新版本");
-        //其它错误
-//        retrofit.addTestResponseBeans(99999, "其它错误");
-        //有新版本，且强制升级。
-//        addGetLastAppVersionTest1(retrofit);
-        //有新版本，不强制升级。
-//        addGetLastAppVersionTest2(retrofit);
-    }
+        @Override
+        public int getCount() {
+            return menuPageList.size();
+        }
 
-    private void addGetLastAppVersionTest1(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
-        GetLastAppVersionOut out = new GetLastAppVersionOut();
-        out.setForceUpdate(true);
-        out.setTip("有最新版本");
-        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
-        out.setVersionX(LKAndroidStatics.versionX());
-        out.setVersionY(LKAndroidStatics.versionY());
-        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
-        retrofit.addTestResponseBeans(out);
-    }
+        @Override
+        public long getItemId(int position) {
+            return menuPageList.get(position).hashCode();
+        }
 
-    private void addGetLastAppVersionTest2(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
-        GetLastAppVersionOut out = new GetLastAppVersionOut();
-        out.setForceUpdate(false);
-        out.setTip("有最新版本");
-        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
-        out.setVersionX(LKAndroidStatics.versionX());
-        out.setVersionY(LKAndroidStatics.versionY());
-        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
-        retrofit.addTestResponseBeans(out);
-    }
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return PagerAdapter.POSITION_NONE;
+        }
 
+    };
 
-    /** 导航栏菜单ID */
-    private static final int NAVIGATION_MENU_GROUP_ID = Menu.NONE;
-    /** 主页菜单ID */
-    private static final int NAVIGATION_MENU_ITEM_ID_HOME = 0;
-    /** 菜单1菜单ID */
-    private static final int NAVIGATION_MENU_ITEM_ID_1 = 1;
-    /** 菜单2菜单ID */
-    private static final int NAVIGATION_MENU_ITEM_ID_2 = 2;
-    /** 菜单3菜单ID */
-    private static final int NAVIGATION_MENU_ITEM_ID_3 = 3;
-    /** 我的菜单ID */
-    private static final int NAVIGATION_MENU_ITEM_ID_MY = 9;
     /** 导航栏对象 */
     private BottomNavigationView navigation;
-
 
     /**
      * 初始化导航栏
@@ -318,159 +358,149 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 LKLog.d("onNavigationItemSelected -> " + item.getTitle());
-                switch (item.getItemId()) {
-                    case NAVIGATION_MENU_ITEM_ID_HOME:
-                        onMenuHomeSelected();
-                        return true;
-                    case NAVIGATION_MENU_ITEM_ID_MY:
-                        onMenuMySelected();
-                        return true;
-                    case NAVIGATION_MENU_ITEM_ID_1:
-                        onMenu1Selected();
-                        return true;
-                    case NAVIGATION_MENU_ITEM_ID_2:
-                        onMenu2Selected();
-                        return true;
-                    case NAVIGATION_MENU_ITEM_ID_3:
-                        onMenu3Selected();
-                        return true;
-                }
-                return false;
+                int menuId = item.getItemId();
+                viewPager.setCurrentItem(menuPageList.indexOf(menuPageMap.get(menuId)));
+                onMenuSelected(menuId);
+                return true;
             }
 
         });
     }
 
     /**
-     * 主页菜单点击事件
+     * 菜单点击事件
+     * @param menuId 菜单ID
      */
-    protected void onMenuHomeSelected() {
+    protected void onMenuSelected(int menuId) {
     }
 
-    /**
-     * 我的菜单点击事件
-     */
-    protected void onMenuMySelected() {
-    }
+    /** 滑动页面 */
+    private ViewPager viewPager;
 
     /**
-     * 菜单1菜单点击事件
+     * 初始化滑动页面
      */
-    protected void onMenu1Selected() {
+    private void initViewPager() {
+        viewPager = findViewById(R.id.viewpager);
+        //添加适配器
+        viewPager.setAdapter(adapter);
+        //为滑动页面增加监听事件
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                navigation.getMenu().findItem(menuPageList.get(position).menuId).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+        });
     }
 
-    /**
-     * 菜单2菜单点击事件
-     */
-    protected void onMenu2Selected() {
-    }
+    /** 导航栏菜单ID */
+    private static final int NAVIGATION_MENU_GROUP_ID = Menu.NONE;
 
     /**
-     * 菜单3菜单点击事件
+     * 显示菜单
+     * @param menuId 菜单ID
      */
-    protected void onMenu3Selected() {
+    protected void showMenu(int menuId) {
+        MenuPage menuPage = menuPageMap.get(menuId);
+        if (menuPageList.contains(menuPage)) {
+            return;
+        }
+
+        //增加菜单
+        navigation.getMenu().add(NAVIGATION_MENU_GROUP_ID, menuId, menuPage.orderId, LKAndroidUtils.getString(menuPage.titleId)).setIcon(menuPage.iconId);
+        //禁用mShiftingMode
+        LKViewHelper.disableShiftingMode(navigation);
+
+        //增加页面
+        if (menuPageList.isEmpty()) {
+            //直接增加
+            menuPageList.add(menuPage);
+        } else {
+            //按照序号选择应该存入的位置
+            //通常都是在后面动态增加，倒序处理。
+            boolean added = false;
+            for (int i = menuPageList.size() - 1; i >= 0; i--) {
+                if (menuPage.orderId > menuPageList.get(i).orderId) {
+                    menuPageList.add(i + 1, menuPage);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                menuPageList.add(menuPage);
+            }
+        }
+        //更新滑动页面状态
+        adapter.notifyDataSetChanged();
+
+        //将页面滑动到刚打开的页面
+        switchMenuPage(create ? 0 : menuPageList.indexOf(menuPage));
     }
 
     /**
      * 显示菜单
      * @param menuId 菜单ID
-     * @param titleId 标题ID
-     * @param iconId 图标ID
      */
-    private void showMenu(int menuId, int titleId, int iconId) {
-        Menu menu = navigation.getMenu();
-        MenuItem item = menu.findItem(menuId);
-        if (item == null) {
-            //增加菜单
-            menu.add(NAVIGATION_MENU_GROUP_ID, menuId, menuId, LKAndroidUtils.getString(titleId)).setIcon(iconId);
-            //禁用mShiftingMode
-            LKViewHelper.disableShiftingMode(navigation);
-        }
-    }
-
-    /**
-     * 显示主页菜单
-     */
-    protected void showMenuHome() {
-        showMenu(NAVIGATION_MENU_ITEM_ID_HOME, R.string.title_navigation_menu_home, R.drawable.ic_navigation_menu_home);
-    }
-
-    /**
-     * 显示我的菜单
-     */
-    protected void showMenuMy() {
-        showMenu(NAVIGATION_MENU_ITEM_ID_MY, R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my);
-    }
-
-    /**
-     * 显示菜单1菜单
-     */
-    protected void showMenu1() {
-        showMenu(NAVIGATION_MENU_ITEM_ID_1, R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1);
-    }
-
-    /**
-     * 显示菜单2菜单
-     */
-    protected void showMenu2() {
-        showMenu(NAVIGATION_MENU_ITEM_ID_2, R.string.title_navigation_menu_2, R.drawable.ic_navigation_menu_2);
-    }
-
-    /**
-     * 显示菜单3菜单
-     */
-    protected void showMenu3() {
-        showMenu(NAVIGATION_MENU_ITEM_ID_3, R.string.title_navigation_menu_3, R.drawable.ic_navigation_menu_3);
+    public static void show(int menuId) {
+        activity.showMenu(menuId);
     }
 
     /**
      * 隐藏菜单
      * @param menuId 菜单ID
      */
-    private void hideMenu(int menuId) {
-        Menu menu = navigation.getMenu();
-        MenuItem item = menu.findItem(menuId);
-        if (item != null) {
-            //移除菜单
-            menu.removeItem(menuId);
-            //禁用mShiftingMode
-            LKViewHelper.disableShiftingMode(navigation);
+    protected void hideMenu(int menuId) {
+        MenuPage menuPage = menuPageMap.get(menuId);
+        if (!menuPageList.contains(menuPage)) {
+            return;
         }
+
+        //移除菜单
+        navigation.getMenu().removeItem(menuId);
+        //禁用mShiftingMode
+        LKViewHelper.disableShiftingMode(navigation);
+
+        //移除页面
+        menuPageList.remove(menuPage);
+        //更新滑动页面状态
+        adapter.notifyDataSetChanged();
+
+        //将页面滑动到第一个页面
+        if (menuPageList.isEmpty()) {
+            return;
+        }
+        switchMenuPage(0);
     }
 
     /**
-     * 隐藏主页菜单
+     * 隐藏菜单
+     * @param menuId 菜单ID
      */
-    protected void hideMenuHome() {
-        hideMenu(NAVIGATION_MENU_ITEM_ID_HOME);
+    public static void hide(int menuId) {
+        activity.hideMenu(menuId);
     }
 
     /**
-     * 隐藏我的菜单
+     * 将页面滑动到指定位置
+     * @param position 位置
      */
-    protected void hideMenuMy() {
-        hideMenu(NAVIGATION_MENU_ITEM_ID_MY);
-    }
-
-    /**
-     * 隐藏菜单1菜单
-     */
-    protected void hideMenu1() {
-        hideMenu(NAVIGATION_MENU_ITEM_ID_1);
-    }
-
-    /**
-     * 隐藏菜单2菜单
-     */
-    protected void hideMenu2() {
-        hideMenu(NAVIGATION_MENU_ITEM_ID_2);
-    }
-
-    /**
-     * 隐藏菜单3菜单
-     */
-    protected void hideMenu3() {
-        hideMenu(NAVIGATION_MENU_ITEM_ID_3);
+    private void switchMenuPage(final int position) {
+        viewPager.setCurrentItem(position);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                navigation.getMenu().getItem(position).setChecked(true);
+            }
+        }, 0);
     }
 
     /** 介绍页列表 */

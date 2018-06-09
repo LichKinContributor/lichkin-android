@@ -4,6 +4,7 @@ package com.lichkin.app.android.demo.activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.lichkin.app.android.demo.R;
 import com.lichkin.app.android.demo.fragments.IntroFragment1;
 import com.lichkin.app.android.demo.fragments.IntroFragment2;
 import com.lichkin.app.android.demo.fragments.IntroFragment3;
@@ -14,23 +15,17 @@ import com.lichkin.app.android.demo.fragments.IntroFragment3;
  */
 public class MainActivity extends com.lichkin.application.activities.MainActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showMenuHome();
-        showMenuMy();
     }
 
-    @Override
-    protected void onMenuHomeSelected() {
-    }
+    public static int MENU_1;
 
     @Override
-    protected void onMenuMySelected() {
-    }
-
-    @Override
-    protected void onMenu1Selected() {
+    protected void initMenuPages() {
+        MENU_1 = initMenuPage(R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1, new IntroFragment3());
     }
 
     @Override
