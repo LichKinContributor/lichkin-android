@@ -2,17 +2,14 @@ package com.lichkin.application.testers;
 
 import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
 import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 
 /**
  * 测试用例
  */
 public class GetLastAppVersionTester {
-
-    /** 客户端版本信息页面 */
-    private static final String APP_VERSION_PAGE_URL = "/app/version" + LKFrameworkStatics.WEB_MAPPING_PAGES;
 
     public static void test(LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit) {
         if (!LKPropertiesLoader.testRetrofit) {
@@ -41,25 +38,25 @@ public class GetLastAppVersionTester {
 //        retrofit.addTestResponseBeans(99999, "其它错误");
 
         //正常返回结果模拟
-//        GetLastAppVersionOut out = new GetLastAppVersionOut();
+        GetLastAppVersionOut out = new GetLastAppVersionOut();
 
         //1===>>>有新版本，且强制升级。
 //        out.setForceUpdate(true);
 //        out.setTip("有最新版本");
-//        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
+//        out.setUrl("file:///android_asset/version/version.html");
 //        out.setVersionX(LKAndroidStatics.versionX());
 //        out.setVersionY(LKAndroidStatics.versionY());
 //        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
         //2===>>>有新版本，不强制升级。
-//        out.setForceUpdate(false);
-//        out.setTip("有最新版本");
-//        out.setUrl(LKPropertiesLoader.baseUrl + APP_VERSION_PAGE_URL);
-//        out.setVersionX(LKAndroidStatics.versionX());
-//        out.setVersionY(LKAndroidStatics.versionY());
-//        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
+        out.setForceUpdate(false);
+        out.setTip("有最新版本");
+        out.setUrl("file:///android_asset/version/version.html");
+        out.setVersionX(LKAndroidStatics.versionX());
+        out.setVersionY(LKAndroidStatics.versionY());
+        out.setVersionZ((short) (LKAndroidStatics.versionZ() + 1));
 
         //正常返回结果模拟
-//        retrofit.addTestResponseBeans(out);
+        retrofit.addTestResponseBeans(out);
     }
 
 }
