@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:banner="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,6 +8,15 @@
     <com.youth.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="0dp"
+        banner:banner_default_image="@drawable/no_banner" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/news"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:divider="#11000000"
+        android:dividerHeight="1dp"
+        android:smoothScrollbar="true" />
 
 </LinearLayout>

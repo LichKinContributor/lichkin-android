@@ -56,4 +56,13 @@ public class LKAndroidUtils {
         return Locale.ENGLISH.toString();
     }
 
+    /**
+     * 获取状态栏高度
+     * @return 状态栏高度
+     */
+    public static float getStatusBarHeight() {
+        Resources resources = getResources();
+        return resources.getDimension(resources.getIdentifier("status_bar_height", "dimen", "android"));
+    }
+
 }

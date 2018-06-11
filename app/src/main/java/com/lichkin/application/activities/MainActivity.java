@@ -345,11 +345,19 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     /** 导航栏对象 */
     private BottomNavigationView navigation;
 
+    /** 导航栏高度 */
+    public int navigationHeight;
+
     /**
      * 初始化导航栏
      */
     private void initBottomNavigationView() {
         navigation = findViewById(R.id.navigation);
+
+        //设置导航栏高度
+        navigation.measure(0, 0);
+        navigationHeight = navigation.getMeasuredHeight();
+
         //为导航栏增加监听事件
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 

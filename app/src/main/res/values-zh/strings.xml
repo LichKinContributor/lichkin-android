@@ -10,6 +10,7 @@
     <string name="response_error">响应内容不正确。</string>
     <string name="internet_auth_not_granted">请检查您的网络链接权限。</string>
     <string name="invoke_timeout">链接超时，请稍后再试。</string>
+    <string name="invoke_no_more_data">没有更多数据</string>
 
     <string name="app_name">鑫宏利业</string>
     <string name="title_navigation_menu_home">主页</string>

@@ -10,6 +10,7 @@
     <string name="response_error">response error.</string>
     <string name="internet_auth_not_granted">Please check you internet authority.</string>
     <string name="invoke_timeout">invoke timeout, please wait.</string>
+    <string name="invoke_no_more_data">No more data.</string>
 
     <string name="app_name">LichKin</string>
     <string name="title_navigation_menu_home">Home</string>

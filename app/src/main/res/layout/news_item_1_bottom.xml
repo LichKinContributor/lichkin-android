@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/NewsContainerOut">
+
+    <LinearLayout style="@style/NewsContainerIn">
+
+        <include layout="@layout/news_item_part_title" />
+
+        <include layout="@layout/news_item_part_brief" />
+
+        <LinearLayout style="@style/NewsImageContainer">
+
+            <ImageView
+                android:id="@+id/news_image_1"
+                style="@style/NewsImage"
+                android:layout_height="198dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

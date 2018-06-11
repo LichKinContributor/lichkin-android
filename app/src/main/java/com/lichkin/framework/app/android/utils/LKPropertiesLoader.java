@@ -32,6 +32,9 @@ public class LKPropertiesLoader {
     /** 测试接口请求 */
     public static final boolean testRetrofit;
 
+    /** 新闻图片位置。true:顶部；false:底部。 */
+    public static final boolean newsPositionTop;
+
     /** 属性配置 */
     private static final Properties prop;
 
@@ -51,6 +54,7 @@ public class LKPropertiesLoader {
         testWebView = getBoolean("lichkin.framework.test.webView");
         testWebViewUrl = getString("lichkin.framework.test.webView.url");
         testRetrofit = getBoolean("lichkin.framework.test.retrofit");
+        newsPositionTop = getBoolean("lichkin.framework.news.image.position.top");
     }
 
 
