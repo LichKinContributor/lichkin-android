@@ -17,6 +17,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LKPropertiesLoader {
 
+    /** 页面测试 */
+    public static final boolean pageTest;
+
+    /** 页面根路径 */
+    public static final String pageBaseUrl;
+
+    /** 页面后缀 */
+    public static final String pageSuffix;
+
     /** 请求根路径 */
     public static final String baseUrl;
 
@@ -49,11 +58,17 @@ public class LKPropertiesLoader {
             e.printStackTrace();
         }
 
-        baseUrl = getString("lichkin.framework.api.baseUrl");
-        timeout = getInteger("lichkin.framework.api.timeout");
+        pageTest = getBoolean("lichkin.framework.page.test");
+        pageBaseUrl = getString("lichkin.framework.page.baseUrl");
+        pageSuffix = getString("lichkin.framework.page.suffix");
+
         testWebView = getBoolean("lichkin.framework.test.webView");
         testWebViewUrl = getString("lichkin.framework.test.webView.url");
+
+        baseUrl = getString("lichkin.framework.api.baseUrl");
+        timeout = getInteger("lichkin.framework.api.timeout");
         testRetrofit = getBoolean("lichkin.framework.test.retrofit");
+
         newsPositionTop = getBoolean("lichkin.framework.news.image.position.top");
     }
 
