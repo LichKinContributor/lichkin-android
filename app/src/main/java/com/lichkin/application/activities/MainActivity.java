@@ -108,9 +108,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         create = false;
 
         if (LKPropertiesLoader.testWebView) {
-            Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
-            intent.putExtra(LKWebViewActivity.KEY_URL, LKPropertiesLoader.testWebViewUrl);
-            startActivity(intent);
+            LKWebViewActivity.open(MainActivity.this, LKPropertiesLoader.testWebViewUrl);
             return;
         }
 
@@ -193,9 +191,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                     @Override
                     public void call(Context context, DialogInterface dialog) {
                         dlgUpdateClosed = true;
-                        Intent intent = new Intent(MainActivity.this, LKWebViewActivity.class);
-                        intent.putExtra("url", responseDatas.getUrl());
-                        startActivity(intent);
+                        LKWebViewActivity.open(MainActivity.this, responseDatas.getUrl());
                     }
                 });
                 if (forceUpdate) {

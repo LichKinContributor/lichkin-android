@@ -1,7 +1,6 @@
 package com.lichkin.application.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -138,9 +137,7 @@ public class HomeFragment extends Fragment {
                 bannerSection.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        Intent intent = new Intent(getActivity(), LKWebViewActivity.class);
-                        intent.putExtra(LKWebViewActivity.KEY_URL, responseDatas.get(position).getPageUrl());
-                        startActivity(intent);
+                        LKWebViewActivity.open(HomeFragment.this.getActivity(), responseDatas.get(position).getPageUrl());
                     }
                 });
                 //开始轮播
@@ -271,9 +268,7 @@ public class HomeFragment extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), LKWebViewActivity.class);
-                    intent.putExtra(LKWebViewActivity.KEY_URL, news.getUrl());
-                    startActivity(intent);
+                    LKWebViewActivity.open(HomeFragment.this.getActivity(), news.getUrl());
                 }
             });
 
