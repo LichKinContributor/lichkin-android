@@ -184,4 +184,15 @@ public class LKWebViewActivity extends Activity {
         });
     }
 
+    /**
+     * 打开页面
+     * @param from 发起环境上下文
+     * @param to 页面地址
+     */
+    public static void open(Context from, String to) {
+        Intent intent = new Intent(from, LKWebViewActivity.class);
+        intent.putExtra("url", to);
+        from.startActivity(intent);
+    }
+
 }
