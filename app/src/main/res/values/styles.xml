@@ -8,124 +8,24 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="NewsContainerOut">
+    <!-- border text -->
+    <style name="border_text_out">
+        <item name="android:background">@color/colorBorder</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">#01888888</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingBottom">1px</item>
-    </style>
-
-    <style name="NewsContainerIn">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">#FFFFFF</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-    </style>
-
-    <style name="NewsImageContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:paddingTop">3dp</item>
-    </style>
-
-    <style name="NewsImage">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="android:src">@drawable/no_image</item>
-    </style>
-
-    <!-- settings -->
-    <style name="settings_layout">
-        <item name="android:orientation">vertical</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:padding">1px</item>
     </style>
 
-    <style name="settings_layout_text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="settings_layout_image_arrow_right">
-        <item name="android:layout_width">16dp</item>
-        <item name="android:layout_height">16dp</item>
-        <item name="android:src">@drawable/arrow_right</item>
-    </style>
-
-    <style name="settings_layout_splitor_line">
+    <style name="border_text_in">
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
-        <item name="android:background">#01888888</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="settings_layout_common">
-        <item name="android:orientation">horizontal</item>
+    <style name="border_text_input">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item>
-    </style>
-
-    <style name="settings_layout_top" parent="settings_layout_common">
-        <item name="android:background">@drawable/settings_layout_top_selector</item>
-    </style>
-
-    <style name="settings_layout_middle" parent="settings_layout_common">
-        <item name="android:background">@drawable/settings_layout_middle_selector</item>
-    </style>
-
-    <style name="settings_layout_bottom" parent="settings_layout_common">
-        <item name="android:background">@drawable/settings_layout_bottom_selector</item>
-    </style>
-
-    <style name="settings_layout_single" parent="settings_layout_common">
-        <item name="android:background">@drawable/settings_layout_single_selector</item>
-    </style>
-
-    <!-- dynamic buttons -->
-    <style name="dynamic_buttons_out">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-    </style>
-
-    <style name="dynamic_buttons_in">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="dynamic_buttons_button_img">
-        <item name="android:layout_width">45dp</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:scaleType">fitXY</item>
-    </style>
-
-    <style name="dynamic_buttons_button_text">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:includeFontPadding">false</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">start</item>
     </style>
 
 </resources>

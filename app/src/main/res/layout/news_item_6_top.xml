@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/NewsContainerOut">
+    style="@style/news_container_out">
 
-    <LinearLayout style="@style/NewsContainerIn">
+    <LinearLayout style="@style/news_containter_in">
 
-        <LinearLayout style="@style/NewsImageContainer">
+        <LinearLayout style="@style/news_image_container">
 
             <ImageView
                 android:id="@+id/news_image_1"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginRight="5dp" />
 
             <ImageView
                 android:id="@+id/news_image_2"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginLeft="2.5dp"
                 android:layout_marginRight="2.5dp" />
 
             <ImageView
                 android:id="@+id/news_image_3"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginLeft="5dp" />
 
         </LinearLayout>
 
-        <LinearLayout style="@style/NewsImageContainer">
+        <LinearLayout style="@style/news_image_container">
 
             <ImageView
                 android:id="@+id/news_image_4"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginRight="5dp" />
 
             <ImageView
                 android:id="@+id/news_image_5"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginLeft="2.5dp"
                 android:layout_marginRight="2.5dp" />
 
             <ImageView
                 android:id="@+id/news_image_6"
-                style="@style/NewsImage"
+                style="@style/news_image"
                 android:layout_height="66dp"
                 android:layout_marginLeft="5dp" />
 

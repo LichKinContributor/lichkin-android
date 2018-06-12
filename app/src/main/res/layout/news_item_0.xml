@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/NewsContainerOut">
+<LinearLayout style="@style/news_container_out">
 
-    <LinearLayout style="@style/NewsContainerIn">
+    <LinearLayout style="@style/news_containter_in">
 
         <include layout="@layout/news_item_part_title" />
 

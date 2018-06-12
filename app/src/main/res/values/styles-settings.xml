@@ -1,0 +1,69 @@
+<resources>
+
+    <style name="settings_container">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#DDDDDD</item>
+    </style>
+
+    <style name="settings_container_out">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:padding">1px</item>
+    </style>
+
+    <style name="settings_container_in">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
+    <style name="settings_container_in_top" parent="settings_container_in">
+        <item name="android:background">@drawable/settings_layout_top_selector</item>
+    </style>
+
+    <style name="settings_container_in_middle" parent="settings_container_in">
+        <item name="android:background">@drawable/settings_layout_middle_selector</item>
+    </style>
+
+    <style name="settings_container_in_bottom" parent="settings_container_in">
+        <item name="android:background">@drawable/settings_layout_bottom_selector</item>
+    </style>
+
+    <style name="settings_container_in_single" parent="settings_container_in">
+        <item name="android:background">@drawable/settings_layout_single_selector</item>
+    </style>
+
+    <style name="settings_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="settings_image_arrow_right">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:src">@drawable/arrow_right</item>
+    </style>
+
+    <style name="settings_splitor_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#66888888</item>
+    </style>
+
+</resources>
