@@ -27,4 +27,12 @@
     <string name="get_last_app_version_invoke_error">invoke error, please check you internet authority.</string>
     <string name="dlg_tip_title_update">New release to update!</string>
     <string name="btn_positive_name_update">Get</string>
+
+    <string name="title_about_us">About US</string>
+    <string name="title_version_info">Version Info</string>
+    <string name="title_copyright">Copyright</string>
+    <string name="title_licensing">Licensing</string>
+    <string name="title_service_agreement">Service Agreement</string>
+    <string name="title_privacy_right_policy">Privacy Right Policy</string>
+    <string name="title_instruction">Instruction</string>
 </resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F3F6"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/settings_layout">
+
+        <LinearLayout style="@style/settings_layout_single">
+
+            <TextView
+                android:id="@+id/version_info"
+                style="@style/settings_layout_text"
+                android:text="@string/title_version_info" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/settings_layout">
+
+        <LinearLayout style="@style/settings_layout_single">
+
+            <TextView
+                android:id="@+id/about_us"
+                style="@style/settings_layout_text"
+                android:text="@string/title_about_us" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/settings_layout">
+
+        <LinearLayout style="@style/settings_layout_top">
+
+            <TextView
+                android:id="@+id/copyright"
+                style="@style/settings_layout_text"
+                android:text="@string/title_copyright" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+        <View style="@style/settings_layout_splitor_line" />
+
+        <LinearLayout style="@style/settings_layout_middle">
+
+            <TextView
+                android:id="@+id/licensing"
+                style="@style/settings_layout_text"
+                android:text="@string/title_licensing" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/settings_layout_middle">
+
+            <TextView
+                android:id="@+id/service_agreement"
+                style="@style/settings_layout_text"
+                android:text="@string/title_service_agreement" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+        <View style="@style/settings_layout_splitor_line" />
+
+        <LinearLayout style="@style/settings_layout_bottom">
+
+            <TextView
+                android:id="@+id/privacy_right_policy"
+                style="@style/settings_layout_text"
+                android:text="@string/title_privacy_right_policy" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/settings_layout">
+
+        <LinearLayout style="@style/settings_layout_single">
+
+            <TextView
+                android:id="@+id/instruction"
+                style="@style/settings_layout_text"
+                android:text="@string/title_instruction" />
+
+            <ImageView style="@style/settings_layout_image_arrow_right" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

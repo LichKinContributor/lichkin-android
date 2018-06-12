@@ -24,6 +24,8 @@
         </activity>
         <activity android:name="com.lichkin.application.activities.IntroActivity" />
         <activity android:name="com.lichkin.framework.app.android.activities.LKWebViewActivity" />
+
+        <activity android:name="com.lichkin.application.activities.AboutActivity" />
     </application>
 
 </manifest>

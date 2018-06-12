@@ -27,4 +27,12 @@
     <string name="get_last_app_version_invoke_error">请求失败，请检查您的网络链接权限！～</string>
     <string name="dlg_tip_title_update">有新版本可以更新啦！</string>
     <string name="btn_positive_name_update">获取</string>
+
+    <string name="title_about_us">关于我们</string>
+    <string name="title_version_info">版本信息</string>
+    <string name="title_copyright">版权信息</string>
+    <string name="title_licensing">软件许可使用协议</string>
+    <string name="title_service_agreement">服务协议</string>
+    <string name="title_privacy_right_policy">隐私权政策</string>
+    <string name="title_instruction">软件说明</string>
 </resources>
