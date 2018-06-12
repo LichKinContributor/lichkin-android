@@ -15,17 +15,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.MainActivity">
+
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lichkin.application.activities.IntroActivity" />
-        <activity android:name="com.lichkin.framework.app.android.activities.LKWebViewActivity" />
 
-        <activity android:name="com.lichkin.application.activities.AboutActivity" />
+        <activity
+            android:name="com.lichkin.application.activities.IntroActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lichkin.framework.app.android.activities.LKWebViewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lichkin.application.activities.AboutActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
