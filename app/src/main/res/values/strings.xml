@@ -1,16 +1,17 @@
 <resources>
-    <string name="error_INTERNAL_SERVER_ERROR">internal server error.</string>
-    <string name="error_NOT_FOUND">not found url.</string>
-    <string name="error_CONFIG_ERROR">config error.</string>
-    <string name="error_PARAM_ERROR">param error.</string>
-    <string name="error_DB_VALIDATE_ERROR">param error.</string>
+    <string name="error_INTERNAL_SERVER_ERROR">internal server error!</string>
+    <string name="error_NOT_FOUND">not found url!</string>
+    <string name="error_CONFIG_ERROR">config error!</string>
+    <string name="error_PARAM_ERROR">param error!</string>
+    <string name="error_DB_VALIDATE_ERROR">param error!</string>
 
     <string name="invoke_success">invoke success.</string>
-    <string name="invoke_error">invoke error.</string>
-    <string name="response_error">response error.</string>
-    <string name="internet_auth_not_granted">Please check you internet authority.</string>
-    <string name="invoke_timeout">invoke timeout, please wait.</string>
-    <string name="invoke_no_more_data">No more data.</string>
+    <string name="invoke_error">invoke error!</string>
+    <string name="response_error">response error!</string>
+    <string name="internet_auth_not_granted">Please check you internet authority!</string>
+    <string name="invoke_timeout">invoke timeout, please wait!</string>
+    <string name="invoke_no_more_data">No more data!</string>
+    <string name="not_implemented">Please wait for surprise!</string>
 
     <string name="app_name">LichKin</string>
     <string name="title_navigation_menu_home">Home</string>
@@ -19,12 +20,11 @@
     <string name="title_navigation_menu_2">Menu2</string>
     <string name="title_navigation_menu_3">Menu3</string>
 
-    <string name="get_last_app_version_invoke_error">invoke error, please check you internet authority.</string>
-
     <string name="dlg_tip_title">Tip</string>
     <string name="btn_positive_name">OK</string>
     <string name="btn_negative_name">Cancel</string>
 
+    <string name="get_last_app_version_invoke_error">invoke error, please check you internet authority.</string>
     <string name="dlg_tip_title_update">New release to update!</string>
     <string name="btn_positive_name_update">Get</string>
 </resources>

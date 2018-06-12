@@ -1,16 +1,17 @@
 <resources>
-    <string name="error_INTERNAL_SERVER_ERROR">服务器未捕获异常</string>
-    <string name="error_NOT_FOUND">未找到请求地址</string>
-    <string name="error_CONFIG_ERROR">配置错误</string>
-    <string name="error_PARAM_ERROR">参数错误</string>
-    <string name="error_DB_VALIDATE_ERROR">参数错误</string>
+    <string name="error_INTERNAL_SERVER_ERROR">服务器未捕获异常！～</string>
+    <string name="error_NOT_FOUND">未找到请求地址！～</string>
+    <string name="error_CONFIG_ERROR">配置错误！～</string>
+    <string name="error_PARAM_ERROR">参数错误！～</string>
+    <string name="error_DB_VALIDATE_ERROR">参数错误！～</string>
 
-    <string name="invoke_success">请求成功。</string>
-    <string name="invoke_error">请求失败。</string>
-    <string name="response_error">响应内容不正确。</string>
-    <string name="internet_auth_not_granted">请检查您的网络链接权限。</string>
-    <string name="invoke_timeout">链接超时，请稍后再试。</string>
-    <string name="invoke_no_more_data">没有更多数据</string>
+    <string name="invoke_success">请求成功</string>
+    <string name="invoke_error">请求失败！～</string>
+    <string name="response_error">响应内容不正确！～</string>
+    <string name="internet_auth_not_granted">请检查您的网络链接权限！～</string>
+    <string name="invoke_timeout">链接超时，请稍后再试！～</string>
+    <string name="invoke_no_more_data">没有更多数据！～</string>
+    <string name="not_implemented">敬请期待！～</string>
 
     <string name="app_name">鑫宏利业</string>
     <string name="title_navigation_menu_home">主页</string>
@@ -19,12 +20,11 @@
     <string name="title_navigation_menu_2">菜单2</string>
     <string name="title_navigation_menu_3">菜单3</string>
 
-    <string name="get_last_app_version_invoke_error">请求失败，请检查您的网络链接权限。</string>
-
     <string name="dlg_tip_title">提示</string>
     <string name="btn_positive_name">确定</string>
     <string name="btn_negative_name">取消</string>
 
+    <string name="get_last_app_version_invoke_error">请求失败，请检查您的网络链接权限！～</string>
     <string name="dlg_tip_title_update">有新版本可以更新啦！</string>
     <string name="btn_positive_name_update">获取</string>
 </resources>
