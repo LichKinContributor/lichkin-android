@@ -10,4 +10,7 @@
     <color name="colorProgressStart">#999933</color>
     <color name="colorProgressCenter">#339977</color>
     <color name="colorProgressEnd">#88bb66</color>
+
+    <color name="color_settings_layout_select">#3F51B5</color>
+    <color name="color_settings_layout_unselect">#FFFFFF</color>
 </resources>
