@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.lichkin.app.android.demo.R;
+import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.LKCallJsFuncCallback;
 import com.lichkin.framework.app.android.utils.LKLog;
@@ -26,6 +27,9 @@ import com.lichkin.framework.defines.beans.LKToastBean;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * HTML交互实现类
  * @author SuZhou LichKin Information Technology Co., Ltd.
@@ -33,7 +37,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 public class LKWebViewActivity extends Activity {
 
     /** 页面地址键 */
-    public static final String KEY_URL = "url";
+    private static final String KEY_URL = "url";
 
     /** JsBridge对象 */
     private LKProgressBridgeWebView webView;
@@ -190,8 +194,43 @@ public class LKWebViewActivity extends Activity {
      * @param to 页面地址
      */
     public static void open(Context from, String to) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("appKey", LKAndroidStatics.appKey());
+        params.put("clientType", "ANDROID");
+        params.put("versionX", LKAndroidStatics.versionX());
+        params.put("versionY", LKAndroidStatics.versionY());
+        params.put("versionZ", LKAndroidStatics.versionZ());
+        params.put("token", LKAndroidStatics.token());
+        params.put("uuid", LKAndroidStatics.uuid());
+        params.put("screenWidth", LKAndroidStatics.screenWidth());
+        params.put("screenHeight", LKAndroidStatics.screenHeight());
+        open(from, to, params);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起环境上下文
+     * @param to 页面地址
+     * @param params 参数
+     */
+    public static void open(Context from, String to, Map<String, Object> params) {
         Intent intent = new Intent(from, LKWebViewActivity.class);
-        intent.putExtra("url", to);
+        StringBuilder sb = new StringBuilder(to);
+        if (params != null) {
+            boolean first = !to.contains("?");
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                if (first) {
+                    sb.append("?");
+                    first = false;
+                } else {
+                    sb.append("&");
+                }
+                sb.append(key).append("=").append(value == null ? "" : value.toString());
+            }
+        }
+        intent.putExtra(KEY_URL, sb.toString());
         from.startActivity(intent);
     }
 
