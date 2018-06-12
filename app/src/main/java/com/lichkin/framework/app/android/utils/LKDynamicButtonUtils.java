@@ -2,7 +2,6 @@ package com.lichkin.framework.app.android.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +29,14 @@ public class LKDynamicButtonUtils {
 
     /**
      * 初始化按钮栏
-     * @param fragment 填充按钮的页面对象
      * @param container 填充按钮的具体布局对象
      * @param btns 按钮列表
      * @param divide 每行展现的按钮数量
      * @param aspectRatio 按钮的宽高比
      */
-    public static void inflate(final Fragment fragment, final ViewGroup container, final List<LKDynamicButton> btns, final int divide, final float aspectRatio) {
+    public static void inflate(final ViewGroup container, final List<LKDynamicButton> btns, final int divide, final float aspectRatio) {
         final Context context = container.getContext();
-        final LayoutInflater inflater = fragment.getLayoutInflater();
+        final LayoutInflater inflater = LKAndroidUtils.getLayoutInflater();
 
         final int screenWidth = LKAndroidUtils.getScreenDispaly().getWidth(); // 取屏幕宽度
         final int leftRightMargin = screenWidth / 32; // 左右边距，将屏幕分成32份，留边。

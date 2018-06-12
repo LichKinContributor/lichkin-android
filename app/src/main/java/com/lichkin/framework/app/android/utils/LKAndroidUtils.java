@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 import com.lichkin.framework.app.android.LKApplication;
@@ -82,6 +83,10 @@ public class LKAndroidUtils {
         final DisplayMetrics dm = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(dm);
         return new LKScreen(dm.widthPixels, dm.heightPixels);
+    }
+
+    public static LayoutInflater getLayoutInflater() {
+        return (LayoutInflater) LKApplication.getInstance().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
 }
