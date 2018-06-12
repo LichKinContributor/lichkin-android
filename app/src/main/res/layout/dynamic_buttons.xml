@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dynamic_buttons_out"
+    style="@style/dynamic_buttons_out">
+
+    <LinearLayout
+        android:id="@+id/dynamic_buttons_in"
+        style="@style/dynamic_buttons_in">
+
+        <ImageView
+            android:id="@+id/dynamic_buttons_button_img"
+            style="@style/dynamic_buttons_button_img" />
+
+        <TextView
+            android:id="@+id/dynamic_buttons_button_text"
+            style="@style/dynamic_buttons_button_text" />
+
+    </LinearLayout>
+
+</FrameLayout>
