@@ -1,9 +1,13 @@
 package com.lichkin.framework.app.android.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.lichkin.framework.app.android.LKApplication;
+import com.lichkin.framework.app.android.beans.LKScreen;
 
 import java.util.Locale;
 
@@ -63,6 +67,21 @@ public class LKAndroidUtils {
     public static float getStatusBarHeight() {
         Resources resources = getResources();
         return resources.getDimension(resources.getIdentifier("status_bar_height", "dimen", "android"));
+    }
+
+    /**
+     * 获取屏幕分辨率
+     * @return 屏幕分辨率
+     */
+    public static LKScreen getScreenDispaly() {
+        WindowManager windowManager = (WindowManager) LKApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+        if (windowManager == null) {
+            return new LKScreen(1080, 1920);
+        }
+
+        final DisplayMetrics dm = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        return new LKScreen(dm.widthPixels, dm.heightPixels);
     }
 
 }
