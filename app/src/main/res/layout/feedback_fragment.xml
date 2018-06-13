@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/form_container_out">
+
+    <LinearLayout style="@style/form_container_in">
+
+        <LinearLayout style="@style/input_container">
+
+            <TextView
+                style="@style/input_text"
+                android:text="@string/feedback_content_text" />
+
+            <EditText
+                android:id="@+id/content"
+                style="@style/input_input"
+                android:hint="@string/feedback_content_hint"
+                android:inputType="text"
+                android:maxLength="1024" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/form_button_container">
+
+        <Button
+            android:id="@+id/btn"
+            style="@style/button_button"
+            android:text="@string/btn_positive_name_submit" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -12,6 +12,7 @@
     <string name="invoke_timeout">链接超时，请稍后再试！～</string>
     <string name="invoke_no_more_data">没有更多数据！～</string>
     <string name="not_implemented">敬请期待！～</string>
+    <string name="not_empty">还没有输入信息！～</string>
 
     <string name="app_name">鑫宏利业</string>
     <string name="title_navigation_menu_home">主页</string>
@@ -43,4 +44,9 @@
     <string name="score_content_text">内容:</string>
     <string name="score_content_hint">内容&#8230;</string>
     <string name="score_result">感谢您的评价</string>
+
+    <string name="title_feedback">意见反馈</string>
+    <string name="feedback_content_text">内容:</string>
+    <string name="feedback_content_hint">内容&#8230;</string>
+    <string name="feedback_result">感谢您的宝贵意见</string>
 </resources>

@@ -12,6 +12,7 @@
     <string name="invoke_timeout">invoke timeout, please wait!</string>
     <string name="invoke_no_more_data">No more data!</string>
     <string name="not_implemented">Please wait for surprise!</string>
+    <string name="not_empty">can not empty!</string>
 
     <string name="app_name">LichKin</string>
     <string name="title_navigation_menu_home">Home</string>
@@ -43,4 +44,9 @@
     <string name="score_content_text">Content:</string>
     <string name="score_content_hint">Content&#8230;</string>
     <string name="score_result">Thanks for your comments</string>
+
+    <string name="title_feedback">feedback</string>
+    <string name="feedback_content_text">Content:</string>
+    <string name="feedback_content_hint">Content&#8230;</string>
+    <string name="feedback_result">Thanks for your comments</string>
 </resources>
