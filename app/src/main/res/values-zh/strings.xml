@@ -49,4 +49,6 @@
     <string name="feedback_content_text">内容:</string>
     <string name="feedback_content_hint">内容&#8230;</string>
     <string name="feedback_result">感谢您的宝贵意见</string>
+
+    <string name="title_about">关于</string>
 </resources>

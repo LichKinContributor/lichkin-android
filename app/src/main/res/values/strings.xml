@@ -49,4 +49,6 @@
     <string name="feedback_content_text">Content:</string>
     <string name="feedback_content_hint">Content&#8230;</string>
     <string name="feedback_result">Thanks for your comments</string>
+
+    <string name="title_about">about</string>
 </resources>
