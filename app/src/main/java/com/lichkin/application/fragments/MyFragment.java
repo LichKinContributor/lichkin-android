@@ -32,6 +32,7 @@ public class MyFragment extends Fragment {
 
         //初始化按钮栏
         List<LKDynamicButton> btns = new ArrayList<>();
+        btns.add(new LKDynamicButton(R.drawable.btn_security_center, R.string.title_security_center));
         btns.add(new LKDynamicButton(R.drawable.btn_score, R.string.title_score, new ScoreFragment(), getFragmentManager()));
         btns.add(new LKDynamicButton(R.drawable.btn_feedback, R.string.title_feedback, new FeedbackFragment(), getFragmentManager()));
         btns.add(new LKDynamicButton(R.drawable.btn_about, R.string.title_about, AboutActivity.class));
