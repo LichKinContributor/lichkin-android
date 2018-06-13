@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 
@@ -71,6 +72,32 @@ public class LKAndroidUtils {
     }
 
     /**
+     * 获取屏幕像素比例
+     * @return 屏幕像素比例
+     */
+    public static float getDpToPxRatio() {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
+    }
+
+    /**
+     * 根据dp值获取px值
+     * @param dp dp值
+     * @return px值
+     */
+    public static int getPxValueByDpValue(final int dp) {
+        return (int) (getDpToPxRatio() * dp + 0.5f);
+    }
+
+    /**
+     * 根据px值获取dp值
+     * @param px px值
+     * @return dp值
+     */
+    public static int getDpValueByPxValue(final int px) {
+        return (int) (px / getDpToPxRatio() + 0.5f);
+    }
+
+    /**
      * 获取屏幕分辨率
      * @return 屏幕分辨率
      */
@@ -85,6 +112,10 @@ public class LKAndroidUtils {
         return new LKScreen(dm.widthPixels, dm.heightPixels);
     }
 
+    /**
+     * 获取布局填充器
+     * @return 布局填充器
+     */
     public static LayoutInflater getLayoutInflater() {
         return (LayoutInflater) LKApplication.getInstance().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
