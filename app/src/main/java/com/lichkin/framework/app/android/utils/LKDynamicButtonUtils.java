@@ -2,6 +2,7 @@ package com.lichkin.framework.app.android.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,12 @@ public class LKDynamicButtonUtils {
                 public void onClick(final View v) {
                     Class<?> activityClass = button.getToActivityClass();
                     if (activityClass == null) {
-                        LKToast.showTip(R.string.not_implemented);
+                        DialogFragment dialogFragment = button.getDialogFragment();
+                        if (dialogFragment == null) {
+                            LKToast.showTip(R.string.not_implemented);
+                            return;
+                        }
+                        dialogFragment.show(button.getFragmentManager(), dialogFragment.getTag());
                         return;
                     }
                     if (activityClass.equals(LKWebViewActivity.class)) {
