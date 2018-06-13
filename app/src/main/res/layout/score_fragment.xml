@@ -30,7 +30,8 @@
                 android:id="@+id/title"
                 style="@style/input_input"
                 android:hint="@string/score_title_hint"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="32" />
 
         </LinearLayout>
 
@@ -44,7 +45,8 @@
                 android:id="@+id/content"
                 style="@style/input_input"
                 android:hint="@string/score_content_hint"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="1024" />
 
         </LinearLayout>
 
