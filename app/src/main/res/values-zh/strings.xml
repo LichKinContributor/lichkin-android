@@ -22,6 +22,7 @@
 
     <string name="dlg_tip_title">提示</string>
     <string name="btn_positive_name">确定</string>
+    <string name="btn_positive_name_submit">提交</string>
     <string name="btn_negative_name">取消</string>
 
     <string name="get_last_app_version_invoke_error">请求失败，请检查您的网络链接权限！～</string>
@@ -35,4 +36,11 @@
     <string name="title_service_agreement">服务协议</string>
     <string name="title_privacy_right_policy">隐私权政策</string>
     <string name="title_instruction">软件说明</string>
+
+    <string name="title_score">评分</string>
+    <string name="score_title_text">标题:</string>
+    <string name="score_title_hint">标题&#8230;</string>
+    <string name="score_content_text">内容:</string>
+    <string name="score_content_hint">内容&#8230;</string>
+    <string name="score_result">感谢您的评价</string>
 </resources>

@@ -22,6 +22,7 @@
 
     <string name="dlg_tip_title">Tip</string>
     <string name="btn_positive_name">OK</string>
+    <string name="btn_positive_name_submit">Submit</string>
     <string name="btn_negative_name">Cancel</string>
 
     <string name="get_last_app_version_invoke_error">invoke error, please check you internet authority.</string>
@@ -35,4 +36,11 @@
     <string name="title_service_agreement">Service Agreement</string>
     <string name="title_privacy_right_policy">Privacy Right Policy</string>
     <string name="title_instruction">Instruction</string>
+
+    <string name="title_score">score</string>
+    <string name="score_title_text">Title:</string>
+    <string name="score_title_hint">Title&#8230;</string>
+    <string name="score_content_text">Content:</string>
+    <string name="score_content_hint">Content&#8230;</string>
+    <string name="score_result">Thanks for your comments</string>
 </resources>
