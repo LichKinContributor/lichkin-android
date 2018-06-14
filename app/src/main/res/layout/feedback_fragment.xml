@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/form_container_out">
 
     <LinearLayout style="@style/form_container_in">
@@ -16,6 +17,17 @@
                 android:hint="@string/feedback_content_hint"
                 android:inputType="text"
                 android:maxLength="1024" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/input_container">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/no_image" />
 
         </LinearLayout>
 

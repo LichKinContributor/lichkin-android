@@ -13,6 +13,7 @@
     <string name="invoke_no_more_data">没有更多数据！～</string>
     <string name="not_implemented">敬请期待！～</string>
     <string name="not_empty">还没有输入信息！～</string>
+    <string name="can_not_use_storage">请检查您的存储读写权限！～</string>
 
     <string name="app_name">鑫宏利业</string>
     <string name="title_navigation_menu_home">主页</string>
@@ -49,6 +50,9 @@
     <string name="feedback_content_text">内容:</string>
     <string name="feedback_content_hint">内容&#8230;</string>
     <string name="feedback_result">感谢您的宝贵意见</string>
+    <string name="feedback_choose_title">如何选择图片？</string>
+    <string name="btn_positive_name_gallery">相册</string>
+    <string name="btn_negative_name_camera">拍照</string>
 
     <string name="title_about">关于</string>
 
