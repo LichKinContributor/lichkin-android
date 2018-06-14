@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.lichkin.app.android.demo.R;
@@ -31,6 +32,8 @@ public class FeedbackFragment extends DialogFragment {
 
     /** 内容 */
     private EditText contentView;
+    /**  按钮*/
+    private Button buttonView;
 
     @Override
     public void onStart() {
@@ -54,9 +57,11 @@ public class FeedbackFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.feedback_fragment, container);
 
         contentView = view.findViewById(R.id.content);
-        view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        buttonView = view.findViewById(R.id.btn);
+        buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonView.setEnabled(false);
                 if ("".equals(contentView.getText().toString().trim())) {
                     LKToast.showTip(R.string.not_empty);
                     contentView.setFocusable(true);
@@ -73,6 +78,7 @@ public class FeedbackFragment extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         contentView.setText("");
+        buttonView.setEnabled(true);
     }
 
     /**

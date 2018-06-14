@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.lichkin.app.android.demo.R;
@@ -33,6 +34,8 @@ public class ScoreFragment extends DialogFragment {
     private EditText titleView;
     /** 内容 */
     private EditText contentView;
+    /**  按钮*/
+    private Button buttonView;
 
     @Override
     public void onStart() {
@@ -58,9 +61,11 @@ public class ScoreFragment extends DialogFragment {
         scoreView = view.findViewById(R.id.score);
         titleView = view.findViewById(R.id.title);
         contentView = view.findViewById(R.id.content);
-        view.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        buttonView = view.findViewById(R.id.btn);
+        buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonView.setEnabled(false);
                 invokeScore();
             }
         });
@@ -74,6 +79,7 @@ public class ScoreFragment extends DialogFragment {
         scoreView.setRating(5.0f);
         titleView.setText("");
         contentView.setText("");
+        buttonView.setEnabled(true);
     }
 
     /**
