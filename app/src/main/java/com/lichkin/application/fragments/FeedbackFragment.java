@@ -27,6 +27,7 @@ import com.lichkin.framework.app.android.beans.LKScreen;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
+import com.lichkin.framework.app.android.utils.LKBase64;
 import com.lichkin.framework.app.android.utils.LKImageLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
@@ -135,7 +136,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
      */
     private void invokeFeedback() {
         //请求参数
-        FeedbackIn in = new FeedbackIn(contentView.getText().toString());
+        FeedbackIn in = new FeedbackIn(contentView.getText().toString(), imgBase64);
 
         //创建请求对象
         final LKRetrofit<FeedbackIn, FeedbackOut> retrofit = new LKRetrofit<>(this.getActivity(), FeedbackInvoker.class);
@@ -176,6 +177,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
     private String imgDir = Environment.getExternalStorageDirectory() + "/temp";
+    private String imgBase64;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -219,7 +221,9 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
 
     @Override
     public void takeSuccess(TResult result) {
-        LKImageLoader.load("file:///" + result.getImages().get(0).getCompressPath(), imageView);
+        String imgPath = "file:///" + result.getImages().get(0).getCompressPath();
+        imgBase64 = LKBase64.toBase64(imgPath);
+        LKImageLoader.load(imgPath, imageView);
     }
 
     @Override
