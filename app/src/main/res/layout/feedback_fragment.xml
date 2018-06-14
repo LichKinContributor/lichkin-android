@@ -22,12 +22,16 @@
 
         <LinearLayout style="@style/input_container">
 
+            <TextView
+                style="@style/input_text"
+                android:text="@string/feedback_image_text" />
+
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/no_image" />
+                app:srcCompat="@drawable/add_image" />
 
         </LinearLayout>
 
