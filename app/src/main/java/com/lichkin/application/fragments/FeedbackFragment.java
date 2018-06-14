@@ -23,6 +23,7 @@ import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
+import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 
 /**
  * 反馈
@@ -32,7 +33,7 @@ public class FeedbackFragment extends DialogFragment {
 
     /** 内容 */
     private EditText contentView;
-    /**  按钮*/
+    /** 按钮 */
     private Button buttonView;
 
     @Override
@@ -65,6 +66,7 @@ public class FeedbackFragment extends DialogFragment {
                 if ("".equals(contentView.getText().toString().trim())) {
                     LKToast.showTip(R.string.not_empty);
                     contentView.setFocusable(true);
+                    buttonView.setEnabled(true);
                     return;
                 }
                 invokeFeedback();
@@ -101,6 +103,24 @@ public class FeedbackFragment extends DialogFragment {
             protected void success(Context context, FeedbackIn FeedbackIn, FeedbackOut responseDatas) {
                 LKToast.showTip(R.string.feedback_result);
                 FeedbackFragment.this.dismiss();
+            }
+
+            @Override
+            protected void busError(Context context, FeedbackIn feedbackIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                super.busError(context, feedbackIn, errorCode, errorType, errorBean);
+                buttonView.setEnabled(true);
+            }
+
+            @Override
+            public void connectError(Context context, String requestId, FeedbackIn feedbackIn, DialogInterface dialog) {
+                super.connectError(context, requestId, feedbackIn, dialog);
+                buttonView.setEnabled(true);
+            }
+
+            @Override
+            public void timeoutError(Context context, String requestId, FeedbackIn feedbackIn, DialogInterface dialog) {
+                super.timeoutError(context, requestId, feedbackIn, dialog);
+                buttonView.setEnabled(true);
             }
 
         });

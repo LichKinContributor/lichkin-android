@@ -23,6 +23,7 @@ import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
+import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
@@ -34,7 +35,7 @@ public class ScoreFragment extends DialogFragment {
     private EditText titleView;
     /** 内容 */
     private EditText contentView;
-    /**  按钮*/
+    /** 按钮 */
     private Button buttonView;
 
     @Override
@@ -102,6 +103,24 @@ public class ScoreFragment extends DialogFragment {
             protected void success(Context context, ScoreIn scoreIn, ScoreOut responseDatas) {
                 LKToast.showTip(R.string.score_result);
                 ScoreFragment.this.dismiss();
+            }
+
+            @Override
+            protected void busError(Context context, ScoreIn scoreIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                super.busError(context, scoreIn, errorCode, errorType, errorBean);
+                buttonView.setEnabled(true);
+            }
+
+            @Override
+            public void connectError(Context context, String requestId, ScoreIn scoreIn, DialogInterface dialog) {
+                super.connectError(context, requestId, scoreIn, dialog);
+                buttonView.setEnabled(true);
+            }
+
+            @Override
+            public void timeoutError(Context context, String requestId, ScoreIn scoreIn, DialogInterface dialog) {
+                super.timeoutError(context, requestId, scoreIn, dialog);
+                buttonView.setEnabled(true);
             }
 
         });
