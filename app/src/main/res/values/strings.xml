@@ -49,6 +49,7 @@
     <string name="title_feedback">feedback</string>
     <string name="feedback_content_text">Content:</string>
     <string name="feedback_content_hint">Content&#8230;</string>
+    <string name="feedback_image_text">Select a Picture:</string>
     <string name="feedback_result">Thanks for your comments</string>
     <string name="feedback_choose_title">How to choose picture</string>
     <string name="btn_positive_name_gallery">From Gallery</string>

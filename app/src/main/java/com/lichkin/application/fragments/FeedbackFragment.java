@@ -111,7 +111,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         LKScreen screen = LKAndroidUtils.getScreenDispaly();
         layoutParams.width = screen.getWidth() * 85 / 100;
-        layoutParams.height = LKAndroidUtils.getPxValueByDpValue(445);
+        layoutParams.height = LKAndroidUtils.getPxValueByDpValue(475);
         window.setAttributes(layoutParams);
     }
 
