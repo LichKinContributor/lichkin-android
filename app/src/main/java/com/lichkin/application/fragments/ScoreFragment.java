@@ -25,18 +25,33 @@ import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class ScoreFragment extends DialogFragment {
 
+    private Unbinder unbinder;
     /** 评分 */
-    private MaterialRatingBar scoreView;
+    @BindView(R.id.score)
+    MaterialRatingBar scoreView;
     /** 标题 */
-    private EditText titleView;
+    @BindView(R.id.title)
+    EditText titleView;
     /** 内容 */
-    private EditText contentView;
+    @BindView(R.id.content)
+    EditText contentView;
     /** 按钮 */
-    private Button buttonView;
+    @BindView(R.id.btn)
+    Button buttonView;
+
+    @OnClick(R.id.btn)
+    void btnClick() {
+        buttonView.setEnabled(false);
+        invokeScore();
+    }
 
     @Override
     public void onStart() {
@@ -59,17 +74,7 @@ public class ScoreFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.score_fragment, container);
 
-        scoreView = view.findViewById(R.id.score);
-        titleView = view.findViewById(R.id.title);
-        contentView = view.findViewById(R.id.content);
-        buttonView = view.findViewById(R.id.btn);
-        buttonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonView.setEnabled(false);
-                invokeScore();
-            }
-        });
+        unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
@@ -82,6 +87,13 @@ public class ScoreFragment extends DialogFragment {
         contentView.setText("");
         buttonView.setEnabled(true);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
 
     /**
      * 请求评分
