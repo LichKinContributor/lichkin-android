@@ -131,6 +131,12 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
         buttonView.setEnabled(true);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
     /**
      * 请求反馈
      */
