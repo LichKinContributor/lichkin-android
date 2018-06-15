@@ -24,6 +24,7 @@ import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
+/**
+ * 评分
+ * @author SuZhou LichKin Information Technology Co., Ltd.
+ */
 public class ScoreFragment extends DialogFragment {
 
     private Unbinder unbinder;
@@ -43,13 +48,16 @@ public class ScoreFragment extends DialogFragment {
     /** 内容 */
     @BindView(R.id.content)
     EditText contentView;
+    /** 加载 */
+    @BindView(R.id.loading)
+    AVLoadingIndicatorView loadingView;
     /** 按钮 */
     @BindView(R.id.btn)
     Button buttonView;
 
+    /** 按钮事件 */
     @OnClick(R.id.btn)
     void btnClick() {
-        buttonView.setEnabled(false);
         invokeScore();
     }
 
@@ -99,6 +107,8 @@ public class ScoreFragment extends DialogFragment {
      * 请求评分
      */
     private void invokeScore() {
+        beforeInvokeScore();
+
         //请求参数
         ScoreIn in = new ScoreIn((byte) scoreView.getRating(), titleView.getText().toString(), contentView.getText().toString());
 
@@ -114,28 +124,45 @@ public class ScoreFragment extends DialogFragment {
             @Override
             protected void success(Context context, ScoreIn scoreIn, ScoreOut responseDatas) {
                 LKToast.showTip(R.string.score_result);
+                afterInvokeScore();
                 ScoreFragment.this.dismiss();
             }
 
             @Override
             protected void busError(Context context, ScoreIn scoreIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
                 super.busError(context, scoreIn, errorCode, errorType, errorBean);
-                buttonView.setEnabled(true);
+                afterInvokeScore();
             }
 
             @Override
             public void connectError(Context context, String requestId, ScoreIn scoreIn, DialogInterface dialog) {
                 super.connectError(context, requestId, scoreIn, dialog);
-                buttonView.setEnabled(true);
+                afterInvokeScore();
             }
 
             @Override
             public void timeoutError(Context context, String requestId, ScoreIn scoreIn, DialogInterface dialog) {
                 super.timeoutError(context, requestId, scoreIn, dialog);
-                buttonView.setEnabled(true);
+                afterInvokeScore();
             }
 
         });
+    }
+
+    /**
+     * 开始请求评分
+     */
+    private void beforeInvokeScore() {
+        buttonView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 结束请求评分
+     */
+    private void afterInvokeScore() {
+        buttonView.setVisibility(View.VISIBLE);
+        loadingView.setVisibility(View.GONE);
     }
 
 }
