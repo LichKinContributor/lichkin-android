@@ -33,6 +33,7 @@ import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.app.android.widgets.LKDialog;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoImpl;
@@ -63,6 +64,9 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
     /** 内容 */
     @BindView(R.id.content)
     EditText contentView;
+    /** 加载 */
+    @BindView(R.id.loading)
+    AVLoadingIndicatorView loadingView;
     /** 图片 */
     @BindView(R.id.img)
     ImageView imageView;
@@ -121,7 +125,6 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         contentView.setText("");
-        buttonView.setEnabled(true);
     }
 
     @Override
@@ -134,15 +137,14 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
      * 请求反馈
      */
     private void invokeFeedback() {
-        //禁用按钮
-        buttonView.setEnabled(false);
+        beforeInvokeFeedback();
 
         //校验内容
         String content = contentView.getText().toString().trim();
         if ("".equals(content)) {
             LKToast.showTip(R.string.not_empty);
             contentView.setFocusable(true);
-            buttonView.setEnabled(true);
+            afterInvokeFeedback();
             return;
         }
 
@@ -161,28 +163,45 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
             @Override
             protected void success(Context context, FeedbackIn FeedbackIn, FeedbackOut responseDatas) {
                 LKToast.showTip(R.string.feedback_result);
+                afterInvokeFeedback();
                 FeedbackFragment.this.dismiss();
             }
 
             @Override
             protected void busError(Context context, FeedbackIn feedbackIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
                 super.busError(context, feedbackIn, errorCode, errorType, errorBean);
-                buttonView.setEnabled(true);
+                afterInvokeFeedback();
             }
 
             @Override
             public void connectError(Context context, String requestId, FeedbackIn feedbackIn, DialogInterface dialog) {
                 super.connectError(context, requestId, feedbackIn, dialog);
-                buttonView.setEnabled(true);
+                afterInvokeFeedback();
             }
 
             @Override
             public void timeoutError(Context context, String requestId, FeedbackIn feedbackIn, DialogInterface dialog) {
                 super.timeoutError(context, requestId, feedbackIn, dialog);
-                buttonView.setEnabled(true);
+                afterInvokeFeedback();
             }
 
         });
+    }
+
+    /**
+     * 开始请求反馈
+     */
+    private void beforeInvokeFeedback() {
+        buttonView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 结束请求反馈
+     */
+    private void afterInvokeFeedback() {
+        buttonView.setVisibility(View.VISIBLE);
+        loadingView.setVisibility(View.GONE);
     }
 
     private InvokeParam invokeParam;

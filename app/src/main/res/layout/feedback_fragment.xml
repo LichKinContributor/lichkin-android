@@ -44,6 +44,15 @@
             style="@style/button_button"
             android:text="@string/btn_positive_name_submit" />
 
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/loading"
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="BallClipRotateIndicator" />
+
     </LinearLayout>
 
 </RelativeLayout>
