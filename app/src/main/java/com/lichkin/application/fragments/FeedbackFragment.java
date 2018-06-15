@@ -88,13 +88,6 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
 
     @OnClick(R.id.btn)
     void btnClick() {
-        buttonView.setEnabled(false);
-        if ("".equals(contentView.getText().toString().trim())) {
-            LKToast.showTip(R.string.not_empty);
-            contentView.setFocusable(true);
-            buttonView.setEnabled(true);
-            return;
-        }
         invokeFeedback();
     }
 
@@ -141,8 +134,20 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
      * 请求反馈
      */
     private void invokeFeedback() {
+        //禁用按钮
+        buttonView.setEnabled(false);
+
+        //校验内容
+        String content = contentView.getText().toString().trim();
+        if ("".equals(content)) {
+            LKToast.showTip(R.string.not_empty);
+            contentView.setFocusable(true);
+            buttonView.setEnabled(true);
+            return;
+        }
+
         //请求参数
-        FeedbackIn in = new FeedbackIn(contentView.getText().toString(), imgBase64);
+        FeedbackIn in = new FeedbackIn(content, imgBase64);
 
         //创建请求对象
         final LKRetrofit<FeedbackIn, FeedbackOut> retrofit = new LKRetrofit<>(this.getActivity(), FeedbackInvoker.class);

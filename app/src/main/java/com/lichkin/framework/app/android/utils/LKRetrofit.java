@@ -2,6 +2,7 @@ package com.lichkin.framework.app.android.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.lichkin.app.android.demo.R;
@@ -71,11 +72,16 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
      * @param in 请求参数
      * @param callback 回调方法
      */
-    public void callSync(In in, LKInvokeCallback<In, Out> callback) {
+    public void callSync(final In in, final LKInvokeCallback<In, Out> callback) {
         LKLog.i(String.format("callSync -> requestId[%s] -> requestDatas[%s]", requestId, in.toString()));
 
         if (LKPropertiesLoader.testRetrofit) {
-            handleResponse(requestId, in, callback, getTestResponseBean());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handleResponse(requestId, in, callback, getTestResponseBean());
+                }
+            }, 1000);
             return;
         }
 
@@ -106,7 +112,12 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
         LKLog.i(String.format("callAsync -> requestId[%s] -> requestDatas[%s]", requestId, in.toString()));
 
         if (LKPropertiesLoader.testRetrofit) {
-            handleResponse(requestId, in, callback, getTestResponseBean());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handleResponse(requestId, in, callback, getTestResponseBean());
+                }
+            }, 1000);
             return;
         }
 

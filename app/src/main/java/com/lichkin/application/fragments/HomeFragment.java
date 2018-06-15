@@ -343,18 +343,8 @@ public class HomeFragment extends Fragment {
                 newsList.clear();
                 //更新列表状态
                 adapter.notifyDataSetChanged();
-                if (LKPropertiesLoader.testRetrofit) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //请求新闻数据
-                            invokeGetNewsPage();
-                        }
-                    }, 1000);
-                } else {
-                    //请求新闻数据
-                    invokeGetNewsPage();
-                }
+                //请求新闻数据
+                invokeGetNewsPage();
             }
 
             @Override
@@ -370,18 +360,8 @@ public class HomeFragment extends Fragment {
                     }, 500);
                     return;
                 }
-                if (LKPropertiesLoader.testRetrofit) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //请求新闻数据
-                            invokeGetNewsPage();
-                        }
-                    }, 1000);
-                } else {
-                    //请求新闻数据
-                    invokeGetNewsPage();
-                }
+                //请求新闻数据
+                invokeGetNewsPage();
             }
 
         });
@@ -434,6 +414,7 @@ public class HomeFragment extends Fragment {
 
                 //更新列表状态
                 newsSection.onRefreshComplete();
+                adapter.notifyDataSetChanged();
 
                 //最后一页禁用刷新
                 if (responseDatas.isLast()) {
