@@ -19,6 +19,12 @@ public class LKSharedPreferences {
     /** 令牌存储键 */
     public static final String TOKEN = "lichkin.framework.app.token";
 
+    /** 登录名键 */
+    public static final String LOGIN_NAME = "lichkin.framework.app.loginName";
+
+    /** 等级键 */
+    public static final String LEVEL = "lichkin.framework.app.level";
+
     /** 存储文件名 */
     private static final String SHARED_PREFERENCES_NAME = "LichKin";
 
@@ -102,7 +108,6 @@ public class LKSharedPreferences {
         editor.putInt(key, value);
         editor.apply();
     }
-
 
     /**
      * 获取值

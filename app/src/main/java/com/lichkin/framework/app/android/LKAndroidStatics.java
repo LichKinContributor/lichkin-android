@@ -1,5 +1,7 @@
 package com.lichkin.framework.app.android;
 
+import com.lichkin.app.android.demo.R;
+import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
 
 import java.util.UUID;
@@ -48,6 +50,12 @@ public class LKAndroidStatics {
 
     /** 令牌 */
     private static String token;
+
+    /** 登录名 */
+    private static String loginName = "";
+
+    /** 等级 */
+    private static Integer level;
 
     /**
      * 获取客户端唯一标识
@@ -215,6 +223,9 @@ public class LKAndroidStatics {
      * @return 令牌
      */
     public static String token() {
+        if (token == null || "".equals(token)) {
+            token = LKSharedPreferences.getString(LKSharedPreferences.TOKEN, "");
+        }
         return token;
     }
 
@@ -225,7 +236,52 @@ public class LKAndroidStatics {
     @Deprecated
     public static void token(String token) {
         LKAndroidStatics.token = token;
+        LKSharedPreferences.putString(LKSharedPreferences.TOKEN, token);
     }
 
+    /**
+     * 获取登录名
+     * @return 登录名
+     */
+    public static String loginName() {
+        if (loginName == null || "".equals(loginName)) {
+            loginName = LKSharedPreferences.getString(LKSharedPreferences.LOGIN_NAME, "");
+            if ("".equals(loginName)) {
+                loginName = LKAndroidUtils.getString(R.string.no_loginName);
+            }
+        }
+        return loginName;
+    }
+
+    /**
+     * 设置登录名
+     * @param loginName 登录名
+     */
+    @Deprecated
+    public static void loginName(String loginName) {
+        LKAndroidStatics.loginName = loginName;
+        LKSharedPreferences.putString(LKSharedPreferences.LOGIN_NAME, loginName);
+    }
+
+    /**
+     * 获取等级
+     * @return 等级
+     */
+    public static Integer level() {
+        if (level == null) {
+            level = LKSharedPreferences.getInt(LKSharedPreferences.LEVEL, 1);
+        }
+        return level;
+    }
+
+    /**
+     * 设置等级
+     * @param level 等级
+     */
+    @Deprecated
+    public static void level(Integer level) {
+        LKAndroidStatics.level = level;
+        LKSharedPreferences.putInt(LKSharedPreferences.LEVEL, level);
+    }
 
 }
