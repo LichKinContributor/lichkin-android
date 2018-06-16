@@ -44,6 +44,9 @@ public class LKPropertiesLoader {
     /** 新闻图片位置。true:顶部；false:底部。 */
     public static final boolean newsPositionTop;
 
+    /** 测试表单 */
+    public static final boolean testForm;
+
     /** 属性配置 */
     private static final Properties prop;
 
@@ -70,6 +73,8 @@ public class LKPropertiesLoader {
         testRetrofit = getBoolean("lichkin.framework.test.retrofit");
 
         newsPositionTop = getBoolean("lichkin.framework.news.image.position.top");
+
+        testForm = getBoolean("lichkin.framework.test.form");
     }
 
 
