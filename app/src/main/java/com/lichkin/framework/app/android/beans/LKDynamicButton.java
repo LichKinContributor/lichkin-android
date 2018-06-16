@@ -4,6 +4,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
+import com.lichkin.framework.app.android.callbacks.LKCallback;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,9 @@ public class LKDynamicButton {
     /** 弹窗对象管理器 */
     private FragmentManager fragmentManager;
 
+    /** 回调方法 */
+    private LKCallback callback;
+
     /**
      * 构造方法（页面访问方式）
      * @param btnImgResId 按钮图片ID
@@ -52,7 +56,7 @@ public class LKDynamicButton {
     }
 
     /**
-     * 构造方法（页面访问方式）
+     * 构造方法（页面访问方式，后续传入URL值。）
      * @param btnImgResId 按钮图片ID
      * @param btnTitleResId 按钮标题ID
      */
@@ -75,6 +79,19 @@ public class LKDynamicButton {
         this.toActivityClass = null;
         this.dialogFragment = dialogFragment;
         this.fragmentManager = fragmentManager;
+    }
+
+    /**
+     * 构造方法（回调方法式）
+     * @param btnImgResId 按钮图片ID
+     * @param btnTitleResId 按钮标题ID
+     * @param callback 回调方法
+     */
+    public LKDynamicButton(int btnImgResId, int btnTitleResId, LKCallback callback) {
+        this.btnImgResId = btnImgResId;
+        this.btnTitleResId = btnTitleResId;
+        this.toActivityClass = null;
+        this.callback = callback;
     }
 
 

@@ -62,4 +62,13 @@ public class LKRandomUtils {
         return new Random().nextInt((max + 1) - min) + min;
     }
 
+
+    /**
+     * 生成随机值布尔值
+     * @return 随机值
+     */
+    public static boolean randomBoolean() {
+        return randomInRange(0, 1) == 0;
+    }
+
 }

@@ -51,11 +51,35 @@
     <string name="feedback_content_hint">内容&#8230;</string>
     <string name="feedback_image_text">选择图片上传:</string>
     <string name="feedback_result">感谢您的宝贵意见</string>
-    <string name="feedback_choose_title">如何选择图片？</string>
+
+    <string name="photo_choose_title">如何选择图片？</string>
     <string name="btn_positive_name_gallery">相册</string>
     <string name="btn_negative_name_camera">拍照</string>
 
     <string name="title_about">关于</string>
+    <string name="title_exit">退出当前账号</string>
 
     <string name="title_security_center">安全中心</string>
+
+    <string name="btn_login">登录</string>
+    <string name="no_loginName">还没有登录</string>
+    <string name="level_tip">等级</string>
+    <string name="title_fast_login">快速登录/注册:</string>
+    <string name="btn_title_fast_login">快速登录/注册&#160;&gt;</string>
+    <string name="title_login">账号登录:</string>
+    <string name="btn_title_login">账号登录&#160;&gt;</string>
+    <string name="login_cellphone_hint">请输入手机号码</string>
+    <string name="login_btn_next">下一步&#160;&#160;&gt;</string>
+    <string name="title_login_service_agreement">登录/注册即视为同意</string>
+    <string name="sms_sended">短信已经发送到</string>
+    <string name="sms_resend">重新发送&#160;&#160;&gt;</string>
+    <string name="login_sms_hint">请输入验证码</string>
+    <string name="register_loginName_hint">请输入用户名</string>
+    <string name="login_loginName_hint">请输入用户名/手机号码</string>
+    <string name="register_loginName_text">用户名可由字母和数字组成</string>
+    <string name="register_loginName_text2">注：只有一次设置机会</string>
+    <string name="pwd_hint">请输入密码</string>
+    <string name="register_pwd_text">密码可由字母、数字、英文符号组成</string>
+    <string name="level">等级</string>
+    <string name="sign_in_success">签到成功</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.lichkin.application.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.lichkin.framework.app.android.utils.LKImageLoader;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
+import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 import com.lichkin.framework.defines.beans.LKPageBean;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -420,6 +422,24 @@ public class HomeFragment extends Fragment {
                 if (responseDatas.isLast()) {
                     last = true;
                 }
+            }
+
+            @Override
+            protected void busError(Context context, GetNewsPageIn getNewsPageIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                super.busError(context, getNewsPageIn, errorCode, errorType, errorBean);
+                newsSection.onRefreshComplete();
+            }
+
+            @Override
+            public void connectError(Context context, String requestId, GetNewsPageIn getNewsPageIn, DialogInterface dialog) {
+                super.connectError(context, requestId, getNewsPageIn, dialog);
+                newsSection.onRefreshComplete();
+            }
+
+            @Override
+            public void timeoutError(Context context, String requestId, GetNewsPageIn getNewsPageIn, DialogInterface dialog) {
+                super.timeoutError(context, requestId, getNewsPageIn, dialog);
+                newsSection.onRefreshComplete();
             }
 
         });

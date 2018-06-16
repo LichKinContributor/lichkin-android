@@ -8,3 +8,6 @@ gradlew.bat
 local.properties
 gradle.properties
 /**/build
+
+PullToRefresh
+TakePhoto

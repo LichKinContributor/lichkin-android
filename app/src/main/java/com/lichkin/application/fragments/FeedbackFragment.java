@@ -73,7 +73,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
 
     @OnClick(R.id.img)
     void imgClick() {
-        new LKDialog(FeedbackFragment.this.getContext(), R.string.feedback_choose_title).setPositiveButton(R.string.btn_positive_name_gallery, new LKBtnCallback() {
+        new LKDialog(FeedbackFragment.this.getContext(), R.string.photo_choose_title).setPositiveButton(R.string.btn_positive_name_gallery, new LKBtnCallback() {
             @Override
             public void call(Context context, DialogInterface dialog) {
                 takePhoto(true);
@@ -251,7 +251,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
 
     @Override
     public void takeSuccess(TResult result) {
-        String imgPath = "file:///" + result.getImages().get(0).getCompressPath();
+        String imgPath = "file:///" + result.getImage().getCompressPath();
         imgBase64 = LKBase64.toBase64(imgPath);
         LKImageLoader.load(imgPath, imageView);
     }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/settings_container">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/settings_container"
+    tools:context="com.lichkin.application.activities.AboutActivity">
 
     <LinearLayout style="@style/settings_container_out">
 

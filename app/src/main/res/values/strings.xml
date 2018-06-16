@@ -51,11 +51,35 @@
     <string name="feedback_content_hint">Content&#8230;</string>
     <string name="feedback_image_text">Select a Picture:</string>
     <string name="feedback_result">Thanks for your comments</string>
-    <string name="feedback_choose_title">How to choose picture</string>
+
+    <string name="photo_choose_title">How to choose picture</string>
     <string name="btn_positive_name_gallery">From Gallery</string>
     <string name="btn_negative_name_camera">Take a photo</string>
 
     <string name="title_about">about</string>
+    <string name="title_exit">exit account</string>
 
     <string name="title_security_center">security center</string>
+
+    <string name="btn_login">Login</string>
+    <string name="no_loginName">Not logined yet</string>
+    <string name="level_tip">Your Level</string>
+    <string name="title_fast_login">Fast Login/Register:</string>
+    <string name="btn_title_fast_login">Fast Login/Register&#160;&gt;</string>
+    <string name="title_login">Account Login:</string>
+    <string name="btn_title_login">Account Login&#160;&gt;</string>
+    <string name="login_cellphone_hint">Please enter your cellphone</string>
+    <string name="login_btn_next">Next&#160;&#160;&gt;</string>
+    <string name="title_login_service_agreement">Login/Register as agreed the&#160;</string>
+    <string name="sms_sended">SMS sended to</string>
+    <string name="sms_resend">Resend&#160;&#160;&gt;</string>
+    <string name="login_sms_hint">Please enter security code</string>
+    <string name="register_loginName_hint">Please enter loginName</string>
+    <string name="login_loginName_hint">Please enter loginName/cellphone</string>
+    <string name="register_loginName_text">User names can be made up of letters and Numbers</string>
+    <string name="register_loginName_text2">Note: there is only one setup opportunity</string>
+    <string name="pwd_hint">Please enter password</string>
+    <string name="register_pwd_text">Passwords can be made up of letters, numbers, symbols.</string>
+    <string name="level">Level</string>
+    <string name="sign_in_success">Sign in Success</string>
 </resources>

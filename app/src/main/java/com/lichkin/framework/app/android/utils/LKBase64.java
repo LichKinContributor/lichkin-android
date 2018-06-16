@@ -1,5 +1,7 @@
 package com.lichkin.framework.app.android.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
 
@@ -38,6 +40,16 @@ public class LKBase64 {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * 将Base64编码转换为图像
+     * @param base64Code Base64编码
+     * @return 图像
+     */
+    public static Bitmap toBitmap(String base64Code) {
+        byte[] bytes = Base64.decode(base64Code, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
 }

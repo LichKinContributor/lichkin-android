@@ -25,4 +25,10 @@ public class FastLoginOut {
     /** 等级 */
     private int level;
 
+    /** 头像 */
+    private String photo;
+
+    /** 安全中心地址 */
+    private String securityCenterUrl;
+
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.beans.LKDynamicButton;
+import com.lichkin.framework.app.android.callbacks.LKCallback;
 
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +92,12 @@ public class LKDynamicButtonUtils {
                     if (activityClass == null) {
                         DialogFragment dialogFragment = button.getDialogFragment();
                         if (dialogFragment == null) {
-                            LKToast.showTip(R.string.not_implemented);
+                            LKCallback callback = button.getCallback();
+                            if (callback == null) {
+                                LKToast.showTip(R.string.not_implemented);
+                                return;
+                            }
+                            callback.call();
                             return;
                         }
                         dialogFragment.show(button.getFragmentManager(), dialogFragment.getTag());
@@ -99,8 +105,12 @@ public class LKDynamicButtonUtils {
                     }
                     if (activityClass.equals(LKWebViewActivity.class)) {
                         if (!btnUrls.containsKey(btnImgResId)) {
-                            LKToast.showTip(R.string.error_NOT_FOUND);
-                            return;
+                            String url = button.getUrl();
+                            if (url == null || "".equals(url)) {
+                                LKToast.showTip(R.string.error_NOT_FOUND);
+                                return;
+                            }
+                            btnUrls.put(btnImgResId, url);
                         }
                         LKWebViewActivity.open(context, btnUrls.get(btnImgResId));
                     } else {

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/form_container_out"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.lichkin.application.activities.FastLoginActivity">
+
+    <LinearLayout
+        style="@style/input_container"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="end"
+            android:text="@string/btn_title_login"
+            android:textColor="#AAAAAA"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/input_container">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:gravity="center_vertical|start"
+            android:text="@string/title_fast_login"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/form_container_in"
+        android:layout_centerInParent="true">
+
+        <LinearLayout style="@style/input_container">
+
+            <EditText
+                android:id="@+id/cellphone"
+                style="@style/input_input_white"
+                android:digits="@string/digits_number"
+                android:hint="@string/login_cellphone_hint"
+                android:inputType="phone"
+                android:maxLength="11" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/input_container"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/login_btn_next"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/input_container"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical|center_horizontal">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loading"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:indicatorColor="#FFFFFF"
+                app:indicatorName="BallClipRotateIndicator" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/form_button_container"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_login_service_agreement"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/btn_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_service_agreement"
+            android:textColor="#DDDDDD"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

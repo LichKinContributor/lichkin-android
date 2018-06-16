@@ -19,6 +19,7 @@ public class GetNewsPageTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
+        retrofit.addTestResponseBeans(666, "GetNewsPageTester");
         retrofit.addTestResponseBeans(new LKPageBean<>(getSubList(in), in.getPageNumber(), in.getPageSize(), total));
     }
 

@@ -224,7 +224,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                         dlg.show();
                         return;
                     }
-                    super.busError(context, getLastAppVersionIn, errorCode, errorType, errorBean);
+                    restart();
                 } else {
                     // 自定义业务错误处理
                     switch (errorCode) {
@@ -232,6 +232,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                             break;
                         default:
                             // 其它错误，待约定与实现。
+                            restart();
                             break;
                     }
                 }

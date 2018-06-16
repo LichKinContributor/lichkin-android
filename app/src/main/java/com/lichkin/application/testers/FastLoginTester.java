@@ -11,24 +11,28 @@ import com.lichkin.framework.utils.LKRandomUtils;
  */
 public class FastLoginTester {
 
+    public static String cellphone = "18501531550";
+
     public static void test(LKRetrofit<FastLoginIn, FastLoginOut> retrofit) {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-
-//        FastLoginOut out_login = new FastLoginOut();
-//        out_login.setLogin(true);
-//        out_login.setLoginName("18621118733");
-//        out_login.setToken(LKRandomUtils.create(32));
-//        out_login.setLevel(5);
-//        retrofit.addTestResponseBeans(out_login);
-
-        FastLoginOut out_register = new FastLoginOut();
-        out_register.setLogin(false);
-        out_register.setLoginName("18621118733");
-        out_register.setToken(LKRandomUtils.create(32));
-        out_register.setLevel(7);
-        retrofit.addTestResponseBeans(out_register);
+        retrofit.addTestResponseBeans(666, "FastLoginTester");
+        FastLoginOut out = new FastLoginOut();
+        if (cellphone.equals("18501531550")) {
+            out.setLoginName("LunaDream");
+            out.setLogin(true);
+            out.setLevel(63);
+            out.setPhoto("photo");
+        } else {
+            out.setLoginName(cellphone);
+            out.setLogin(false);
+            out.setLevel(1);
+            out.setPhoto(null);
+        }
+        out.setToken(LKRandomUtils.create(32));
+        out.setSecurityCenterUrl("file:///android_asset/test/test.html");
+        retrofit.addTestResponseBeans(out);
     }
 
 }

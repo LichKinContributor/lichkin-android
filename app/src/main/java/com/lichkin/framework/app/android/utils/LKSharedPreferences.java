@@ -25,6 +25,12 @@ public class LKSharedPreferences {
     /** 等级键 */
     public static final String LEVEL = "lichkin.framework.app.level";
 
+    /** 头像键 */
+    public static final String PHOTO = "lichkin.framework.app.photo";
+
+    /** 安全中心地址键 */
+    public static final String SECURITY_CENTER_URL = "lichkin.framework.app.securityCenterUrl";
+
     /** 存储文件名 */
     private static final String SHARED_PREFERENCES_NAME = "LichKin";
 

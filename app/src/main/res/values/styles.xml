@@ -48,6 +48,20 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="input_input_white" parent="input_input">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#AAAAAA</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_shape_white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:theme">@style/input_input_white_theme</item>
+    </style>
+
+    <style name="input_input_white_theme" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#AAAAAA</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+    </style>
+
     <!-- button -->
     <style name="button_container">
         <item name="android:layout_width">match_parent</item>
@@ -62,6 +76,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/colorForeground</item>
+        <item name="android:textColor">@color/colorBackground</item>
+    </style>
+
+    <style name="button_button_green" parent="button_button">
+        <item name="android:background">#339977</item>
         <item name="android:textColor">@color/colorBackground</item>
     </style>
 
@@ -81,6 +100,12 @@
 
     <style name="form_button_container" parent="@style/button_container">
         <item name="android:layout_alignParentBottom">true</item>
+    </style>
+
+    <!-- popup -->
+    <style name="popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_out</item>
     </style>
 
 </resources>

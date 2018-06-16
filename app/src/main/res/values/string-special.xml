@@ -1,0 +1,6 @@
+<resources>
+    <string name="digits_letter_number_symbol">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~`!@#$%^&#38;*()_+-={}|[];:&#60;&#62;?,./</string>
+    <string name="digits_letter_number">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="digits_number">0123456789</string>
+    <string name="digits_letter">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+</resources>

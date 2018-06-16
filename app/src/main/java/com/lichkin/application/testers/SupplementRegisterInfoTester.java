@@ -10,12 +10,15 @@ import com.lichkin.framework.app.android.utils.LKRetrofit;
  */
 public class SupplementRegisterInfoTester {
 
+    public static String loginName = "LunaDream";
+
     public static void test(LKRetrofit<SupplementRegisterInfoIn, SupplementRegisterInfoOut> retrofit) {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
+        retrofit.addTestResponseBeans(666, "SupplementRegisterInfoTester");
         SupplementRegisterInfoOut out = new SupplementRegisterInfoOut();
-        out.setLoginName("LunaDream");
+        out.setLoginName(loginName);
         retrofit.addTestResponseBeans(out);
     }
 

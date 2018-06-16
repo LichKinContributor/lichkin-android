@@ -14,6 +14,7 @@ public class ScoreTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
+        retrofit.addTestResponseBeans(666, "ScoreTester");
         ScoreOut out = new ScoreOut();
         retrofit.addTestResponseBeans(out);
     }

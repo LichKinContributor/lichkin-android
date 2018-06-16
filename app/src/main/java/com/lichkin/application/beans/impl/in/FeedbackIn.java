@@ -4,7 +4,6 @@ import com.lichkin.framework.defines.beans.LKRequestBean;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**

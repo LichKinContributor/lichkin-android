@@ -14,6 +14,7 @@ public class FeedbackTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
+        retrofit.addTestResponseBeans(666, "FeedbackTester");
         FeedbackOut out = new FeedbackOut();
         retrofit.addTestResponseBeans(out);
     }

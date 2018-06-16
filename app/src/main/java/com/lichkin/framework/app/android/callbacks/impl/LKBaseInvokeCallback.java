@@ -115,4 +115,5 @@ public class LKBaseInvokeCallback<In extends LKRequestBean, Out> implements LKIn
     public void timeoutError(Context context, String requestId, In in, DialogInterface dialog) {
         //TODO
     }
+
 }

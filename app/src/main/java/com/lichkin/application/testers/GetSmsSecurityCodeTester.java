@@ -14,6 +14,7 @@ public class GetSmsSecurityCodeTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
+        retrofit.addTestResponseBeans(666, "GetSmsSecurityCodeTester");
         GetSmsSecurityCodeOut out = new GetSmsSecurityCodeOut();
         retrofit.addTestResponseBeans(out);
     }

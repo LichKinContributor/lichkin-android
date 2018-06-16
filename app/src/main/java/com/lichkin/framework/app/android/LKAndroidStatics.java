@@ -57,6 +57,12 @@ public class LKAndroidStatics {
     /** 等级 */
     private static Integer level;
 
+    /** 头像 */
+    private static String photo;
+
+    /** 安全中心地址 */
+    private static String securityCenterUrl;
+
     /**
      * 获取客户端唯一标识
      * @return 客户端唯一标识
@@ -279,9 +285,51 @@ public class LKAndroidStatics {
      * @param level 等级
      */
     @Deprecated
-    public static void level(Integer level) {
+    public static void level(int level) {
         LKAndroidStatics.level = level;
         LKSharedPreferences.putInt(LKSharedPreferences.LEVEL, level);
+    }
+
+    /**
+     * 获取头像
+     * @return 头像
+     */
+    public static String photo() {
+        if (photo == null || "".equals(photo)) {
+            photo = LKSharedPreferences.getString(LKSharedPreferences.PHOTO, "");
+        }
+        return photo;
+    }
+
+    /**
+     * 设置头像
+     * @param photo 头像
+     */
+    @Deprecated
+    public static void photo(String photo) {
+        LKAndroidStatics.photo = photo;
+        LKSharedPreferences.putString(LKSharedPreferences.PHOTO, photo);
+    }
+
+    /**
+     * 获取安全中心地址
+     * @return 安全中心地址
+     */
+    public static String securityCenterUrl() {
+        if (securityCenterUrl == null || "".equals(securityCenterUrl)) {
+            securityCenterUrl = LKSharedPreferences.getString(LKSharedPreferences.SECURITY_CENTER_URL, "");
+        }
+        return securityCenterUrl;
+    }
+
+    /**
+     * 设置安全中心地址
+     * @param securityCenterUrl 安全中心地址
+     */
+    @Deprecated
+    public static void securityCenterUrl(String securityCenterUrl) {
+        LKAndroidStatics.securityCenterUrl = securityCenterUrl;
+        LKSharedPreferences.putString(LKSharedPreferences.SECURITY_CENTER_URL, securityCenterUrl);
     }
 
 }

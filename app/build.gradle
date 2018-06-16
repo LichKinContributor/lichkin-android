@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.lichkin.app.android.demo"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
         versionName "1.0.0"
@@ -32,6 +32,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Library
+    implementation project(path: ':PullToRefresh')
+    implementation project(path: ':TakePhoto')
 
     // thirdparty
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
