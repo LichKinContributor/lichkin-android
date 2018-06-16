@@ -15,7 +15,6 @@ import android.view.WindowManager;
 
 import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.utils.LKLog;
-import com.lichkin.framework.app.android.utils.LKSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,9 +152,6 @@ public abstract class LKAppCompatActivity extends AppCompatActivity {
             LKAndroidStatics.versionY((byte) 0);
             LKAndroidStatics.versionZ((short) 0);
         }
-
-        //令牌
-        LKAndroidStatics.token(LKSharedPreferences.getString(LKSharedPreferences.TOKEN, ""));
 
         //屏幕宽高
         Object wm = this.getSystemService(Context.WINDOW_SERVICE);
