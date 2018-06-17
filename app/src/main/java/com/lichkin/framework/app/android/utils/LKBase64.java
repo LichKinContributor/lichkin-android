@@ -2,6 +2,8 @@ package com.lichkin.framework.app.android.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Base64;
 
@@ -50,6 +52,15 @@ public class LKBase64 {
     public static Bitmap toBitmap(String base64Code) {
         byte[] bytes = Base64.decode(base64Code, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * 将Base64编码转换为图像
+     * @param base64Code Base64编码
+     * @return 图像
+     */
+    public static Drawable toDrawable(String base64Code) {
+        return new BitmapDrawable(toBitmap(base64Code));
     }
 
 }

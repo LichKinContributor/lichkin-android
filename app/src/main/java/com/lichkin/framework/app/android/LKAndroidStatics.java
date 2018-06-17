@@ -3,9 +3,13 @@ package com.lichkin.framework.app.android;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.out.LoginOut;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
+import com.lichkin.application.beans.out.nested.CompInfo;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
+import com.lichkin.framework.defines.LKFrameworkStatics;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -64,6 +68,9 @@ public class LKAndroidStatics {
 
     /** 安全中心地址 */
     private static String securityCenterUrl;
+
+    /** 公司列表 */
+    private static List<CompInfo> listComp;
 
     /**
      * 获取客户端唯一标识
@@ -235,16 +242,18 @@ public class LKAndroidStatics {
             photo(null);
             level(1);
             securityCenterUrl(null);
+            listComp(null);
             token(null);
             loginName(null);
             return;
         }
-        LKAndroidStatics.photo(login.getPhoto());
-        LKAndroidStatics.level(login.getLevel());
-        LKAndroidStatics.securityCenterUrl(login.getSecurityCenterUrl());
+        photo(login.getPhoto());
+        level(login.getLevel());
+        securityCenterUrl(login.getSecurityCenterUrl());
+        listComp(login.getListComp());
         if (login instanceof AccountLoginOut) {
-            LKAndroidStatics.token(((AccountLoginOut) login).getToken());
-            LKAndroidStatics.loginName(((AccountLoginOut) login).getLoginName());
+            token(((AccountLoginOut) login).getToken());
+            loginName(((AccountLoginOut) login).getLoginName());
         }
     }
 
@@ -350,6 +359,39 @@ public class LKAndroidStatics {
     private static void securityCenterUrl(String securityCenterUrl) {
         LKAndroidStatics.securityCenterUrl = securityCenterUrl;
         LKSharedPreferences.putString(LKSharedPreferences.SECURITY_CENTER_URL, securityCenterUrl);
+    }
+
+    /**
+     * 获取公司列表
+     * @return 公司列表
+     */
+    public static List<CompInfo> listComp() {
+        if (listComp == null || listComp.isEmpty()) {
+            String listCompStr = LKSharedPreferences.getString(LKSharedPreferences.LIST_COMP, "");
+            if (!"".equals(listCompStr)) {
+                listComp = new ArrayList<>();
+                String[] listCompStrArr = listCompStr.split(LKFrameworkStatics.SPLITOR);
+                for (String compStr : listCompStrArr) {
+                    listComp.add(new CompInfo(compStr.split(LKFrameworkStatics.SPLITOR_FIELDS)));
+                }
+            }
+        }
+        return listComp;
+    }
+
+    /**
+     * 设置公司列表
+     * @param listComp 公司列表
+     */
+    private static void listComp(List<CompInfo> listComp) {
+        LKAndroidStatics.listComp = listComp;
+        StringBuilder sb = new StringBuilder();
+        if (listComp != null && !listComp.isEmpty()) {
+            for (CompInfo info : listComp) {
+                sb.append(info.getCompName()).append(LKFrameworkStatics.SPLITOR_FIELDS).append(info.getCompImg()).append(LKFrameworkStatics.SPLITOR);
+            }
+        }
+        LKSharedPreferences.putString(LKSharedPreferences.LIST_COMP, sb.toString());
     }
 
 }

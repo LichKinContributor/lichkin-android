@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -21,15 +22,18 @@ import android.view.MenuItem;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
 import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
+import com.lichkin.application.beans.out.nested.CompInfo;
 import com.lichkin.application.fragments.HomeFragment;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
 import com.lichkin.application.testers.GetLastAppVersionTester;
+import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
+import com.lichkin.framework.app.android.utils.LKBase64;
 import com.lichkin.framework.app.android.utils.LKLog;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
@@ -115,6 +119,21 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         if (dontNeedRequestPermission(Manifest.permission.INTERNET)) {
             //有权限请求接口
             getLastAppVersion();
+        }
+
+        String token = LKAndroidStatics.token();
+        if (token == null || "".equals(token)) {
+            return;
+        }
+        List<CompInfo> listComp = LKAndroidStatics.listComp();
+        if (listComp != null) {
+            for (int i = 0; i < listComp.size(); i++) {
+                if (i > 2) {
+                    break;
+                }
+                CompInfo compInfo = listComp.get(i);
+                displayMenu(i, compInfo.getCompName(), LKBase64.toDrawable(compInfo.getCompImg()));
+            }
         }
     }
 
@@ -303,7 +322,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      * 初始化主页
      */
     protected void initHomePage() {
-        HOME_MENU_ID = initMenuPage(R.string.title_navigation_menu_home, R.drawable.ic_navigation_menu_home, new HomeFragment());
+        HOME_MENU_ID = initMenuPage(R.string.title_navigation_menu_home, R.drawable.ic_navigation_menu_home, new HomeFragment(), true);
     }
 
     /**
@@ -315,24 +334,32 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      * 初始化我的页面
      */
     protected void initMyPage() {
-        MY_MENU_ID = initMenuPage(R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my, new MyFragment());
+        MY_MENU_ID = initMenuPage(R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my, new MyFragment(), true);
     }
+
+    /** 自定义菜单 */
+    public List<MenuPage> userDefinedMenus = new ArrayList<>();
 
     /**
      * 初始化对象
      * @param titleId 标题ID
      * @param iconId 图标ID
      * @param fragment 页面
+     * @param lock 锁定
      * @return 菜单ID
      */
-    protected int initMenuPage(int titleId, int iconId, Fragment fragment) {
+    protected int initMenuPage(int titleId, int iconId, Fragment fragment, boolean lock) {
         int menuId = LKRandomUtils.randomInRange(10000, 99999);
-        menuPageMap.put(menuId, new MenuPage(menuId, titleId, iconId, orderId++, fragment));
+        MenuPage menuPage = new MenuPage(menuId, titleId, iconId, orderId++, fragment);
+        menuPageMap.put(menuId, menuPage);
+        if (!lock) {
+            userDefinedMenus.add(menuPage);
+        }
         return menuId;
     }
 
     /** 适配器位置与菜单页面映射关系 */
-    private List<MenuPage> menuPageList = new ArrayList<>();
+    public List<MenuPage> menuPageList = new ArrayList<>();
     /** 适配器 */
     private FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -404,6 +431,8 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      */
     private void initViewPager() {
         viewPager = findViewById(R.id.viewpager);
+        //禁止销毁数量
+        viewPager.setOffscreenPageLimit(5);
         //添加适配器
         viewPager.setAdapter(adapter);
         //为滑动页面增加监听事件
@@ -434,12 +463,23 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      */
     protected void showMenu(int menuId) {
         MenuPage menuPage = menuPageMap.get(menuId);
+        showMenu(menuId, LKAndroidUtils.getString(menuPage.titleId), LKAndroidUtils.getDrawable(menuPage.iconId));
+    }
+
+    /**
+     * 显示菜单
+     * @param menuId 菜单ID
+     * @param title 标题
+     * @param icon 图标
+     */
+    protected void showMenu(int menuId, String title, Drawable icon) {
+        MenuPage menuPage = menuPageMap.get(menuId);
         if (menuPageList.contains(menuPage)) {
             return;
         }
 
         //增加菜单
-        navigation.getMenu().add(NAVIGATION_MENU_GROUP_ID, menuId, menuPage.orderId, LKAndroidUtils.getString(menuPage.titleId)).setIcon(menuPage.iconId);
+        navigation.getMenu().add(NAVIGATION_MENU_GROUP_ID, menuId, menuPage.orderId, title).setIcon(icon);
         //禁用mShiftingMode
         LKViewHelper.disableShiftingMode(navigation);
 
@@ -471,10 +511,15 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
     /**
      * 显示菜单
-     * @param menuId 菜单ID
+     * @param idx 自定义菜单索引值。从0开始。
+     * @param title 标题
+     * @param icon 图标
      */
-    public static void show(int menuId) {
-        activity.showMenu(menuId);
+    protected void displayMenu(int idx, String title, Drawable icon) {
+        if (idx > userDefinedMenus.size()) {
+            return;
+        }
+        showMenu(userDefinedMenus.get(idx).menuId, title, icon);
     }
 
     /**
@@ -505,11 +550,31 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     }
 
     /**
-     * 隐藏菜单
-     * @param menuId 菜单ID
+     * 销毁菜单
+     * @param idx 自定义菜单索引值。从0开始。
      */
-    public static void hide(int menuId) {
-        activity.hideMenu(menuId);
+    private void destoryMenu(int idx) {
+        //第0个是主页；最后一个是我的页面。
+        if (idx > userDefinedMenus.size()) {
+            return;
+        }
+        hideMenu(userDefinedMenus.get(idx).menuId);
+    }
+
+    /**
+     * 销毁菜单
+     */
+    public void destoryMenus() {
+        for (int i = 0; i < userDefinedMenus.size(); i++) {
+            destoryMenu(i);
+        }
+    }
+
+    /**
+     * 销毁菜单
+     */
+    public static void hideMenus() {
+        activity.destoryMenus();
     }
 
     /**

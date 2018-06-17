@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.activities.AboutActivity;
 import com.lichkin.application.activities.FastLoginActivity;
+import com.lichkin.application.activities.MainActivity;
 import com.lichkin.application.beans.in.impl.PhotoUploadIn;
 import com.lichkin.application.beans.in.impl.SignInIn;
 import com.lichkin.application.beans.in.impl.TokenLoginIn;
@@ -62,7 +63,7 @@ import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.permission.TakePhotoInvocationHandler;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -148,10 +149,39 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
     /** 动态按钮 */
     @BindView(R.id.btns)
     LinearLayout btnsContainer;
-    List<LKDynamicButton> btns = new ArrayList<>();
-    private boolean loginedBtnAdded = false;
-    private static int BTN_DIVIDE = 4;
-    private static float BTN_ASPECT_RATIO = 1.0f;
+
+    /** 登录前按钮列表 */
+    List<LKDynamicButton> btns;
+
+    /** 登录后按钮列表 */
+    List<LKDynamicButton> btnsAfterLogin;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        btns = Arrays.asList(
+                new LKDynamicButton(R.drawable.btn_score, R.string.title_score, new ScoreFragment(), getFragmentManager()),
+                new LKDynamicButton(R.drawable.btn_feedback, R.string.title_feedback, new FeedbackFragment(), getFragmentManager()),
+                new LKDynamicButton(R.drawable.btn_about, R.string.title_about, AboutActivity.class)
+        );
+        btnsAfterLogin = Arrays.asList(
+                new LKDynamicButton(R.drawable.btn_score, R.string.title_score, new ScoreFragment(), getFragmentManager()),
+                new LKDynamicButton(R.drawable.btn_feedback, R.string.title_feedback, new FeedbackFragment(), getFragmentManager()),
+                new LKDynamicButton(R.drawable.btn_about, R.string.title_about, AboutActivity.class),
+                new LKDynamicButton(R.drawable.btn_security_center, R.string.title_security_center, LKAndroidStatics.securityCenterUrl()),
+                new LKDynamicButton(R.drawable.btn_exit, R.string.title_exit, new LKCallback() {
+                    @Override
+                    public void call() {
+                        new LKDialog(MyFragment.this.getContext(), LKAndroidUtils.getString(R.string.title_exit) + "?").setPositiveButton(new LKBtnCallback() {
+                            @Override
+                            public void call(Context context, DialogInterface dialog) {
+                                clearMyInfo();
+                            }
+                        }).setNegativeButton().show();
+                    }
+                })
+        );
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,13 +190,10 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
 
         unbinder = ButterKnife.bind(this, view);
 
-        //初始化按钮栏
-        btns.add(new LKDynamicButton(R.drawable.btn_score, R.string.title_score, new ScoreFragment(), getFragmentManager()));
-        btns.add(new LKDynamicButton(R.drawable.btn_feedback, R.string.title_feedback, new FeedbackFragment(), getFragmentManager()));
-        btns.add(new LKDynamicButton(R.drawable.btn_about, R.string.title_about, AboutActivity.class));
-        LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
+        //初始化我的信息
+        initMyInfo();
 
-        //请求令牌登录
+        //更新个人信息
         String token = LKAndroidStatics.token();
         if (token != null && !"".equals(token)) {
             invokeTokenLogin();
@@ -247,17 +274,20 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         });
     }
 
+    private static int BTN_DIVIDE = 4;
+    private static float BTN_ASPECT_RATIO = 1.0f;
+
     /**
      * 初始化我的信息
      */
     private void initMyInfo() {
         String token = LKAndroidStatics.token();
         if (token == null || "".equals(token)) {
+            btnsContainer.removeAllViews();
+            LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
             return;
         }
         loginNameView.setText(LKAndroidStatics.loginName());
-        levelLayout.removeAllViews();
-        LevelFragment.inflateLevel(levelLayout, LKAndroidStatics.level());
         String photo = LKAndroidStatics.photo();
         if (photo != null && !"".equals(photo)) {
             if ("photo".equals(photo)) {
@@ -266,27 +296,12 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
                 photoView.setImageBitmap(LKBase64.toBitmap(photo));
             }
         }
+        levelLayout.removeAllViews();
+        LevelFragment.inflateLevel(levelLayout, LKAndroidStatics.level());
         btnLogin.setVisibility(View.GONE);
         loginedLayout.setVisibility(View.VISIBLE);
-
-        if (loginedBtnAdded) {
-            return;
-        }
-        loginedBtnAdded = true;
         btnsContainer.removeAllViews();
-        btns.add(new LKDynamicButton(R.drawable.btn_security_center, R.string.title_security_center, LKAndroidStatics.securityCenterUrl()));
-        btns.add(new LKDynamicButton(R.drawable.btn_exit, R.string.title_exit, new LKCallback() {
-            @Override
-            public void call() {
-                new LKDialog(MyFragment.this.getContext(), LKAndroidUtils.getString(R.string.title_exit) + "?").setPositiveButton(new LKBtnCallback() {
-                    @Override
-                    public void call(Context context, DialogInterface dialog) {
-                        clearMyInfo();
-                    }
-                }).setNegativeButton().show();
-            }
-        }));
-        LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
+        LKDynamicButtonUtils.inflate(btnsContainer, btnsAfterLogin, BTN_DIVIDE, BTN_ASPECT_RATIO);
     }
 
     /**
@@ -296,17 +311,12 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         LKAndroidStatics.saveLoginInfo(null);
         loginNameView.setText("");
         photoView.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.no_photo));
+        levelLayout.removeAllViews();
         btnLogin.setVisibility(View.VISIBLE);
         loginedLayout.setVisibility(View.GONE);
-        loginedBtnAdded = false;
         btnsContainer.removeAllViews();
-        for (int i = btns.size() - 1; i >= 0; i--) {
-            LKDynamicButton btn = btns.get(i);
-            if (btn.getBtnImgResId() == R.drawable.btn_security_center || btn.getBtnImgResId() == R.drawable.btn_exit) {
-                btns.remove(i);
-            }
-        }
         LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
+        MainActivity.hideMenus();
     }
 
     /**
