@@ -1,4 +1,4 @@
-package com.lichkin.application.beans.impl.in;
+package com.lichkin.application.beans.in.impl;
 
 import com.lichkin.framework.defines.beans.LKRequestBean;
 
@@ -7,21 +7,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * 评分
+ * 反馈
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
 @ToString(callSuper = true)
 @RequiredArgsConstructor
-public class ScoreIn extends LKRequestBean {
+public class FeedbackIn extends LKRequestBean {
 
-    /** 评分（按照星级评分1~5分 ） */
-    private final Byte score;
-
-    /** 标题 */
-    private final String title;
-
-    /** 评分内容 */
+    /** 反馈内容 */
     private final String content;
+
+    /** 图片（Base64） */
+    private final String img;
 
 }

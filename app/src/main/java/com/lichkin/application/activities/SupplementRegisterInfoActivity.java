@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.SupplementRegisterInfoIn;
-import com.lichkin.application.beans.impl.out.SupplementRegisterInfoOut;
+import com.lichkin.application.beans.in.impl.SupplementRegisterInfoIn;
+import com.lichkin.application.beans.out.impl.SupplementRegisterInfoOut;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.SupplementRegisterInfoInvoker;
 import com.lichkin.application.testers.SupplementRegisterInfoTester;

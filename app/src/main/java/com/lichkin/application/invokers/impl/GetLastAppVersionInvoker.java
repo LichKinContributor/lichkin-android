@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
-import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
+import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 

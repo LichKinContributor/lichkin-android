@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.GetBannerListIn;
-import com.lichkin.application.beans.impl.out.GetBannerListOut;
+import com.lichkin.application.beans.in.impl.GetBannerListIn;
+import com.lichkin.application.beans.out.impl.GetBannerListOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 

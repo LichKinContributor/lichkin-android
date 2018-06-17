@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.ScoreIn;
-import com.lichkin.application.beans.impl.out.ScoreOut;
+import com.lichkin.application.beans.in.impl.ScoreIn;
+import com.lichkin.application.beans.out.impl.ScoreOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 

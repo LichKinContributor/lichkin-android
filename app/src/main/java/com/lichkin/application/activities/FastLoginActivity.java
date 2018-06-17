@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.GetSmsSecurityCodeIn;
-import com.lichkin.application.beans.impl.out.GetSmsSecurityCodeOut;
+import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
+import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.GetSmsSecurityCodeInvoker;
 import com.lichkin.application.testers.GetSmsSecurityCodeTester;

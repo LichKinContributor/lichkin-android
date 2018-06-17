@@ -1,4 +1,4 @@
-package com.lichkin.application.beans.impl.in;
+package com.lichkin.application.beans.in.impl;
 
 import com.lichkin.framework.defines.beans.LKRequestBean;
 
@@ -7,18 +7,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * 反馈
+ * 快速登录
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
 @ToString(callSuper = true)
 @RequiredArgsConstructor
-public class FeedbackIn extends LKRequestBean {
+public class FastLoginIn extends LKRequestBean {
 
-    /** 反馈内容 */
-    private final String content;
+    /** 手机号码 */
+    private final String cellphone;
 
-    /** 图片（Base64） */
-    private final String img;
+    /** 验证码 */
+    private final String securityCode;
 
 }

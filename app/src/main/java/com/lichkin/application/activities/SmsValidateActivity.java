@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.FastLoginIn;
-import com.lichkin.application.beans.impl.in.GetSmsSecurityCodeIn;
-import com.lichkin.application.beans.impl.out.FastLoginOut;
-import com.lichkin.application.beans.impl.out.GetSmsSecurityCodeOut;
+import com.lichkin.application.beans.in.impl.FastLoginIn;
+import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
+import com.lichkin.application.beans.out.impl.FastLoginOut;
+import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.FastLoginInvoker;
 import com.lichkin.application.invokers.impl.GetSmsSecurityCodeInvoker;

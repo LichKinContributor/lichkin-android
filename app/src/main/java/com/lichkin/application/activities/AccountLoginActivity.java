@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.AccountLoginIn;
-import com.lichkin.application.beans.impl.out.AccountLoginOut;
+import com.lichkin.application.beans.in.impl.AccountLoginIn;
+import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.AccountLoginInvoker;
 import com.lichkin.application.testers.AccountLoginTester;

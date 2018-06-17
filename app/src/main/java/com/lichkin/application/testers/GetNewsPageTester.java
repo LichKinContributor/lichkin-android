@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.GetNewsPageIn;
-import com.lichkin.application.beans.impl.out.GetNewsPageOut;
+import com.lichkin.application.beans.in.impl.GetNewsPageIn;
+import com.lichkin.application.beans.out.impl.GetNewsPageOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.defines.beans.LKPageBean;

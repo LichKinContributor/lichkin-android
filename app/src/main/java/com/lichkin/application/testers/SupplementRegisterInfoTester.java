@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.SupplementRegisterInfoIn;
-import com.lichkin.application.beans.impl.out.SupplementRegisterInfoOut;
+import com.lichkin.application.beans.in.impl.SupplementRegisterInfoIn;
+import com.lichkin.application.beans.out.impl.SupplementRegisterInfoOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 

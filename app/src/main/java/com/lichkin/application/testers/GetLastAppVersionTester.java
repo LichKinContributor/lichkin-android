@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
-import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
+import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
 import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;

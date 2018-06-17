@@ -1,4 +1,4 @@
-package com.lichkin.application.beans.impl.in;
+package com.lichkin.application.beans.in.impl;
 
 import com.lichkin.framework.defines.beans.LKRequestBean;
 
@@ -7,15 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * 头像上传
+ * 令牌登录
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
 @ToString(callSuper = true)
 @RequiredArgsConstructor
-public class PhotoUploadIn extends LKRequestBean {
-
-    /** 头像（Base64） */
-    private final String photo;
-
+public class TokenLoginIn extends LKRequestBean {
 }

@@ -1,4 +1,4 @@
-package com.lichkin.application.beans.impl.in;
+package com.lichkin.application.beans.in.impl;
 
 import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.defines.beans.LKRequestBean;

@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.ScoreIn;
-import com.lichkin.application.beans.impl.out.ScoreOut;
+import com.lichkin.application.beans.in.impl.ScoreIn;
+import com.lichkin.application.beans.out.impl.ScoreOut;
 import com.lichkin.application.invokers.impl.ScoreInvoker;
 import com.lichkin.application.testers.ScoreTester;
 import com.lichkin.framework.app.android.beans.LKScreen;

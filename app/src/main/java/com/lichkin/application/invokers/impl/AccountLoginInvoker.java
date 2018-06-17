@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.AccountLoginIn;
-import com.lichkin.application.beans.impl.out.AccountLoginOut;
+import com.lichkin.application.beans.in.impl.AccountLoginIn;
+import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 

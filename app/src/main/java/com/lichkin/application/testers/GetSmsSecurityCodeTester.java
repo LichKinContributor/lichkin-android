@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.GetSmsSecurityCodeIn;
-import com.lichkin.application.beans.impl.out.GetSmsSecurityCodeOut;
+import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
+import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 

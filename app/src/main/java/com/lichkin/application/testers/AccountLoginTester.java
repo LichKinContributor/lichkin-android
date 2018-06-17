@@ -1,7 +1,7 @@
 package com.lichkin.application.testers;
 
-import com.lichkin.application.beans.impl.in.AccountLoginIn;
-import com.lichkin.application.beans.impl.out.AccountLoginOut;
+import com.lichkin.application.beans.in.impl.AccountLoginIn;
+import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.utils.LKRandomUtils;

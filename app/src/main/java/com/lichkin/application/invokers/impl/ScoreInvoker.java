@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.ScoreIn;
-import com.lichkin.application.beans.impl.out.ScoreOut;
+import com.lichkin.application.beans.in.impl.ScoreIn;
+import com.lichkin.application.beans.out.impl.ScoreOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 

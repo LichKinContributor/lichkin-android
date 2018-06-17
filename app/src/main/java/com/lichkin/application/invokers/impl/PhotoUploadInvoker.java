@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.PhotoUploadIn;
-import com.lichkin.application.beans.impl.out.PhotoUploadOut;
+import com.lichkin.application.beans.in.impl.PhotoUploadIn;
+import com.lichkin.application.beans.out.impl.PhotoUploadOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 

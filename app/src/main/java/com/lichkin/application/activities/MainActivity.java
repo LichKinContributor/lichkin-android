@@ -19,8 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.beans.impl.in.GetLastAppVersionIn;
-import com.lichkin.application.beans.impl.out.GetLastAppVersionOut;
+import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
+import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
 import com.lichkin.application.fragments.HomeFragment;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;

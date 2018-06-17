@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.GetNewsPageIn;
-import com.lichkin.application.beans.impl.out.GetNewsPageOut;
+import com.lichkin.application.beans.in.impl.GetNewsPageIn;
+import com.lichkin.application.beans.out.impl.GetNewsPageOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKPageBean;
 import com.lichkin.framework.defines.beans.LKResponseBean;

@@ -1,4 +1,4 @@
-package com.lichkin.application.beans.impl.out;
+package com.lichkin.application.beans.out.impl;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.beans.impl.in.GetBannerListIn;
-import com.lichkin.application.beans.impl.out.GetBannerListOut;
+import com.lichkin.application.beans.in.impl.GetBannerListIn;
+import com.lichkin.application.beans.out.impl.GetBannerListOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 

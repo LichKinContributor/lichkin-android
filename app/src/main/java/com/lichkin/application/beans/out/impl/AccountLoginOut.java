@@ -1,4 +1,6 @@
-package com.lichkin.application.beans.impl.out;
+package com.lichkin.application.beans.out.impl;
+
+import com.lichkin.application.beans.out.LoginOut;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,22 +12,13 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
-public class AccountLoginOut {
+@ToString(callSuper = true)
+public class AccountLoginOut extends LoginOut {
 
     /** 令牌 */
     private String token;
 
     /** 登录名 */
     private String loginName;
-
-    /** 等级 */
-    private int level;
-
-    /** 头像 */
-    private String photo;
-
-    /** 安全中心地址 */
-    private String securityCenterUrl;
 
 }
