@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
@@ -188,13 +189,19 @@ public class LKWebViewActivity extends Activity {
         });
     }
 
+
+    /** 默认请求码 */
+    public static final int REQUEST_CODE = 0x00000008;
+
     /**
-     * 打开页面
-     * @param from 发起环境上下文
-     * @param to 页面地址
+     * 初始化参数
+     * @param params 参数
+     * @return 参数
      */
-    public static void open(Context from, String to) {
-        Map<String, Object> params = new HashMap<>();
+    private static Map<String, Object> initParams(Map<String, Object> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
         params.put("appKey", LKAndroidStatics.appKey());
         params.put("clientType", "ANDROID");
         params.put("versionX", LKAndroidStatics.versionX());
@@ -204,7 +211,57 @@ public class LKWebViewActivity extends Activity {
         params.put("uuid", LKAndroidStatics.uuid());
         params.put("screenWidth", LKAndroidStatics.screenWidth());
         params.put("screenHeight", LKAndroidStatics.screenHeight());
-        open(from, to, params);
+        return params;
+    }
+
+    /**
+     * 拼接参数地址
+     * @param to 页面地址
+     * @param params 参数
+     * @return 参数地址
+     */
+    private static String spliceUrlParams(String to, Map<String, Object> params) {
+        StringBuilder sb = new StringBuilder(to);
+        boolean first = !to.contains("?");
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (first) {
+                sb.append("?");
+                first = false;
+            } else {
+                sb.append("&");
+            }
+            sb.append(key).append("=").append(value == null ? "" : value.toString());
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     */
+    public static void open(Activity from, String to) {
+        open(from, to, null, REQUEST_CODE);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     */
+    public static void open(Fragment from, String to) {
+        open(from.getActivity(), to, null, REQUEST_CODE);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     */
+    public static void open(Context from, String to) {
+        open(from, to, null);
     }
 
     /**
@@ -215,23 +272,72 @@ public class LKWebViewActivity extends Activity {
      */
     public static void open(Context from, String to, Map<String, Object> params) {
         Intent intent = new Intent(from, LKWebViewActivity.class);
-        StringBuilder sb = new StringBuilder(to);
-        if (params != null) {
-            boolean first = !to.contains("?");
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                if (first) {
-                    sb.append("?");
-                    first = false;
-                } else {
-                    sb.append("&");
-                }
-                sb.append(key).append("=").append(value == null ? "" : value.toString());
-            }
-        }
-        intent.putExtra(KEY_URL, sb.toString());
+        intent.putExtra(KEY_URL, spliceUrlParams(to, initParams(params)));
         from.startActivity(intent);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param params 参数
+     */
+    public static void open(Activity from, String to, Map<String, Object> params) {
+        open(from, to, params, REQUEST_CODE);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param params 参数
+     */
+    public static void open(Fragment from, String to, Map<String, Object> params) {
+        open(from.getActivity(), to, params, REQUEST_CODE);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param params 参数
+     * @param requestCode 请求码
+     */
+    public static void open(Activity from, String to, Map<String, Object> params, int requestCode) {
+        Intent intent = new Intent(from, LKWebViewActivity.class);
+        intent.putExtra(KEY_URL, spliceUrlParams(to, initParams(params)));
+        from.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param requestCode 请求码
+     */
+    public static void open(Activity from, String to, int requestCode) {
+        open(from, to, null, requestCode);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param params 参数
+     * @param requestCode 请求码
+     */
+    public static void open(Fragment from, String to, Map<String, Object> params, int requestCode) {
+        open(from.getActivity(), to, params, requestCode);
+    }
+
+    /**
+     * 打开页面
+     * @param from 发起页面
+     * @param to 页面地址
+     * @param requestCode 请求码
+     */
+    public static void open(Fragment from, String to, int requestCode) {
+        open(from.getActivity(), to, null, requestCode);
     }
 
 }

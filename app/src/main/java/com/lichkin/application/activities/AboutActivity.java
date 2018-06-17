@@ -45,9 +45,9 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (LKPropertiesLoader.pageTest) {
-                    LKWebViewActivity.open(AboutActivity.this, "file:///android_asset/test/test.html");
+                    LKWebViewActivity.open(AboutActivity.this.getBaseContext(), "file:///android_asset/test/test.html");
                 } else {
-                    LKWebViewActivity.open(AboutActivity.this, LKPropertiesLoader.pageBaseUrl + subUrl + LKPropertiesLoader.pageSuffix);
+                    LKWebViewActivity.open(AboutActivity.this.getBaseContext(), LKPropertiesLoader.pageBaseUrl + subUrl + LKPropertiesLoader.pageSuffix);
                 }
             }
         });

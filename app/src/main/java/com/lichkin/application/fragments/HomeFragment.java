@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
                 bannerSection.setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        LKWebViewActivity.open(HomeFragment.this.getActivity(), responseDatas.get(position).getPageUrl());
+                        LKWebViewActivity.open(HomeFragment.this.getContext(), responseDatas.get(position).getPageUrl());
                     }
                 });
                 //开始轮播
@@ -270,7 +270,7 @@ public class HomeFragment extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LKWebViewActivity.open(HomeFragment.this.getActivity(), news.getUrl());
+                    LKWebViewActivity.open(HomeFragment.this.getContext(), news.getUrl());
                 }
             });
 

@@ -108,7 +108,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         create = false;
 
         if (LKPropertiesLoader.testWebView) {
-            LKWebViewActivity.open(MainActivity.this, LKPropertiesLoader.testWebViewUrl);
+            LKWebViewActivity.open(MainActivity.this.getBaseContext(), LKPropertiesLoader.testWebViewUrl);
             return;
         }
 
@@ -154,6 +154,8 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         startActivity(intent);
     }
 
+    public static final int REQUEST_CODE = 0x00000006;
+
     /**
      * 获取最新客户端版本信息
      */
@@ -184,14 +186,18 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                 if (responseDatas == null) {
                     return;
                 }
-                boolean forceUpdate = responseDatas.isForceUpdate();
+                final boolean forceUpdate = responseDatas.isForceUpdate();
                 String tip = responseDatas.getTip();
                 LKDialog dlg = new LKDialog(context, tip).setTitle(R.string.dlg_tip_title_update).setCancelable(false);
                 dlg.setPositiveButton(R.string.btn_positive_name_update, new LKBtnCallback() {
                     @Override
                     public void call(Context context, DialogInterface dialog) {
                         dlgUpdateClosed = true;
-                        LKWebViewActivity.open(MainActivity.this, responseDatas.getUrl());
+                        if (forceUpdate) {
+                            LKWebViewActivity.open(MainActivity.this, responseDatas.getUrl(), REQUEST_CODE);
+                        } else {
+                            LKWebViewActivity.open(MainActivity.this.getBaseContext(), responseDatas.getUrl());
+                        }
                     }
                 });
                 if (forceUpdate) {
@@ -260,6 +266,15 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
             }
 
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            System.exit(0);
+        }
     }
 
     /**
