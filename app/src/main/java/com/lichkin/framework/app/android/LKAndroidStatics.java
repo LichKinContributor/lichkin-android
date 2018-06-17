@@ -1,6 +1,8 @@
 package com.lichkin.framework.app.android;
 
 import com.lichkin.app.android.demo.R;
+import com.lichkin.application.beans.out.LoginOut;
+import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
 
@@ -225,6 +227,28 @@ public class LKAndroidStatics {
     }
 
     /**
+     * 保存登录信息
+     * @param login 登录信息
+     */
+    public static void saveLoginInfo(LoginOut login) {
+        if (login == null) {
+            photo(null);
+            level(1);
+            securityCenterUrl(null);
+            token(null);
+            loginName(null);
+            return;
+        }
+        LKAndroidStatics.photo(login.getPhoto());
+        LKAndroidStatics.level(login.getLevel());
+        LKAndroidStatics.securityCenterUrl(login.getSecurityCenterUrl());
+        if (login instanceof AccountLoginOut) {
+            LKAndroidStatics.token(((AccountLoginOut) login).getToken());
+            LKAndroidStatics.loginName(((AccountLoginOut) login).getLoginName());
+        }
+    }
+
+    /**
      * 获取令牌
      * @return 令牌
      */
@@ -239,8 +263,7 @@ public class LKAndroidStatics {
      * 设置令牌
      * @param token 令牌
      */
-    @Deprecated
-    public static void token(String token) {
+    private static void token(String token) {
         LKAndroidStatics.token = token;
         LKSharedPreferences.putString(LKSharedPreferences.TOKEN, token);
     }
@@ -263,8 +286,7 @@ public class LKAndroidStatics {
      * 设置登录名
      * @param loginName 登录名
      */
-    @Deprecated
-    public static void loginName(String loginName) {
+    private static void loginName(String loginName) {
         LKAndroidStatics.loginName = loginName;
         LKSharedPreferences.putString(LKSharedPreferences.LOGIN_NAME, loginName);
     }
@@ -284,8 +306,7 @@ public class LKAndroidStatics {
      * 设置等级
      * @param level 等级
      */
-    @Deprecated
-    public static void level(int level) {
+    private static void level(int level) {
         LKAndroidStatics.level = level;
         LKSharedPreferences.putInt(LKSharedPreferences.LEVEL, level);
     }
@@ -326,8 +347,7 @@ public class LKAndroidStatics {
      * 设置安全中心地址
      * @param securityCenterUrl 安全中心地址
      */
-    @Deprecated
-    public static void securityCenterUrl(String securityCenterUrl) {
+    private static void securityCenterUrl(String securityCenterUrl) {
         LKAndroidStatics.securityCenterUrl = securityCenterUrl;
         LKSharedPreferences.putString(LKSharedPreferences.SECURITY_CENTER_URL, securityCenterUrl);
     }

@@ -238,11 +238,7 @@ public class SmsValidateActivity extends AppCompatActivity {
             @Override
             protected void success(Context context, FastLoginIn FastLoginIn, FastLoginOut responseDatas) {
                 afterInvokeFastLogin();
-                LKAndroidStatics.token(responseDatas.getToken());
-                LKAndroidStatics.loginName(responseDatas.getLoginName());
-                LKAndroidStatics.level(responseDatas.getLevel());
-                LKAndroidStatics.photo(responseDatas.getPhoto());
-                LKAndroidStatics.securityCenterUrl(responseDatas.getSecurityCenterUrl());
+                LKAndroidStatics.saveLoginInfo(responseDatas);
                 if (responseDatas.isLogin()) {
                     //登录
                     SmsValidateActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);

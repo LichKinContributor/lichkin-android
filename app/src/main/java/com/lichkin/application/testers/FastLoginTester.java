@@ -17,7 +17,7 @@ public class FastLoginTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "FastLoginTester");
+//        retrofit.addTestResponseBeans(666, "FastLoginTester");
         FastLoginOut out = new FastLoginOut();
         if (cellphone.equals("18501531550")) {
             out.setLoginName("LunaDream");

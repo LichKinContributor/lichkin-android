@@ -14,7 +14,7 @@ public class SignInTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "SignInTester");
+//        retrofit.addTestResponseBeans(666, "SignInTester");
         SignInOut out = new SignInOut();
         retrofit.addTestResponseBeans(out);
     }

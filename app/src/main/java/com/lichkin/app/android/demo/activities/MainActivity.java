@@ -22,10 +22,14 @@ public class MainActivity extends com.lichkin.application.activities.MainActivit
     }
 
     public static int MENU_1;
+    public static int MENU_2;
+    public static int MENU_3;
 
     @Override
     protected void initMenuPages() {
         MENU_1 = initMenuPage(R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1, new IntroFragment3());
+        MENU_2 = initMenuPage(R.string.title_navigation_menu_2, R.drawable.ic_navigation_menu_2, new IntroFragment3());
+        MENU_3 = initMenuPage(R.string.title_navigation_menu_3, R.drawable.ic_navigation_menu_3, new IntroFragment3());
     }
 
     @Override

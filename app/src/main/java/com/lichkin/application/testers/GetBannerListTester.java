@@ -17,7 +17,7 @@ public class GetBannerListTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "GetBannerListTester");
+//        retrofit.addTestResponseBeans(666, "GetBannerListTester");
         final List<GetBannerListOut> bannerList = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
             GetBannerListOut banner = new GetBannerListOut();

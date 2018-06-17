@@ -221,9 +221,7 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
 
             @Override
             protected void success(Context context, TokenLoginIn TokenLoginIn, TokenLoginOut responseDatas) {
-                LKAndroidStatics.level(responseDatas.getLevel());
-                LKAndroidStatics.photo(responseDatas.getPhoto());
-                LKAndroidStatics.securityCenterUrl(responseDatas.getSecurityCenterUrl());
+                LKAndroidStatics.saveLoginInfo(responseDatas);
                 //初始化我的信息
                 initMyInfo();
             }
@@ -290,15 +288,9 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
      * 清除我的信息
      */
     private void clearMyInfo() {
-        LKAndroidStatics.token(null);
-        LKAndroidStatics.loginName(null);
+        LKAndroidStatics.saveLoginInfo(null);
         loginNameView.setText("");
-        LKAndroidStatics.level(1);
-        levelLayout.removeAllViews();
-        LKAndroidStatics.photo(null);
         photoView.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.no_photo));
-        LKAndroidStatics.securityCenterUrl(null);
-        loginedBtnAdded = false;
         btnLogin.setVisibility(View.VISIBLE);
         loginedLayout.setVisibility(View.GONE);
         loginedBtnAdded = false;

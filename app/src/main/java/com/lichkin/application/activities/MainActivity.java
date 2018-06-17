@@ -224,6 +224,10 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                         dlg.show();
                         return;
                     }
+                    if (LKPropertiesLoader.testRetrofit) {
+                        super.busError(context, getLastAppVersionIn, errorCode, errorType, errorBean);
+                        return;
+                    }
                     restart();
                 } else {
                     // 自定义业务错误处理

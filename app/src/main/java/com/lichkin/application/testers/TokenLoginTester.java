@@ -15,7 +15,7 @@ public class TokenLoginTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "TokenLoginTester");
+//        retrofit.addTestResponseBeans(666, "TokenLoginTester");
         TokenLoginOut out = new TokenLoginOut();
         out.setLevel(LKAndroidStatics.level());
         out.setPhoto(LKAndroidStatics.photo());

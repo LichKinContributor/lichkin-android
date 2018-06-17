@@ -162,11 +162,7 @@ public class AccountLoginActivity extends AppCompatActivity {
             @Override
             protected void success(Context context, AccountLoginIn AccountLoginIn, AccountLoginOut responseDatas) {
                 afterInvokeAccountLogin();
-                LKAndroidStatics.token(responseDatas.getToken());
-                LKAndroidStatics.loginName(responseDatas.getLoginName());
-                LKAndroidStatics.level(responseDatas.getLevel());
-                LKAndroidStatics.photo(responseDatas.getPhoto());
-                LKAndroidStatics.securityCenterUrl(responseDatas.getSecurityCenterUrl());
+                LKAndroidStatics.saveLoginInfo(responseDatas);
                 AccountLoginActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);
                 AccountLoginActivity.this.finish();
             }

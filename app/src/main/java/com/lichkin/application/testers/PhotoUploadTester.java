@@ -14,7 +14,7 @@ public class PhotoUploadTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "PhotoUploadTester");
+//        retrofit.addTestResponseBeans(666, "PhotoUploadTester");
         PhotoUploadOut out = new PhotoUploadOut();
         retrofit.addTestResponseBeans(out);
     }

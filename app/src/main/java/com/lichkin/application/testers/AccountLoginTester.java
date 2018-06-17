@@ -17,7 +17,7 @@ public class AccountLoginTester {
         if (!LKPropertiesLoader.testRetrofit) {
             return;
         }
-        retrofit.addTestResponseBeans(666, "AccountLoginTester");
+//        retrofit.addTestResponseBeans(666, "AccountLoginTester");
         AccountLoginOut out = new AccountLoginOut();
         if (loginName.equals("18501531550") || loginName.equals("LunaDream")) {
             out.setLoginName("LunaDream");
