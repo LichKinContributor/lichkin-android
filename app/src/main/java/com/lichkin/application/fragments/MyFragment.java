@@ -278,7 +278,12 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         btns.add(new LKDynamicButton(R.drawable.btn_exit, R.string.title_exit, new LKCallback() {
             @Override
             public void call() {
-                clearMyInfo();
+                new LKDialog(MyFragment.this.getContext(), LKAndroidUtils.getString(R.string.title_exit) + "?").setPositiveButton(new LKBtnCallback() {
+                    @Override
+                    public void call(Context context, DialogInterface dialog) {
+                        clearMyInfo();
+                    }
+                }).setNegativeButton().show();
             }
         }));
         LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
