@@ -4,6 +4,7 @@ package com.lichkin.app.android.demo.activities;
 import android.support.v4.app.Fragment;
 
 import com.lichkin.app.android.demo.R;
+import com.lichkin.app.android.demo.fragments.CompFragment;
 import com.lichkin.app.android.demo.fragments.IntroFragment1;
 import com.lichkin.app.android.demo.fragments.IntroFragment2;
 import com.lichkin.app.android.demo.fragments.IntroFragment3;
@@ -16,9 +17,9 @@ public class MainActivity extends com.lichkin.application.activities.MainActivit
 
     @Override
     protected void initMenuPages() {
-        initMenuPage(R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1, new IntroFragment1(), false);
-        initMenuPage(R.string.title_navigation_menu_2, R.drawable.ic_navigation_menu_2, new IntroFragment2(), false);
-        initMenuPage(R.string.title_navigation_menu_3, R.drawable.ic_navigation_menu_3, new IntroFragment3(), false);
+        initMenuPage(R.string.title_navigation_menu_1, R.drawable.ic_navigation_menu_1, new CompFragment(), false);
+        initMenuPage(R.string.title_navigation_menu_2, R.drawable.ic_navigation_menu_2, new CompFragment(), false);
+        initMenuPage(R.string.title_navigation_menu_3, R.drawable.ic_navigation_menu_3, new CompFragment(), false);
     }
 
     @Override

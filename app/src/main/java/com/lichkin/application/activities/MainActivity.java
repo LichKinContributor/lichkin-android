@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
 import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
-import com.lichkin.application.beans.out.nested.CompInfo;
 import com.lichkin.application.fragments.HomeFragment;
 import com.lichkin.application.fragments.MyFragment;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
@@ -30,6 +29,7 @@ import com.lichkin.application.testers.GetLastAppVersionTester;
 import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.activities.LKAppCompatActivity;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
+import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
@@ -125,14 +125,17 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         if (token == null || "".equals(token)) {
             return;
         }
-        List<CompInfo> listComp = LKAndroidStatics.listComp();
-        if (listComp != null) {
-            for (int i = 0; i < listComp.size(); i++) {
+        List<LKDynamicTab> dynamicTabs = LKAndroidStatics.dynamicTabs();
+        if (dynamicTabs != null) {
+            for (int i = 0; i < dynamicTabs.size(); i++) {
                 if (i > 2) {
                     break;
                 }
-                CompInfo compInfo = listComp.get(i);
-                displayMenu(i, compInfo.getCompName(), LKBase64.toDrawable(compInfo.getCompImg()));
+                LKDynamicTab tabInfo = dynamicTabs.get(i);
+                Bundle bundle = new Bundle();
+                bundle.putString("tabId", tabInfo.getTabId());
+                fragments.get(i).setArguments(bundle);
+                displayMenu(i, tabInfo.getTabName(), LKBase64.toDrawable(tabInfo.getTabIcon()));
             }
         }
     }
@@ -339,6 +342,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
     /** 自定义菜单 */
     public List<MenuPage> userDefinedMenus = new ArrayList<>();
+    public List<Fragment> fragments = new ArrayList<>();
 
     /**
      * 初始化对象
@@ -354,6 +358,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         menuPageMap.put(menuId, menuPage);
         if (!lock) {
             userDefinedMenus.add(menuPage);
+            fragments.add(fragment);
         }
         return menuId;
     }

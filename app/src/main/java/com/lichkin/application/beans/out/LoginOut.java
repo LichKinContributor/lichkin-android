@@ -1,6 +1,6 @@
 package com.lichkin.application.beans.out;
 
-import com.lichkin.application.beans.out.nested.CompInfo;
+import com.lichkin.framework.app.android.beans.LKDynamicTab;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class LoginOut {
     /** 安全中心地址 */
     private String securityCenterUrl;
 
-    /** 公司列表 */
-    private List<CompInfo> listComp;
+    /** 动态TAB页列表 */
+    private List<LKDynamicTab> listTab;
 
 }

@@ -82,4 +82,8 @@
     <string name="register_pwd_text">密码可由字母、数字、英文符号组成</string>
     <string name="level">等级</string>
     <string name="sign_in_success">签到成功</string>
+
+    <string name="title_btn_comp_news">新闻</string>
+    <string name="title_btn_approval">审批</string>
+    <string name="title_btn_punch_the_clock">打卡</string>
 </resources>

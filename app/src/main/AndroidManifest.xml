@@ -45,6 +45,9 @@
         <activity
             android:name="com.lichkin.application.activities.AccountLoginActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lichkin.application.activities.CompNewsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

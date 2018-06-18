@@ -82,4 +82,8 @@
     <string name="register_pwd_text">Passwords can be made up of letters, numbers, symbols.</string>
     <string name="level">Level</string>
     <string name="sign_in_success">Sign in Success</string>
+
+    <string name="title_btn_comp_news">News</string>
+    <string name="title_btn_approval">Workflow</string>
+    <string name="title_btn_punch_the_clock">Punch The Clock</string>
 </resources>

@@ -32,7 +32,7 @@ public class LKSharedPreferences {
     public static final String SECURITY_CENTER_URL = "lichkin.framework.app.securityCenterUrl";
 
     /** 公司列表键 */
-    public static final String LIST_COMP = "lichkin.framework.app.listComp";
+    public static final String TABS = "lichkin.framework.app.tabs";
 
     /** 存储文件名 */
     private static final String SHARED_PREFERENCES_NAME = "LichKin";

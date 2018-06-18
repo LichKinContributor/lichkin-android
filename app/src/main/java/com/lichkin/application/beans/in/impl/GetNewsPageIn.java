@@ -21,4 +21,13 @@ public class GetNewsPageIn extends LKRequestPageBean {
         super(pageNumber, 5);
     }
 
+    /**
+     * 构造方法
+     * @param pageNumber 页码
+     * @param pageSize 每页数据量
+     */
+    public GetNewsPageIn(int pageNumber, int pageSize) {
+        super(pageNumber, pageSize);
+    }
+
 }

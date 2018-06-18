@@ -1,12 +1,11 @@
-package com.lichkin.application.fragments;
+package com.lichkin.application.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,15 +16,10 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.activities.MainActivity;
-import com.lichkin.application.beans.in.impl.GetBannerListIn;
-import com.lichkin.application.beans.in.impl.GetNewsPageIn;
-import com.lichkin.application.beans.out.impl.GetBannerListOut;
-import com.lichkin.application.beans.out.impl.GetNewsPageOut;
-import com.lichkin.application.invokers.impl.GetBannerListInvoker;
-import com.lichkin.application.invokers.impl.GetNewsPageInvoker;
-import com.lichkin.application.testers.GetBannerListTester;
-import com.lichkin.application.testers.GetNewsPageTester;
+import com.lichkin.application.beans.in.impl.GetCompNewsPageIn;
+import com.lichkin.application.beans.out.impl.GetCompNewsPageOut;
+import com.lichkin.application.invokers.impl.GetCompNewsPageInvoker;
+import com.lichkin.application.testers.GetCompNewsPageTester;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
@@ -35,137 +29,46 @@ import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 import com.lichkin.framework.defines.beans.LKPageBean;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
- * 主页
+ * 公司新闻页
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
-public class HomeFragment extends Fragment {
+public class CompNewsActivity extends AppCompatActivity {
 
-    /** 当前视图 */
-    private View view;
+    /** 公司ID */
+    private String compId;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //填充页面
-        view = inflater.inflate(R.layout.home_fragment, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        //初始化Banner栏
-        initBannerSection();
+        //引用布局文件
+        setContentView(R.layout.activity_comp_news);
+
+        //只使用竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //绑定页面
+        ButterKnife.bind(this);
+
+        compId = getIntent().getStringExtra("tabId");
 
         //初始化新闻栏
         initNewsSection();
-
-        //返回视图
-        return view;
-    }
-
-    /** 配置键：Banner图片高宽比例 */
-    private static final String CONFIG_KEY_BANNER_RATIO = "lichkin.framework.api.banner.ratio";
-    /** 配置值：Banner图片高宽比例 */
-    private static final double CONFIG_VALUE_BANNER_RATIO = LKPropertiesLoader.getDivision(CONFIG_KEY_BANNER_RATIO);
-    /** Banner栏控件 */
-    private Banner bannerSection;
-    /** Banner栏高度 */
-    private int bannerSectionHeight;
-
-    /**
-     * 初始化Banner栏
-     */
-    private void initBannerSection() {
-        //获取Banner控件
-        bannerSection = view.findViewById(R.id.banner);
-
-        //设置样式-数字指示器和标题
-        bannerSection.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
-        //设置图片加载器
-        bannerSection.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object obj, ImageView imageView) {
-                LKImageLoader.load(((GetBannerListOut) obj).getImageUrl(), imageView);
-            }
-        });
-
-        //图片按比例设置值
-        bannerSectionHeight = (int) (getResources().getDisplayMetrics().widthPixels * CONFIG_VALUE_BANNER_RATIO);
-        ViewGroup.LayoutParams bannerParams = bannerSection.getLayoutParams();
-        bannerParams.height = bannerSectionHeight;
-        bannerSection.setLayoutParams(bannerParams);
-
-        //设置图片
-        bannerSection.setImages(new ArrayList<>());
-
-        //开始轮播-如果请求没有结果时会显示无图片
-        bannerSection.start();
-
-        //请求获取Banner列表
-        invokeGetBannerList();
-    }
-
-    /**
-     * 请求获取Banner列表
-     */
-    private void invokeGetBannerList() {
-        //请求参数
-        GetBannerListIn in = new GetBannerListIn();
-
-        //创建请求对象
-        final LKRetrofit<GetBannerListIn, List<GetBannerListOut>> retrofit = new LKRetrofit<>(this.getActivity(), GetBannerListInvoker.class);
-
-        //测试代码
-        GetBannerListTester.test(retrofit);
-
-        //执行请求
-        retrofit.callAsync(in, new LKBaseInvokeCallback<GetBannerListIn, List<GetBannerListOut>>() {
-
-            @Override
-            protected void success(Context context, GetBannerListIn getLastAppVersionIn, final List<GetBannerListOut> responseDatas) {
-                if (responseDatas == null) {
-                    return;
-                }
-
-                //设置图片
-                bannerSection.setImages(responseDatas);
-                //设置标题
-                bannerSection.setBannerTitles(extractBannerTitleList(responseDatas));
-                //设置点击事件
-                bannerSection.setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int position) {
-                        LKWebViewActivity.open(HomeFragment.this.getContext(), responseDatas.get(position).getPageUrl());
-                    }
-                });
-                //开始轮播
-                bannerSection.start();
-            }
-
-        });
-    }
-
-    /**
-     * 提取Banner标题列表
-     * @param bannerList Banner列表
-     * @return Banner标题列表
-     */
-    private List<String> extractBannerTitleList(List<GetBannerListOut> bannerList) {
-        List<String> titleList = new ArrayList<>(bannerList.size());
-        for (int i = 0; i < bannerList.size(); i++) {
-            titleList.add(bannerList.get(i).getTitle());
-        }
-        return titleList;
     }
 
     /** 新闻栏控件 */
-    private PullToRefreshListView newsSection;
+    @BindView(R.id.news)
+    PullToRefreshListView newsSection;
     /** 数据列表 */
-    private List<GetNewsPageOut> newsList = new ArrayList<>();
+    private List<GetCompNewsPageOut> newsList = new ArrayList<>();
     /** 适配器 */
     private BaseAdapter adapter = new BaseAdapter() {
 
@@ -175,7 +78,7 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public GetNewsPageOut getItem(int position) {
+        public GetCompNewsPageOut getItem(int position) {
             return newsList.get(position);
         }
 
@@ -187,7 +90,7 @@ public class HomeFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             //取对应的新闻对象
-            final GetNewsPageOut news = getItem(position);
+            final GetCompNewsPageOut news = getItem(position);
 
             //根据图片数量确定布局
             List<String> imageUrls = news.getImageUrls();
@@ -264,13 +167,13 @@ public class HomeFragment extends Fragment {
             }
 
             //添加布局
-            convertView = View.inflate(view.getContext(), layoutResId, null);
+            convertView = View.inflate(newsSection.getContext(), layoutResId, null);
 
             //点击事件监听
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LKWebViewActivity.open(HomeFragment.this.getContext(), news.getUrl());
+                    LKWebViewActivity.open(newsSection.getContext(), news.getUrl());
                 }
             });
 
@@ -317,14 +220,9 @@ public class HomeFragment extends Fragment {
      * 初始化新闻栏
      */
     private void initNewsSection() {
-        //获取新闻控件
-        newsSection = view.findViewById(R.id.news);
-
         //新闻栏高度
         int newsSectionHeight = getResources().getDisplayMetrics().heightPixels//总高度
                 - (int) LKAndroidUtils.getStatusBarHeight()//状态栏高度
-                - bannerSectionHeight //Banner栏高度
-                - ((MainActivity) getActivity()).navigationHeight//导航栏高度
                 ;
         ViewGroup.LayoutParams newsParams = newsSection.getLayoutParams();
         newsParams.height = newsSectionHeight;
@@ -346,7 +244,7 @@ public class HomeFragment extends Fragment {
                 //更新列表状态
                 adapter.notifyDataSetChanged();
                 //请求新闻数据
-                invokeGetNewsPage();
+                invokeGetCompNewsPage();
             }
 
             @Override
@@ -363,7 +261,7 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 //请求新闻数据
-                invokeGetNewsPage();
+                invokeGetCompNewsPage();
             }
 
         });
@@ -372,27 +270,27 @@ public class HomeFragment extends Fragment {
         newsSection.setBackground(LKAndroidUtils.getDrawable(R.drawable.no_news));
 
         //请求新闻数据
-        invokeGetNewsPage();
+        invokeGetCompNewsPage();
     }
 
     /**
      * 请求获取新闻分页
      */
-    private void invokeGetNewsPage() {
+    private void invokeGetCompNewsPage() {
         //请求参数
-        GetNewsPageIn in = new GetNewsPageIn(pageNumber++);
+        GetCompNewsPageIn in = new GetCompNewsPageIn(pageNumber++, compId);
 
         //创建请求对象
-        final LKRetrofit<GetNewsPageIn, LKPageBean<GetNewsPageOut>> retrofit = new LKRetrofit<>(this.getActivity(), GetNewsPageInvoker.class);
+        final LKRetrofit<GetCompNewsPageIn, LKPageBean<GetCompNewsPageOut>> retrofit = new LKRetrofit<>(CompNewsActivity.this, GetCompNewsPageInvoker.class);
 
         //测试代码
-        GetNewsPageTester.test(retrofit, in);
+        GetCompNewsPageTester.test(retrofit, in);
 
         //执行请求
-        retrofit.callAsync(in, new LKBaseInvokeCallback<GetNewsPageIn, LKPageBean<GetNewsPageOut>>() {
+        retrofit.callAsync(in, new LKBaseInvokeCallback<GetCompNewsPageIn, LKPageBean<GetCompNewsPageOut>>() {
 
             @Override
-            protected void success(Context context, GetNewsPageIn getLastAppVersionIn, final LKPageBean<GetNewsPageOut> responseDatas) {
+            protected void success(Context context, GetCompNewsPageIn getLastAppVersionIn, final LKPageBean<GetCompNewsPageOut> responseDatas) {
                 if (responseDatas == null) {
                     //更新列表状态
                     newsSection.onRefreshComplete();
@@ -425,20 +323,20 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            protected void busError(Context context, GetNewsPageIn getNewsPageIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
-                super.busError(context, getNewsPageIn, errorCode, errorType, errorBean);
+            protected void busError(Context context, GetCompNewsPageIn GetCompNewsPageIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                super.busError(context, GetCompNewsPageIn, errorCode, errorType, errorBean);
                 newsSection.onRefreshComplete();
             }
 
             @Override
-            public void connectError(Context context, String requestId, GetNewsPageIn getNewsPageIn, DialogInterface dialog) {
-                super.connectError(context, requestId, getNewsPageIn, dialog);
+            public void connectError(Context context, String requestId, GetCompNewsPageIn GetCompNewsPageIn, DialogInterface dialog) {
+                super.connectError(context, requestId, GetCompNewsPageIn, dialog);
                 newsSection.onRefreshComplete();
             }
 
             @Override
-            public void timeoutError(Context context, String requestId, GetNewsPageIn getNewsPageIn, DialogInterface dialog) {
-                super.timeoutError(context, requestId, getNewsPageIn, dialog);
+            public void timeoutError(Context context, String requestId, GetCompNewsPageIn GetCompNewsPageIn, DialogInterface dialog) {
+                super.timeoutError(context, requestId, GetCompNewsPageIn, dialog);
                 newsSection.onRefreshComplete();
             }
 

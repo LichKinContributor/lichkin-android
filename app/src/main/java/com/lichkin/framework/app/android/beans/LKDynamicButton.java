@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.LKCallback;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,6 +36,9 @@ public class LKDynamicButton {
     /** 页面地址 */
     private String url;
 
+    /** 页面参数 */
+    private Map<String, Object> params = new HashMap<>();
+
     /** 弹窗页面对象 */
     private DialogFragment dialogFragment;
 
@@ -53,6 +59,17 @@ public class LKDynamicButton {
         this.btnTitleResId = btnTitleResId;
         this.toActivityClass = LKWebViewActivity.class;
         this.url = url;
+    }
+
+    /**
+     * 添加参数
+     * @param key 键
+     * @param value 值
+     * @return 本对象
+     */
+    public LKDynamicButton addParam(String key, Object value) {
+        params.put(key, value);
+        return this;
     }
 
     /**
@@ -93,6 +110,5 @@ public class LKDynamicButton {
         this.toActivityClass = null;
         this.callback = callback;
     }
-
 
 }

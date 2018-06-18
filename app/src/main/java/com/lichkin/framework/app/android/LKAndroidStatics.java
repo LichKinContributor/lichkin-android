@@ -3,12 +3,10 @@ package com.lichkin.framework.app.android;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.out.LoginOut;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
-import com.lichkin.application.beans.out.nested.CompInfo;
+import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,8 +67,8 @@ public class LKAndroidStatics {
     /** 安全中心地址 */
     private static String securityCenterUrl;
 
-    /** 公司列表 */
-    private static List<CompInfo> listComp;
+    /** 动态TAB页列表 */
+    private static List<LKDynamicTab> dynamicTabs;
 
     /**
      * 获取客户端唯一标识
@@ -242,7 +240,7 @@ public class LKAndroidStatics {
             photo(null);
             level(1);
             securityCenterUrl(null);
-            listComp(null);
+            dynamicTabs(null);
             token(null);
             loginName(null);
             return;
@@ -250,7 +248,7 @@ public class LKAndroidStatics {
         photo(login.getPhoto());
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
-        listComp(login.getListComp());
+        dynamicTabs(login.getListTab());
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());
@@ -362,36 +360,32 @@ public class LKAndroidStatics {
     }
 
     /**
-     * 获取公司列表
-     * @return 公司列表
+     * 获取动态TAB页列表
+     * @return 动态TAB页列表
      */
-    public static List<CompInfo> listComp() {
-        if (listComp == null || listComp.isEmpty()) {
-            String listCompStr = LKSharedPreferences.getString(LKSharedPreferences.LIST_COMP, "");
-            if (!"".equals(listCompStr)) {
-                listComp = new ArrayList<>();
-                String[] listCompStrArr = listCompStr.split(LKFrameworkStatics.SPLITOR);
-                for (String compStr : listCompStrArr) {
-                    listComp.add(new CompInfo(compStr.split(LKFrameworkStatics.SPLITOR_FIELDS)));
-                }
+    public static List<LKDynamicTab> dynamicTabs() {
+        if (dynamicTabs == null || dynamicTabs.isEmpty()) {
+            String dynamicTabsStr = LKSharedPreferences.getString(LKSharedPreferences.TABS, "");
+            if (!"".equals(dynamicTabsStr)) {
+                dynamicTabs = LKDynamicTab.convertListObject(dynamicTabsStr);
             }
         }
-        return listComp;
+        return dynamicTabs;
     }
 
     /**
-     * 设置公司列表
-     * @param listComp 公司列表
+     * 设置动态TAB页列表
+     * @param dynamicTabs 动态TAB页列表
      */
-    private static void listComp(List<CompInfo> listComp) {
-        LKAndroidStatics.listComp = listComp;
+    private static void dynamicTabs(List<LKDynamicTab> dynamicTabs) {
+        LKAndroidStatics.dynamicTabs = dynamicTabs;
         StringBuilder sb = new StringBuilder();
-        if (listComp != null && !listComp.isEmpty()) {
-            for (CompInfo info : listComp) {
-                sb.append(info.getCompName()).append(LKFrameworkStatics.SPLITOR_FIELDS).append(info.getCompImg()).append(LKFrameworkStatics.SPLITOR);
+        if (dynamicTabs != null && !dynamicTabs.isEmpty()) {
+            for (LKDynamicTab info : dynamicTabs) {
+                sb.append(info.convertString());
             }
         }
-        LKSharedPreferences.putString(LKSharedPreferences.LIST_COMP, sb.toString());
+        LKSharedPreferences.putString(LKSharedPreferences.TABS, sb.toString());
     }
 
 }

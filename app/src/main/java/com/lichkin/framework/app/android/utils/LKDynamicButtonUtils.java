@@ -41,16 +41,16 @@ public class LKDynamicButtonUtils {
         final LayoutInflater inflater = LKAndroidUtils.getLayoutInflater();
 
         final int screenWidth = LKAndroidUtils.getScreenDispaly().getWidth(); // 取屏幕宽度
-        final int leftRightMargin = screenWidth / 32; // 左右边距，将屏幕分成32份，留边。
+        final int leftRightMargin = divide == 1 ? 0 : screenWidth / 32; // 左右边距，将屏幕分成32份，留边。
         final int btnMargin = leftRightMargin / 2; // 按钮边距等于左右边距的四分之一
         final float lineWidth = (float) screenWidth - (leftRightMargin * 2); // 行宽需去掉左右边距
         final float btnWidth = (lineWidth - (btnMargin * (divide - 1))) / divide; // 行宽 = (按钮个数 * 按钮宽度) + ((按钮个数 - 1) * 按钮间距)
         final float btnHeight = btnWidth / aspectRatio; // 按钮高度等于按钮宽度除以按钮的宽高比
         int btnTitleHeight = (int) (btnHeight / 5); // 按钮标题高度
-        final int btnImgHeight = (int) (btnHeight - btnTitleHeight); // 按钮图标高度
+        final int btnImgHeight = divide == 1 ? (int) btnHeight : ((int) (btnHeight - btnTitleHeight)); // 按钮图标高度
 
         // 行样式
-        final LinearLayout.LayoutParams lineLayoutParams = new LinearLayout.LayoutParams((int) lineWidth, (int) btnHeight);
+        final LinearLayout.LayoutParams lineLayoutParams = new LinearLayout.LayoutParams((int) lineWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         lineLayoutParams.setMargins(leftRightMargin, btnMargin, 0, 0);
 
         // 动态添加按钮
@@ -59,7 +59,7 @@ public class LKDynamicButtonUtils {
             final LKDynamicButton button = btns.get(i);
             final int btnImgResId = button.getBtnImgResId();
             // 按钮样式
-            final LinearLayout.LayoutParams btnLayoutParams = new LinearLayout.LayoutParams((int) btnWidth, (int) btnHeight);
+            final LinearLayout.LayoutParams btnLayoutParams = new LinearLayout.LayoutParams((int) btnWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             if ((i % divide) == 0) {// 每divide个创建一行
                 lineLayout = new LinearLayout(context);
                 lineLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -75,7 +75,12 @@ public class LKDynamicButtonUtils {
             final ImageView btnImgView = btnListLayout.findViewById(R.id.dynamic_buttons_button_img);
             btnImgView.setImageResource(btnImgResId);
             final ViewGroup.LayoutParams imgLayoutParams = btnImgView.getLayoutParams();
-            imgLayoutParams.width = imgLayoutParams.height = btnImgHeight;
+            if (divide == 1) {
+                imgLayoutParams.height = btnImgHeight;
+                imgLayoutParams.width = (int) (btnImgHeight * aspectRatio);
+            } else {
+                imgLayoutParams.width = imgLayoutParams.height = btnImgHeight;
+            }
             btnImgView.setLayoutParams(imgLayoutParams);
 
             final TextView btnTitleView = btnListLayout.findViewById(R.id.dynamic_buttons_button_text);
@@ -112,9 +117,13 @@ public class LKDynamicButtonUtils {
                             }
                             btnUrls.put(btnImgResId, url);
                         }
-                        LKWebViewActivity.open(context, btnUrls.get(btnImgResId));
+                        LKWebViewActivity.open(context, btnUrls.get(btnImgResId), button.getParams());
                     } else {
-                        context.startActivity(new Intent(context, activityClass));
+                        Intent intent = new Intent(context, activityClass);
+                        for (Map.Entry<String, Object> entry : button.getParams().entrySet()) {
+                            intent.putExtra(entry.getKey(), String.valueOf(entry.getValue()));
+                        }
+                        context.startActivity(intent);
                     }
                 }
             });
