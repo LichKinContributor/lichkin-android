@@ -67,6 +67,15 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //清空列表
+        newsList.clear();
+        //更新列表状态
+        adapter.notifyDataSetChanged();
+    }
+
     /** 配置键：Banner图片高宽比例 */
     private static final String CONFIG_KEY_BANNER_RATIO = "lichkin.framework.api.banner.ratio";
     /** 配置值：Banner图片高宽比例 */
