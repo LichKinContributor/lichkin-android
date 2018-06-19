@@ -14,6 +14,7 @@
     <string name="not_implemented">敬请期待！～</string>
     <string name="not_empty">还没有输入信息！～</string>
     <string name="can_not_use_storage">请检查您的存储读写权限！～</string>
+    <string name="can_not_locate">请检查您的定位权限！～</string>
 
     <string name="app_name">鑫宏利业</string>
     <string name="title_navigation_menu_home">主页</string>
@@ -86,4 +87,8 @@
     <string name="title_btn_comp_news">新闻</string>
     <string name="title_btn_approval">审批</string>
     <string name="title_btn_punch_the_clock">打卡</string>
+
+    <string name="invoke_punch_the_clock_wait">获取精准的定位信息（%s米内）可能需要一些时间，请耐心等待！~</string>
+    <string name="invoke_punch_the_clock_success">打卡成功</string>
+    <string name="invoke_punch_the_clock_failed">打卡失败</string>
 </resources>

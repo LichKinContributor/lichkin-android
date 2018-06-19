@@ -14,6 +14,7 @@
     <string name="not_implemented">Please wait for surprise!</string>
     <string name="not_empty">can not empty!</string>
     <string name="can_not_use_storage">Please check your storage read/write authority!</string>
+    <string name="can_not_locate">Please check your locate authority!</string>
 
     <string name="app_name">LichKin</string>
     <string name="title_navigation_menu_home">Home</string>
@@ -86,4 +87,8 @@
     <string name="title_btn_comp_news">News</string>
     <string name="title_btn_approval">Workflow</string>
     <string name="title_btn_punch_the_clock">Punch The Clock</string>
+
+    <string name="invoke_punch_the_clock_wait">get accuracy limit in %s need some times, please wait for a moment.</string>
+    <string name="invoke_punch_the_clock_success">Invoke Punch The Clock Success</string>
+    <string name="invoke_punch_the_clock_failed">Invoke Punch The Clock Failed</string>
 </resources>

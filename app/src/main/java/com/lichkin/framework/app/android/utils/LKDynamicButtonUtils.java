@@ -70,6 +70,7 @@ public class LKDynamicButtonUtils {
             }
 
             final FrameLayout btnListLayout = (FrameLayout) inflater.inflate(R.layout.dynamic_buttons, null);
+            btnListLayout.setTag(button.tag());
             btnListLayout.setLayoutParams(btnLayoutParams);
 
             final ImageView btnImgView = btnListLayout.findViewById(R.id.dynamic_buttons_button_img);

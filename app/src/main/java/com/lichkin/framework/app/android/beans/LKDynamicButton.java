@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.LKCallback;
+import com.lichkin.framework.utils.LKRandomUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,30 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class LKDynamicButton {
+
+    /** 视图TAG */
+    private String tag;
+
+    /**
+     * 设置视图TAG
+     * @param tag 视图TAG
+     * @return 本对象
+     */
+    public LKDynamicButton tag(String tag) {
+        this.tag = tag;
+        return this;
+    }
+
+    /**
+     * 获取视图TAG
+     * @return 视图TAG
+     */
+    public String tag() {
+        if (tag != null) {
+            return tag;
+        }
+        return LKRandomUtils.create(10);
+    }
 
     /** 按钮图片ID */
     private final int btnImgResId;

@@ -14,6 +14,32 @@ import com.lichkin.framework.app.android.utils.LKAndroidUtils;
  */
 public class LKDialog {
 
+    /**
+     * 提示信息
+     * @param context 上下文环境
+     * @param message 提示信息
+     */
+    public static void alert(Context context, String message) {
+        new LKDialog(context, message).setCancelable(false).setNegativeButton(R.string.btn_positive_name, new LKBtnCallback() {
+            @Override
+            public void call(Context context, DialogInterface dialog) {
+            }
+        }).show();
+    }
+
+    /**
+     * 提示信息
+     * @param context 上下文环境
+     * @param messageResId 提示信息资源ID
+     */
+    public static void alert(Context context, int messageResId) {
+        new LKDialog(context, messageResId).setCancelable(false).setNegativeButton(R.string.btn_positive_name, new LKBtnCallback() {
+            @Override
+            public void call(Context context, DialogInterface dialog) {
+            }
+        }).show();
+    }
+
     /** 上下文环境 */
     private Context context;
 
