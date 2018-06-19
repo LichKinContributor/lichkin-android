@@ -195,7 +195,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         GetLastAppVersionIn in = new GetLastAppVersionIn();
 
         //创建请求对象
-        final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class);
+        final LKRetrofit<GetLastAppVersionIn, GetLastAppVersionOut> retrofit = new LKRetrofit<>(this, GetLastAppVersionInvoker.class, "LichKin");
 
         //测试代码
         GetLastAppVersionTester.test(retrofit);
