@@ -67,7 +67,7 @@ public class CompFragment extends LKTabFragment {
     /** 按钮列表 */
     List<LKDynamicButton> btns;
 
-    private static final int LOCATION_MAX_ACCURACY = 15;
+    private static final int LOCATION_MAX_ACCURACY = 30;
     private AMapLocationClient aMapLocationClient;
     private LKAMapLocation location;
     private static int BTN_DIVIDE = 1;
@@ -87,7 +87,7 @@ public class CompFragment extends LKTabFragment {
                 }
                 if (aMapLocation.getErrorCode() == 0) {
                     LKLog.i(String.format("location -> accuracy:[%s], longitude:[%s], latitude:[%s], altitude:[%s]", aMapLocation.getAccuracy(), aMapLocation.getLongitude(), aMapLocation.getLatitude(), aMapLocation.getAltitude()));
-                    if (aMapLocation.getAccuracy() < LOCATION_MAX_ACCURACY) {
+                    if (aMapLocation.getAccuracy() <= LOCATION_MAX_ACCURACY) {
                         aMapLocationClient.stopLocation();
                         location = new LKAMapLocation(aMapLocation);
                         LKLog.w(location.toString());
