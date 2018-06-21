@@ -10,6 +10,7 @@
     <string name="response_error">响应内容不正确！～</string>
     <string name="internet_auth_not_granted">请检查您的网络链接权限！～</string>
     <string name="invoke_timeout">链接超时，请稍后再试！～</string>
+    <string name="invoke_no_route_to_host">服务器无法连接，请稍后再试！～</string>
     <string name="invoke_no_more_data">没有更多数据！～</string>
     <string name="not_implemented">敬请期待！～</string>
     <string name="not_empty">还没有输入信息！～</string>

@@ -13,6 +13,8 @@ import com.lichkin.framework.defines.beans.LKRequestBean;
 import com.lichkin.framework.defines.beans.LKResponseBean;
 import com.lichkin.framework.utils.LKRandomUtils;
 
+import java.net.ConnectException;
+import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -206,7 +208,7 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
      * @param e 异常对象
      */
     private void handleError(final LKInvokeCallback<In, Out> callback, Context context, final String requestId, final In in, Throwable e) {
-        if (e instanceof java.net.ConnectException) {
+        if (e instanceof ConnectException) {
             LKDialog dlg = new LKDialog(context, R.string.internet_auth_not_granted).setCancelable(false);
             dlg.setPositiveButton(new LKBtnCallback() {
                 @Override
@@ -217,6 +219,15 @@ public class LKRetrofit<In extends LKRequestBean, Out> {
             dlg.show();
         } else if (e instanceof SocketTimeoutException) {
             LKDialog dlg = new LKDialog(context, R.string.invoke_timeout).setCancelable(false);
+            dlg.setPositiveButton(new LKBtnCallback() {
+                @Override
+                public void call(Context context, DialogInterface dialog) {
+                    callback.timeoutError(context, requestId, in, dialog);
+                }
+            });
+            dlg.show();
+        } else if (e instanceof NoRouteToHostException) {
+            LKDialog dlg = new LKDialog(context, R.string.invoke_no_route_to_host).setCancelable(false);
             dlg.setPositiveButton(new LKBtnCallback() {
                 @Override
                 public void call(Context context, DialogInterface dialog) {

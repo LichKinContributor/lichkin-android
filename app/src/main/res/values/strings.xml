@@ -10,6 +10,7 @@
     <string name="response_error">response error!</string>
     <string name="internet_auth_not_granted">Please check your internet authority!</string>
     <string name="invoke_timeout">invoke timeout, please wait!</string>
+    <string name="invoke_no_route_to_host">no route to host, please wait!</string>
     <string name="invoke_no_more_data">No more data!</string>
     <string name="not_implemented">Please wait for surprise!</string>
     <string name="not_empty">can not empty!</string>
