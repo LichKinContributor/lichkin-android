@@ -17,7 +17,17 @@ public class LKImageLoader {
      * @param imageView 图片视图对象
      */
     public static void load(String url, ImageView imageView) {
-        Picasso.get().load(url).placeholder(R.drawable.no_image).into(imageView);
+        load(url, imageView, R.drawable.no_image);
+    }
+
+    /**
+     * 加载图像
+     * @param url 图片地址
+     * @param imageView 图片视图对象
+     * @param drawableResId 无图片资源ID
+     */
+    public static void load(String url, ImageView imageView, int drawableResId) {
+        Picasso.get().load(url).placeholder(drawableResId).into(imageView);
     }
 
 }

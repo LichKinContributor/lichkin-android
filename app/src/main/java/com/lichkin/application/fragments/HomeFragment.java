@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
         bannerSection.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object obj, ImageView imageView) {
-                LKImageLoader.load(((GetBannerListOut) obj).getImageUrl(), imageView);
+                LKImageLoader.load(((GetBannerListOut) obj).getImageUrl(), imageView, R.drawable.no_banner);
             }
         });
 
