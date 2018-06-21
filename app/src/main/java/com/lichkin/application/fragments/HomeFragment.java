@@ -402,7 +402,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             protected void success(Context context, GetNewsPageIn getLastAppVersionIn, final LKPageBean<GetNewsPageOut> responseDatas) {
-                if (responseDatas == null) {
+                if (responseDatas == null || responseDatas.getContent().isEmpty()) {
                     //更新列表状态
                     newsSection.onRefreshComplete();
 
