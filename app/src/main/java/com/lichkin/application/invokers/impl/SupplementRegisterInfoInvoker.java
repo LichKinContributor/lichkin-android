@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface SupplementRegisterInfoInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "SupplementRegister")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + "SupplementRegisterInfo")
     Call<LKResponseBean<SupplementRegisterInfoOut>> invoke(@Body SupplementRegisterInfoIn in);
 
 }
