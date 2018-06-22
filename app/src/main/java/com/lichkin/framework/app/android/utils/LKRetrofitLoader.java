@@ -2,6 +2,8 @@ package com.lichkin.framework.app.android.utils;
 
 import android.support.annotation.NonNull;
 
+import com.lichkin.framework.json.LKJsonUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +69,7 @@ class LKRetrofitLoader {
         });
 
         OkHttpClient httpClient = client.build();
-        return new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).client(httpClient).build();
+        return new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create(LKJsonUtils.newObjectMapper())).client(httpClient).build();
     }
 
 
