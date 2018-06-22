@@ -125,6 +125,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         contentView.setText("");
+        imgBase64 = null;
     }
 
     @Override
