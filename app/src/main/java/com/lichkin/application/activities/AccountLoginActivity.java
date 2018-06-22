@@ -22,6 +22,7 @@ import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
+import com.lichkin.framework.app.android.utils.LKMD5;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKToast;
@@ -147,7 +148,7 @@ public class AccountLoginActivity extends AppCompatActivity {
         }
 
         //请求参数
-        AccountLoginIn in = new AccountLoginIn(loginName, pwd);
+        AccountLoginIn in = new AccountLoginIn(loginName, LKMD5.md5(pwd));
 
         //创建请求对象
         final LKRetrofit<AccountLoginIn, AccountLoginOut> retrofit = new LKRetrofit<>(this, AccountLoginInvoker.class);
