@@ -35,7 +35,7 @@ public class LKBase64 {
                     InputStream is = new FileInputStream(file);
                     byte[] data = new byte[is.available()];
                     is.read(data);
-                    result = Base64.encodeToString(data, Base64.DEFAULT);
+                    result = Base64.encodeToString(data, Base64.DEFAULT).replaceAll("[\\s*\t\n\r]", "");
                 }
             }
         } catch (IOException e) {
