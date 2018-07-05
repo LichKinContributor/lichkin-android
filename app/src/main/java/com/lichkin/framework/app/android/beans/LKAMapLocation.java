@@ -18,19 +18,22 @@ import lombok.ToString;
 public class LKAMapLocation {
 
     /** 当前定位结果来源，如网络定位结果，详见定位类型表 */
-    private int locationType;
-
-    /** 纬度 */
-    private double latitude;
-
-    /** 经度 */
-    private double longitude;
+    private Integer locationType;
 
     /** 精度信息 */
-    private float accuracy;
+    private Float accuracy;
 
-    /** 地址 */
-    private String address;
+    /** 纬度 */
+    private Double latitude;
+
+    /** 经度 */
+    private Double longitude;
+
+    /** 高度 */
+    private Double altitude;
+
+    /** 定位时间 */
+    private Long time;
 
     /** 国家信息 */
     private String country;
@@ -56,6 +59,9 @@ public class LKAMapLocation {
     /** 地区编码 */
     private String adCode;
 
+    /** 方向角 */
+    private Float bearing;
+
     /** 当前定位点的AOI信息 */
     private String aoiName;
 
@@ -66,19 +72,7 @@ public class LKAMapLocation {
     private String floor;
 
     /** GPS的当前状态 */
-    private int gpsAccuracyStatus;
-
-    /** 定位时间 */
-    private long time;
-
-    /** 方向角 */
-    private float bearing;
-
-    /** 高度 */
-    private double altitude;
-
-    /** 描述 */
-    private String description;
+    private Integer gpsAccuracyStatus;
 
     /**
      * 构造方法
@@ -86,10 +80,11 @@ public class LKAMapLocation {
      */
     public LKAMapLocation(AMapLocation location) {
         locationType = location.getLocationType();
+        accuracy = location.getAccuracy();
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        accuracy = location.getAccuracy();
-        address = location.getAddress();
+        altitude = location.getAltitude();
+        time = location.getTime();
         country = location.getCountry();
         province = location.getProvince();
         city = location.getCity();
@@ -98,14 +93,11 @@ public class LKAMapLocation {
         streetNum = location.getStreetNum();
         cityCode = location.getCityCode();
         adCode = location.getAdCode();
+        bearing = location.getBearing();
         aoiName = location.getAoiName();
         buildingId = location.getBuildingId();
         floor = location.getFloor();
         gpsAccuracyStatus = location.getGpsAccuracyStatus();
-        time = location.getTime();
-        bearing = location.getBearing();
-        altitude = location.getAltitude();
-        description = location.getDescription();
     }
 
 }
