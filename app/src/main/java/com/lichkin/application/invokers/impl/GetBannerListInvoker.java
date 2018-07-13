@@ -17,7 +17,7 @@ import retrofit2.http.POST;
  */
 public interface GetBannerListInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "GetBannerList")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "GetBannerList")
     Call<LKResponseBean<List<GetBannerListOut>>> invoke(@Body GetBannerListIn in);
 
 }

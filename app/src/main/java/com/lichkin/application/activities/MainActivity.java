@@ -40,7 +40,6 @@ import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
 import com.lichkin.framework.app.android.utils.LKViewHelper;
 import com.lichkin.framework.app.android.widgets.LKDialog;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 import com.lichkin.framework.utils.LKRandomUtils;
 
@@ -239,8 +238,8 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
 
             @Override
             protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
-                if (errorCode < LKFrameworkStatics.MIN_BUS_ERROR_CODE) {
-                    if (errorCode == 9999) {//应用已下架
+                switch (errorCode) {
+                    case 100000://应用已下架
                         String[] errorMessageArr = errorBean.getErrorMessageArr();
                         LKDialog dlg = new LKDialog(context, errorMessageArr[0]).setTitle(errorMessageArr[1]).setCancelable(false);
                         dlg.setPositiveButton(errorMessageArr[2], new LKBtnCallback() {
@@ -250,23 +249,15 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                             }
                         });
                         dlg.show();
-                        return;
-                    }
-                    if (LKPropertiesLoader.testRetrofit) {
-                        super.busError(context, getLastAppVersionIn, errorCode, errorType, errorBean);
-                        return;
-                    }
-                    restart();
-                } else {
-                    // 自定义业务错误处理
-                    switch (errorCode) {
-                        case 10000://没有可用版本，不处理。
-                            break;
-                        default:
-                            // 其它错误，待约定与实现。
-                            restart();
-                            break;
-                    }
+                        break;
+                    case 100001://没有可用版本，不处理。
+                        break;
+                    case -1://服务器异常
+                        break;
+                    default:
+                        // 其它错误，待约定与实现。
+                        restart();
+                        break;
                 }
             }
 

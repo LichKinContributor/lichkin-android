@@ -240,7 +240,6 @@ public class LKAndroidStatics {
             photo(null);
             level(1);
             securityCenterUrl(null);
-            dynamicTabs(null);
             token(null);
             loginName(null);
             return;
@@ -248,7 +247,6 @@ public class LKAndroidStatics {
         photo(login.getPhoto());
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
-        dynamicTabs(login.getListTab());
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());
@@ -293,7 +291,7 @@ public class LKAndroidStatics {
      * 设置登录名
      * @param loginName 登录名
      */
-    private static void loginName(String loginName) {
+    public static void loginName(String loginName) {
         LKAndroidStatics.loginName = loginName;
         LKSharedPreferences.putString(LKSharedPreferences.LOGIN_NAME, loginName);
     }

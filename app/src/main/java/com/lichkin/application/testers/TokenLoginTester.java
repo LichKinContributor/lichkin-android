@@ -20,7 +20,6 @@ public class TokenLoginTester {
         out.setLevel(LKAndroidStatics.level());
         out.setPhoto(LKAndroidStatics.photo());
         out.setSecurityCenterUrl(LKAndroidStatics.securityCenterUrl());
-        out.setListTab(LKAndroidStatics.dynamicTabs());
         retrofit.addTestResponseBeans(out);
     }
 

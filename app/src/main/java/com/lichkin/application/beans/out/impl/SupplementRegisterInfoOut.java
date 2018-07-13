@@ -10,7 +10,10 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class SupplementRegisterInfoOut extends AccountLoginOut {
+@ToString
+public class SupplementRegisterInfoOut {
+
+    /** 登录名 */
+    private String loginName;
 
 }

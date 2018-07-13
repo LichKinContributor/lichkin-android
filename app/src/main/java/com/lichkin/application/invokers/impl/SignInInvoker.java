@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface SignInInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "SignIn")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "SignIn")
     Call<LKResponseBean<SignInOut>> invoke(@Body SignInIn in);
 
 }

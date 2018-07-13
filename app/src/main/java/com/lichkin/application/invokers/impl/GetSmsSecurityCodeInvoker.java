@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface GetSmsSecurityCodeInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "GetSmsSecurityCode")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "GetSmsSecurityCode")
     Call<LKResponseBean<GetSmsSecurityCodeOut>> invoke(@Body GetSmsSecurityCodeIn in);
 
 }

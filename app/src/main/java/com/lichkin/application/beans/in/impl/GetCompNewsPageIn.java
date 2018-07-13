@@ -14,6 +14,9 @@ public class GetCompNewsPageIn extends GetNewsPageIn {
     /** 公司ID */
     private String compId;
 
+    /** 分类编码 */
+    private String categoryCode = "";
+
     /**
      * 构造方法
      * @param pageNumber 页码

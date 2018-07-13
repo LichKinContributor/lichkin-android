@@ -12,4 +12,8 @@ import lombok.ToString;
 @Getter
 @ToString(callSuper = true)
 public class GetBannerListIn extends LKRequestBean {
+
+    /** 分类编码 */
+    private String categoryCode = "";
+
 }

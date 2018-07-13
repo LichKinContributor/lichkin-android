@@ -1,9 +1,5 @@
 package com.lichkin.application.beans.out;
 
-import com.lichkin.framework.app.android.beans.LKDynamicTab;
-
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,8 +21,5 @@ public class LoginOut {
 
     /** 安全中心地址 */
     private String securityCenterUrl;
-
-    /** 动态TAB页列表 */
-    private List<LKDynamicTab> listTab;
 
 }

@@ -138,7 +138,7 @@ public class SupplementRegisterInfoActivity extends AppCompatActivity {
             @Override
             protected void success(Context context, SupplementRegisterInfoIn SupplementRegisterInfoIn, SupplementRegisterInfoOut responseDatas) {
                 afterInvokeSupplementRegisterInfo();
-                LKAndroidStatics.saveLoginInfo(responseDatas);
+                LKAndroidStatics.loginName(responseDatas.getLoginName());
                 SupplementRegisterInfoActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);
                 SupplementRegisterInfoActivity.this.finish();
             }

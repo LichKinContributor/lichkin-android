@@ -13,6 +13,9 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class GetNewsPageIn extends LKRequestPageBean {
 
+    /** 分类编码 */
+    private String categoryCode = "";
+
     /**
      * 构造方法
      * @param pageNumber 页码

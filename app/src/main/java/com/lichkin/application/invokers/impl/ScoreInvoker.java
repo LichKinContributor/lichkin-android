@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface ScoreInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "Score")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "Score")
     Call<LKResponseBean<ScoreOut>> invoke(@Body ScoreIn in);
 
 }

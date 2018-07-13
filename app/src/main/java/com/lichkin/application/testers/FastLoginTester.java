@@ -2,12 +2,9 @@ package com.lichkin.application.testers;
 
 import com.lichkin.application.beans.in.impl.FastLoginIn;
 import com.lichkin.application.beans.out.impl.FastLoginOut;
-import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
 import com.lichkin.framework.app.android.utils.LKRetrofit;
 import com.lichkin.framework.utils.LKRandomUtils;
-
-import java.util.Arrays;
 
 /**
  * 测试用例
@@ -27,9 +24,6 @@ public class FastLoginTester {
             out.setLoginName("LunaDream");
             out.setLevel(63);
             out.setPhoto("photo");
-            out.setListTab(Arrays.asList(
-                    new LKDynamicTab("LichKin", "鑫宏利业", TesterStatics.LichKin_LOGO_BASE64)
-            ));
         } else {
             out.setLogin(false);
             out.setLoginName(cellphone);

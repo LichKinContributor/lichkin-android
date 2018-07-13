@@ -31,11 +31,11 @@ public class GetLastAppVersionTester {
 //        retrofit.addTestResponseBeans(888, String.format("多个错误提示%s第1个%s第2个%s等等等等%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR));
 //        retrofit.addTestResponseBeans(999, String.format("[msg]%s[多个带字段信息的错误提示]%s[field1]%s[字段1]%s[field2]%s[字段2]%s", LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS, LKFrameworkStatics.SPLITOR, LKFrameworkStatics.SPLITOR_FIELDS));
         //应用已下架
-//        retrofit.addTestResponseBeans(9999, "应用已下架" + LKFrameworkStatics.SPLITOR + "重要提示" + LKFrameworkStatics.SPLITOR + "心灰意冷的离去");
+//        retrofit.addTestResponseBeans(100000, "应用已下架" + LKFrameworkStatics.SPLITOR + "重要提示" + LKFrameworkStatics.SPLITOR + "心灰意冷的离去");
         //无新版本
-        retrofit.addTestResponseBeans(10000, "无新版本");
+        retrofit.addTestResponseBeans(100001, "无新版本");
         //其它错误
-//        retrofit.addTestResponseBeans(99999, "其它错误");
+//        retrofit.addTestResponseBeans(999999, "其它错误");
 
         //正常返回结果模拟
 //        GetLastAppVersionOut out = new GetLastAppVersionOut();

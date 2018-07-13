@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface PunchTheClockInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + "PunchTheClock")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_EMPLOYEE + "PunchTheClock")
     Call<LKResponseBean<PunchTheClockOut>> invoke(@Body PunchTheClockIn in);
 
 }

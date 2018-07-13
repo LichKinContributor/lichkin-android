@@ -14,4 +14,8 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class TokenLoginOut extends LoginOut {
+
+    /** 登录名 */
+    private String loginName;
+
 }
