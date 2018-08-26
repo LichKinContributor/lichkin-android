@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        pageNumber = 0;
         //清空列表
         newsList.clear();
         //更新列表状态

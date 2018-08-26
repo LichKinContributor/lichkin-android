@@ -69,7 +69,7 @@ class LKRetrofitLoader {
         });
 
         OkHttpClient httpClient = client.build();
-        return new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create(LKJsonUtils.newObjectMapper())).client(httpClient).build();
+        return new Retrofit.Builder().baseUrl(baseUrl+"/").addConverterFactory(JacksonConverterFactory.create(LKJsonUtils.newObjectMapper())).client(httpClient).build();
     }
 
 
