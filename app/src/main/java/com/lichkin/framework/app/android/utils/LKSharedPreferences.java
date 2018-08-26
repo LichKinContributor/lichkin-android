@@ -31,6 +31,9 @@ public class LKSharedPreferences {
     /** 安全中心地址键 */
     public static final String SECURITY_CENTER_URL = "lichkin.framework.app.securityCenterUrl";
 
+    /** 工作流页面地址键 */
+    public static final String ACTIVITI_URL = "lichkin.framework.app.activitiUrl";
+
     /** 公司列表键 */
     public static final String TABS = "lichkin.framework.app.tabs";
 

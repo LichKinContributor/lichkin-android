@@ -58,7 +58,7 @@ public class CompNewsActivity extends AppCompatActivity {
         //绑定页面
         ButterKnife.bind(this);
 
-        compId = getIntent().getStringExtra("tabId");
+        compId = getIntent().getStringExtra("compId");
 
         //初始化新闻栏
         initNewsSection();

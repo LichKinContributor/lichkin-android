@@ -57,7 +57,7 @@ import lombok.RequiredArgsConstructor;
 public abstract class MainActivity extends LKAppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     /** 当前对象 */
-    static MainActivity activity;
+    public static MainActivity activity;
 
     /** 主页菜单ID */
     public static int HOME_MENU_ID;
@@ -124,18 +124,74 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         if (token == null || "".equals(token)) {
             return;
         }
-        List<LKDynamicTab> dynamicTabs = LKAndroidStatics.dynamicTabs();
-        if (dynamicTabs != null) {
-            for (int i = 0; i < dynamicTabs.size(); i++) {
-                if (i > 2) {
-                    break;
-                }
-                LKDynamicTab tabInfo = dynamicTabs.get(i);
-                Bundle bundle = new Bundle();
-                bundle.putString("tabId", tabInfo.getTabId());
-                fragments.get(i).setArguments(bundle);
-                displayMenu(i, tabInfo.getTabName(), LKBase64.toDrawable(tabInfo.getTabIcon()));
+
+        addDynamicTabs(LKAndroidStatics.dynamicTabs());
+    }
+
+    /**
+     * 处理动态TAB页
+     * @param dynamicTabs 动态TAB页
+     */
+    public void handleDynamicTabs(List<LKDynamicTab> dynamicTabs) {
+        List<LKDynamicTab> savedDynamicTabs = LKAndroidStatics.dynamicTabs();
+        if (dynamicTabs == null || dynamicTabs.isEmpty()) {
+            if (savedDynamicTabs == null || savedDynamicTabs.isEmpty()) {
+                LKLog.d("dynamicTabs -> handle null, saved null. nothing to do.");
+                return;
+            } else {
+                LKLog.d("dynamicTabs -> handle null, saved not null. do clear.");
+                LKAndroidStatics.dynamicTabs(null);
+                hideMenus();
             }
+        } else {
+            if (savedDynamicTabs == null || savedDynamicTabs.isEmpty()) {
+                LKLog.d("dynamicTabs -> handle not null, saved null. do add.");
+                LKAndroidStatics.dynamicTabs(dynamicTabs);
+                addDynamicTabs(dynamicTabs);
+            } else {
+                if (dynamicTabs.size() != savedDynamicTabs.size()) {
+                    LKLog.d("dynamicTabs -> handle not null, saved not null. size not match, do clear and add.");
+                    LKAndroidStatics.dynamicTabs(dynamicTabs);
+                    hideMenus();
+                    addDynamicTabs(dynamicTabs);
+                    return;
+                }
+
+                out:
+                for (LKDynamicTab dynamicTab : dynamicTabs) {
+                    for (LKDynamicTab savedDynamicTab : savedDynamicTabs) {
+                        if (dynamicTab.getTabId().equals(savedDynamicTab.getTabId())) {
+                            continue out;
+                        }
+                    }
+                    LKLog.d("dynamicTabs -> handle not null, saved not null. size match but tab not match, do clear and add.");
+                    LKAndroidStatics.dynamicTabs(dynamicTabs);
+                    hideMenus();
+                    addDynamicTabs(dynamicTabs);
+                    return;
+                }
+                LKLog.d("dynamicTabs -> handle not null, saved not null. size match and tab match, nothing to do.");
+            }
+        }
+    }
+
+    /**
+     * 添加动态TAB页
+     * @param dynamicTabs 动态TAB页
+     */
+    private void addDynamicTabs(List<LKDynamicTab> dynamicTabs) {
+        if (dynamicTabs == null || dynamicTabs.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < dynamicTabs.size(); i++) {
+            if (i > 2) {
+                break;
+            }
+            LKDynamicTab tabInfo = dynamicTabs.get(i);
+            Bundle bundle = new Bundle();
+            bundle.putString("tabId", tabInfo.getTabId());
+            fragments.get(i).setArguments(bundle);
+            displayMenu(i, tabInfo.getTabName(), LKBase64.toDrawable(tabInfo.getTabIcon()));
         }
     }
 

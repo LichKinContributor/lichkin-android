@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface FastLoginInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "FastLogin")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/FastLogin")
     Call<LKResponseBean<FastLoginOut>> invoke(@Body FastLoginIn in);
 
 }

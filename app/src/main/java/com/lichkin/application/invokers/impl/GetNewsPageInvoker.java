@@ -16,7 +16,7 @@ import retrofit2.http.POST;
  */
 public interface GetNewsPageInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "GetNewsPage")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/GetNewsPage")
     Call<LKResponseBean<LKPageBean<GetNewsPageOut>>> invoke(@Body GetNewsPageIn in);
 
 }

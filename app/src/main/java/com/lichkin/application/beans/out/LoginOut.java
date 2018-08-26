@@ -22,4 +22,7 @@ public class LoginOut {
     /** 安全中心地址 */
     private String securityCenterUrl;
 
+    /** 工作流页面地址 */
+    private String activitiUrl;
+
 }

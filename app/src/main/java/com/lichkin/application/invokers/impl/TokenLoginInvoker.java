@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface TokenLoginInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "TokenLogin")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/TokenLogin")
     Call<LKResponseBean<TokenLoginOut>> invoke(@Body TokenLoginIn in);
 
 }

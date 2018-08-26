@@ -20,6 +20,7 @@ import com.lichkin.application.beans.in.impl.PunchTheClockIn;
 import com.lichkin.application.beans.out.impl.PunchTheClockOut;
 import com.lichkin.application.invokers.impl.PunchTheClockInvoker;
 import com.lichkin.application.testers.PunchTheClockTester;
+import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.beans.LKAMapLocation;
 import com.lichkin.framework.app.android.beans.LKDynamicButton;
 import com.lichkin.framework.app.android.callbacks.LKCallback;
@@ -67,7 +68,7 @@ public class CompFragment extends LKTabFragment {
     /** 按钮列表 */
     List<LKDynamicButton> btns;
 
-    private static final int LOCATION_MAX_ACCURACY = 30;
+    private static final int LOCATION_MAX_ACCURACY = 60;
     private AMapLocationClient aMapLocationClient;
     private LKAMapLocation location;
     private static int BTN_DIVIDE = 1;
@@ -99,7 +100,7 @@ public class CompFragment extends LKTabFragment {
         });
         btns = Arrays.asList(
                 new LKDynamicButton(R.drawable.btn_comp_news, R.string.title_btn_comp_news, CompNewsActivity.class).addParam("compId", tabId),
-                new LKDynamicButton(R.drawable.btn_approval, R.string.title_btn_approval, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKPropertiesLoader.pageBaseUrl + "/workflow" + LKPropertiesLoader.pageSuffix).addParam("compId", tabId),
+                new LKDynamicButton(R.drawable.btn_approval, R.string.title_btn_approval, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compId", tabId),
                 new LKDynamicButton(R.drawable.btn_punch_the_clock, R.string.title_btn_punch_the_clock, new LKCallback() {
                     @Override
                     public void call() {

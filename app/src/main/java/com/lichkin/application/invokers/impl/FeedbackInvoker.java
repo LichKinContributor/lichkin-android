@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface FeedbackInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "Feedback")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/Feedback")
     Call<LKResponseBean<FeedbackOut>> invoke(@Body FeedbackIn in);
 
 }

@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface GetLastAppVersionInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "GetLastAppVersion")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/GetLastAppVersion")
     Call<LKResponseBean<GetLastAppVersionOut>> invoke(@Body GetLastAppVersionIn in);
 
 }

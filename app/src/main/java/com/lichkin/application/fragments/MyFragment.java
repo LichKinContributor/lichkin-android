@@ -22,20 +22,24 @@ import com.lichkin.app.android.demo.R;
 import com.lichkin.application.activities.AboutActivity;
 import com.lichkin.application.activities.FastLoginActivity;
 import com.lichkin.application.activities.MainActivity;
+import com.lichkin.application.beans.in.impl.GetDynamicTabsIn;
 import com.lichkin.application.beans.in.impl.PhotoUploadIn;
 import com.lichkin.application.beans.in.impl.SignInIn;
 import com.lichkin.application.beans.in.impl.TokenLoginIn;
 import com.lichkin.application.beans.out.impl.PhotoUploadOut;
 import com.lichkin.application.beans.out.impl.SignInOut;
 import com.lichkin.application.beans.out.impl.TokenLoginOut;
+import com.lichkin.application.invokers.impl.GetDynamicTabsInvoker;
 import com.lichkin.application.invokers.impl.PhotoUploadInvoker;
 import com.lichkin.application.invokers.impl.SignInInvoker;
 import com.lichkin.application.invokers.impl.TokenLoginInvoker;
+import com.lichkin.application.testers.GetDynamicTabsTester;
 import com.lichkin.application.testers.PhotoUploadTester;
 import com.lichkin.application.testers.SignInTester;
 import com.lichkin.application.testers.TokenLoginTester;
 import com.lichkin.framework.app.android.LKAndroidStatics;
 import com.lichkin.framework.app.android.beans.LKDynamicButton;
+import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.callbacks.LKBtnCallback;
 import com.lichkin.framework.app.android.callbacks.LKCallback;
 import com.lichkin.framework.app.android.callbacks.impl.LKBaseInvokeCallback;
@@ -183,6 +187,8 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         );
     }
 
+    private boolean fromActivity = false;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //填充页面
@@ -195,9 +201,11 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
 
         //更新个人信息
         String token = LKAndroidStatics.token();
-        if (token != null && !"".equals(token)) {
+        if (token != null && !"".equals(token) && !fromActivity) {
             invokeTokenLogin();
         }
+
+        fromActivity = false;
 
         //返回视图
         return view;
@@ -224,8 +232,10 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        fromActivity = true;
         if (requestCode == REQUEST_CODE && resultCode == RESULT_CODE_LOGINED) {
             initMyInfo();
+            invokeGetDynamicTabs();
         }
         takePhoto.onActivityResult(requestCode, resultCode, data);
     }
@@ -251,6 +261,7 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
                 LKAndroidStatics.saveLoginInfo(responseDatas);
                 //初始化我的信息
                 initMyInfo();
+                invokeGetDynamicTabs();
             }
 
             @Override
@@ -301,7 +312,55 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         btnLogin.setVisibility(View.GONE);
         loginedLayout.setVisibility(View.VISIBLE);
         btnsContainer.removeAllViews();
+        for (LKDynamicButton btn : btnsAfterLogin) {
+            if (btn.getBtnImgResId() == R.drawable.btn_security_center) {
+                btn.setUrl(LKAndroidStatics.securityCenterUrl());
+            }
+        }
         LKDynamicButtonUtils.inflate(btnsContainer, btnsAfterLogin, BTN_DIVIDE, BTN_ASPECT_RATIO);
+    }
+
+
+    /**
+     * 请求获取动态TAB页
+     */
+    private void invokeGetDynamicTabs() {
+        //请求参数
+        GetDynamicTabsIn in = new GetDynamicTabsIn();
+
+        //创建请求对象
+        final LKRetrofit<GetDynamicTabsIn, List<LKDynamicTab>> retrofit = new LKRetrofit<>(this.getContext(), GetDynamicTabsInvoker.class);
+
+        //测试代码
+        GetDynamicTabsTester.test(retrofit);
+
+        //执行请求
+        retrofit.callAsync(in, new LKBaseInvokeCallback<GetDynamicTabsIn, List<LKDynamicTab>>() {
+
+            @Override
+            protected void success(Context context, GetDynamicTabsIn GetDynamicTabsIn, List<LKDynamicTab> responseDatas) {
+                MainActivity.activity.handleDynamicTabs(responseDatas);
+            }
+
+            @Override
+            protected void busError(Context context, GetDynamicTabsIn GetDynamicTabsIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
+                super.busError(context, GetDynamicTabsIn, errorCode, errorType, errorBean);
+                clearMyInfo();
+            }
+
+            @Override
+            public void connectError(Context context, String requestId, GetDynamicTabsIn GetDynamicTabsIn, DialogInterface dialog) {
+                super.connectError(context, requestId, GetDynamicTabsIn, dialog);
+                MainActivity.activity.handleDynamicTabs(null);
+            }
+
+            @Override
+            public void timeoutError(Context context, String requestId, GetDynamicTabsIn GetDynamicTabsIn, DialogInterface dialog) {
+                super.timeoutError(context, requestId, GetDynamicTabsIn, dialog);
+                MainActivity.activity.handleDynamicTabs(null);
+            }
+
+        });
     }
 
     /**
@@ -316,7 +375,7 @@ public class MyFragment extends Fragment implements TakePhoto.TakeResultListener
         loginedLayout.setVisibility(View.GONE);
         btnsContainer.removeAllViews();
         LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
-        MainActivity.hideMenus();
+        MainActivity.activity.handleDynamicTabs(null);
     }
 
     /**

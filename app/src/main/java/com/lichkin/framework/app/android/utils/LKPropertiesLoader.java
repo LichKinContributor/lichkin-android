@@ -1,6 +1,7 @@
 package com.lichkin.framework.app.android.utils;
 
 import com.lichkin.framework.app.android.LKApplication;
+import com.lichkin.framework.defines.LKFrameworkStatics;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +25,7 @@ public class LKPropertiesLoader {
     public static final String pageBaseUrl;
 
     /** 页面后缀 */
-    public static final String pageSuffix;
+    public static final String pageSuffix = LKFrameworkStatics.WEB_MAPPING_PAGES;
 
     /** 请求根路径 */
     public static final String baseUrl;
@@ -63,7 +64,6 @@ public class LKPropertiesLoader {
 
         pageTest = getBoolean("lichkin.framework.page.test");
         pageBaseUrl = getString("lichkin.framework.page.baseUrl");
-        pageSuffix = getString("lichkin.framework.page.suffix");
 
         testWebView = getBoolean("lichkin.framework.test.webView");
         testWebViewUrl = getString("lichkin.framework.test.webView.url");

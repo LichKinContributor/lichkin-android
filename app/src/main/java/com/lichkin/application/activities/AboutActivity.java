@@ -26,12 +26,12 @@ public class AboutActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //点击事件
-        bindClickAction(R.id.version_info, "/version_info");
-        bindClickAction(R.id.about_us, "/about_us");
+        bindClickAction(R.id.version_info, "/versionInfo");
+        bindClickAction(R.id.about_us, "/aboutUs");
         bindClickAction(R.id.copyright, "/copyright");
         bindClickAction(R.id.licensing, "/licensing");
-        bindClickAction(R.id.service_agreement, "/service_agreement");
-        bindClickAction(R.id.privacy_right_policy, "/privacy_right_policy");
+        bindClickAction(R.id.service_agreement, "/serviceAgreement");
+        bindClickAction(R.id.privacy_right_policy, "/privacyRightPolicy");
         bindClickAction(R.id.instruction, "/instruction");
     }
 

@@ -67,6 +67,9 @@ public class LKAndroidStatics {
     /** 安全中心地址 */
     private static String securityCenterUrl;
 
+    /** 工作流页面地址 */
+    private static String activitiUrl;
+
     /** 动态TAB页列表 */
     private static List<LKDynamicTab> dynamicTabs;
 
@@ -240,6 +243,7 @@ public class LKAndroidStatics {
             photo(null);
             level(1);
             securityCenterUrl(null);
+            activitiUrl(null);
             token(null);
             loginName(null);
             return;
@@ -247,6 +251,7 @@ public class LKAndroidStatics {
         photo(login.getPhoto());
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
+        activitiUrl(login.getActivitiUrl());
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());
@@ -358,6 +363,26 @@ public class LKAndroidStatics {
     }
 
     /**
+     * 获取工作流页面地址
+     * @return 工作流页面地址
+     */
+    public static String activitiUrl() {
+        if (activitiUrl == null || "".equals(activitiUrl)) {
+            activitiUrl = LKSharedPreferences.getString(LKSharedPreferences.ACTIVITI_URL, "");
+        }
+        return activitiUrl;
+    }
+
+    /**
+     * 设置工作流页面地址
+     * @param activitiUrl 工作流页面地址
+     */
+    private static void activitiUrl(String activitiUrl) {
+        LKAndroidStatics.activitiUrl = activitiUrl;
+        LKSharedPreferences.putString(LKSharedPreferences.ACTIVITI_URL, activitiUrl);
+    }
+
+    /**
      * 获取动态TAB页列表
      * @return 动态TAB页列表
      */
@@ -375,7 +400,7 @@ public class LKAndroidStatics {
      * 设置动态TAB页列表
      * @param dynamicTabs 动态TAB页列表
      */
-    private static void dynamicTabs(List<LKDynamicTab> dynamicTabs) {
+    public static void dynamicTabs(List<LKDynamicTab> dynamicTabs) {
         LKAndroidStatics.dynamicTabs = dynamicTabs;
         StringBuilder sb = new StringBuilder();
         if (dynamicTabs != null && !dynamicTabs.isEmpty()) {

@@ -84,7 +84,7 @@ public class SmsValidateActivity extends AppCompatActivity {
         if (LKPropertiesLoader.pageTest) {
             LKWebViewActivity.open(this.getBaseContext(), "file:///android_asset/test/test.html");
         } else {
-            LKWebViewActivity.open(this.getBaseContext(), LKPropertiesLoader.pageBaseUrl + "/service_agreement" + LKPropertiesLoader.pageSuffix);
+            LKWebViewActivity.open(this.getBaseContext(), LKPropertiesLoader.pageBaseUrl + "/serviceAgreement" + LKPropertiesLoader.pageSuffix);
         }
     }
 

@@ -20,6 +20,6 @@ public class PunchTheClockIn extends LKRequestBean {
     private final String compId;
 
     /** 高德定位信息 */
-    private final LKAMapLocation aMapLocation;
+    private final LKAMapLocation amap;
 
 }

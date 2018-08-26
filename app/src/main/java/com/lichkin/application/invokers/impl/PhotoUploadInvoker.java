@@ -15,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface PhotoUploadInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_USER + "PhotoUpload")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/PhotoUpload")
     Call<LKResponseBean<PhotoUploadOut>> invoke(@Body PhotoUploadIn in);
 
 }
