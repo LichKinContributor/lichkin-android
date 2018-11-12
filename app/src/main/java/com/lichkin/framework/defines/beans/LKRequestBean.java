@@ -13,33 +13,14 @@ import lombok.ToString;
 @ToString
 public class LKRequestBean {
 
-    /** 客户端唯一标识 */
-    private String appKey;
-
-    /** 客户端类型 */
-    private String clientType = "ANDROID";
-
-    /** 客户端版本号（大版本号） */
-    private Byte versionX;
-
-    /** 客户端版本号（中版本号） */
-    private Byte versionY;
-
-    /** 客户端版本号（小版本号） */
-    private Short versionZ;
-
-    /** 登录后获取得 */
-    private String token;
+    /** 统一请求参数 */
+    private Datas datas;
 
     /**
      * 构造方法
      */
     public LKRequestBean() {
-        appKey = LKAndroidStatics.appKey();
-        versionX = LKAndroidStatics.versionX();
-        versionY = LKAndroidStatics.versionY();
-        versionZ = LKAndroidStatics.versionZ();
-        token = LKAndroidStatics.token();
+        datas = new Datas(LKAndroidStatics.appKey(), LKAndroidStatics.versionX(), LKAndroidStatics.versionY(), LKAndroidStatics.versionZ(), LKAndroidStatics.token());
     }
 
 }
