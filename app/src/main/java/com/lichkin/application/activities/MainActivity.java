@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,7 +24,7 @@ import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.GetLastAppVersionIn;
 import com.lichkin.application.beans.out.impl.GetLastAppVersionOut;
 import com.lichkin.application.fragments.HomeFragment;
-import com.lichkin.application.fragments.MyFragment;
+import com.lichkin.application.fragments.MyListFragment;
 import com.lichkin.application.invokers.impl.GetLastAppVersionInvoker;
 import com.lichkin.application.testers.GetLastAppVersionTester;
 import com.lichkin.framework.app.android.LKAndroidStatics;
@@ -44,9 +45,7 @@ import com.lichkin.framework.defines.beans.LKErrorMessageBean;
 import com.lichkin.framework.utils.LKRandomUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 
@@ -137,7 +136,6 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
         if (dynamicTabs == null || dynamicTabs.isEmpty()) {
             if (savedDynamicTabs == null || savedDynamicTabs.isEmpty()) {
                 LKLog.d("dynamicTabs -> handle null, saved null. nothing to do.");
-                return;
             } else {
                 LKLog.d("dynamicTabs -> handle null, saved not null. do clear.");
                 LKAndroidStatics.dynamicTabs(null);
@@ -190,6 +188,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
             LKDynamicTab tabInfo = dynamicTabs.get(i);
             Bundle bundle = new Bundle();
             bundle.putString("tabId", tabInfo.getTabId());
+            bundle.putString("tabName", tabInfo.getTabName());
             fragments.get(i).setArguments(bundle);
             displayMenu(i, tabInfo.getTabName(), LKBase64.toDrawable(tabInfo.getTabIcon()));
         }
@@ -366,7 +365,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
     /** 排序ID */
     private int orderId = 0;
     /** 菜单页面对象映射集合 */
-    private Map<Integer, MenuPage> menuPageMap = new HashMap<>();
+    private SparseArray<MenuPage> menuPageMap = new SparseArray<>();
 
     /**
      * 初始化主页
@@ -384,7 +383,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
      * 初始化我的页面
      */
     protected void initMyPage() {
-        MY_MENU_ID = initMenuPage(R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my, new MyFragment(), true);
+        MY_MENU_ID = initMenuPage(R.string.title_navigation_menu_my, R.drawable.ic_navigation_menu_my, new MyListFragment(), true);
     }
 
     /** 自定义菜单 */

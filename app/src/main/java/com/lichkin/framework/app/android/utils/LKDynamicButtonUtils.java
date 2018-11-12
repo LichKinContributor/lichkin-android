@@ -3,6 +3,7 @@ package com.lichkin.framework.app.android.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 import com.lichkin.framework.app.android.beans.LKDynamicButton;
 import com.lichkin.framework.app.android.callbacks.LKCallback;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import java.util.Map;
 public class LKDynamicButtonUtils {
 
     /** 按钮链接信息 */
-    private static final Map<Integer, String> btnUrls = new HashMap<>();
+    private static final SparseArray<String> btnUrls = new SparseArray<>();
 
     /**
      * 初始化按钮栏
@@ -37,6 +37,10 @@ public class LKDynamicButtonUtils {
      * @param aspectRatio 按钮的宽高比
      */
     public static void inflate(final ViewGroup container, final List<LKDynamicButton> btns, final int divide, final float aspectRatio) {
+        if (btns == null || btns.isEmpty()) {
+            return;
+        }
+
         final Context context = container.getContext();
         final LayoutInflater inflater = LKAndroidUtils.getLayoutInflater();
 
@@ -85,9 +89,15 @@ public class LKDynamicButtonUtils {
             btnImgView.setLayoutParams(imgLayoutParams);
 
             final TextView btnTitleView = btnListLayout.findViewById(R.id.dynamic_buttons_button_text);
-            btnTitleView.setText(button.getBtnTitleResId());
+            Integer titleRestId = button.getBtnTitleResId();
             final ViewGroup.LayoutParams btnTitleLayoutParams = btnTitleView.getLayoutParams();
-            btnTitleLayoutParams.height = btnTitleHeight;
+            if (titleRestId == null) {
+                btnTitleView.setText("");
+                btnTitleLayoutParams.height = 10;
+            } else {
+                btnTitleView.setText(titleRestId);
+                btnTitleLayoutParams.height = btnTitleHeight;
+            }
             btnTitleView.setLayoutParams(btnTitleLayoutParams);
 
             btnListLayout.setClickable(true);
@@ -110,7 +120,7 @@ public class LKDynamicButtonUtils {
                         return;
                     }
                     if (activityClass.equals(LKWebViewActivity.class)) {
-                        if (!btnUrls.containsKey(btnImgResId)) {
+                        if (btnUrls.indexOfKey(btnImgResId) != -1) {
                             String url = button.getUrl();
                             if (url == null || "".equals(url)) {
                                 LKToast.showTip(R.string.error_NOT_FOUND);
@@ -129,6 +139,9 @@ public class LKDynamicButtonUtils {
                 }
             });
 
+            if (lineLayout == null) {
+                return;
+            }
             lineLayout.addView(btnListLayout);
         }
     }

@@ -1,5 +1,6 @@
 package com.lichkin.application.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.AccountLoginIn;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
-import com.lichkin.application.fragments.MyFragment;
+import com.lichkin.application.fragments.MyFragmentDefine;
 import com.lichkin.application.invokers.impl.AccountLoginInvoker;
 import com.lichkin.application.testers.AccountLoginTester;
 import com.lichkin.framework.app.android.LKAndroidStatics;
@@ -106,6 +107,7 @@ public class AccountLoginActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,7 +166,7 @@ public class AccountLoginActivity extends AppCompatActivity {
             protected void success(Context context, AccountLoginIn AccountLoginIn, AccountLoginOut responseDatas) {
                 afterInvokeAccountLogin();
                 LKAndroidStatics.saveLoginInfo(responseDatas);
-                AccountLoginActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);
+                AccountLoginActivity.this.setResult(MyFragmentDefine.RESULT_CODE_LOGINED);
                 AccountLoginActivity.this.finish();
             }
 

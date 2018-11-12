@@ -1,6 +1,7 @@
 package com.lichkin.framework.app.android.widgets;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -45,6 +46,9 @@ public class LKDialog {
 
     /** 对话框构建对象 */
     private AlertDialog.Builder builder;
+
+    /** 弹窗对象 */
+    private Dialog dialog;
 
     /**
      * 构造方法
@@ -211,7 +215,16 @@ public class LKDialog {
      * 显示对话框
      */
     public void show() {
-        builder.show();
+        dialog = builder.show();
+    }
+
+    /**
+     * 关闭对话框
+     */
+    public void close() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
 

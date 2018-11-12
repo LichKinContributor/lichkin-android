@@ -1,5 +1,6 @@
 package com.lichkin.application.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.SupplementRegisterInfoIn;
 import com.lichkin.application.beans.out.impl.SupplementRegisterInfoOut;
-import com.lichkin.application.fragments.MyFragment;
+import com.lichkin.application.fragments.MyFragmentDefine;
 import com.lichkin.application.invokers.impl.SupplementRegisterInfoInvoker;
 import com.lichkin.application.testers.SupplementRegisterInfoTester;
 import com.lichkin.framework.app.android.LKAndroidStatics;
@@ -81,6 +82,7 @@ public class SupplementRegisterInfoActivity extends AppCompatActivity {
         invokeSupplementRegisterInfo();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +141,7 @@ public class SupplementRegisterInfoActivity extends AppCompatActivity {
             protected void success(Context context, SupplementRegisterInfoIn SupplementRegisterInfoIn, SupplementRegisterInfoOut responseDatas) {
                 afterInvokeSupplementRegisterInfo();
                 LKAndroidStatics.loginName(responseDatas.getLoginName());
-                SupplementRegisterInfoActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);
+                SupplementRegisterInfoActivity.this.setResult(MyFragmentDefine.RESULT_CODE_LOGINED);
                 SupplementRegisterInfoActivity.this.finish();
             }
 

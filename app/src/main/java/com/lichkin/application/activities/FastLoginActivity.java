@@ -1,5 +1,6 @@
 package com.lichkin.application.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
 import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
-import com.lichkin.application.fragments.MyFragment;
+import com.lichkin.application.fragments.MyFragmentDefine;
 import com.lichkin.application.invokers.impl.GetSmsSecurityCodeInvoker;
 import com.lichkin.application.testers.GetSmsSecurityCodeTester;
 import com.lichkin.framework.app.android.activities.LKWebViewActivity;
@@ -42,7 +43,7 @@ public class FastLoginActivity extends AppCompatActivity {
     /** 登录按钮事件 */
     @OnClick(R.id.btn_login)
     void btnLoginClick() {
-        startActivityForResult(new Intent(FastLoginActivity.this, AccountLoginActivity.class), MyFragment.REQUEST_CODE);
+        startActivityForResult(new Intent(FastLoginActivity.this, AccountLoginActivity.class), MyFragmentDefine.REQUEST_CODE);
     }
 
     /** 下一步按钮 */
@@ -77,6 +78,7 @@ public class FastLoginActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +137,7 @@ public class FastLoginActivity extends AppCompatActivity {
                 afterInvokeGetSmsSecurityCode();
                 Intent intent = new Intent(FastLoginActivity.this, SmsValidateActivity.class);
                 intent.putExtra("cellphone", cellphone);
-                startActivityForResult(intent, MyFragment.REQUEST_CODE);
+                startActivityForResult(intent, MyFragmentDefine.REQUEST_CODE);
             }
 
             @Override
@@ -177,8 +179,8 @@ public class FastLoginActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MyFragment.REQUEST_CODE && resultCode == MyFragment.RESULT_CODE_LOGINED) {
-            setResult(MyFragment.RESULT_CODE_LOGINED, data);
+        if (requestCode == MyFragmentDefine.REQUEST_CODE && resultCode == MyFragmentDefine.RESULT_CODE_LOGINED) {
+            setResult(MyFragmentDefine.RESULT_CODE_LOGINED, data);
             finish();
         }
     }

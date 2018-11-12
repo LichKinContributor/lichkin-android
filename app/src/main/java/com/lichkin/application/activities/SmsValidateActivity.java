@@ -1,5 +1,6 @@
 package com.lichkin.application.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +16,7 @@ import com.lichkin.application.beans.in.impl.FastLoginIn;
 import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
 import com.lichkin.application.beans.out.impl.FastLoginOut;
 import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
-import com.lichkin.application.fragments.MyFragment;
+import com.lichkin.application.fragments.MyFragmentDefine;
 import com.lichkin.application.invokers.impl.FastLoginInvoker;
 import com.lichkin.application.invokers.impl.GetSmsSecurityCodeInvoker;
 import com.lichkin.application.testers.FastLoginTester;
@@ -91,6 +92,7 @@ public class SmsValidateActivity extends AppCompatActivity {
     /** 手机号码 */
     private String cellphone;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +190,7 @@ public class SmsValidateActivity extends AppCompatActivity {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void run() {
                         btnResend.setText(String.valueOf(timeout) + "s");
@@ -241,13 +244,13 @@ public class SmsValidateActivity extends AppCompatActivity {
                 LKAndroidStatics.saveLoginInfo(responseDatas);
                 if (responseDatas.isLogin()) {
                     //登录
-                    SmsValidateActivity.this.setResult(MyFragment.RESULT_CODE_LOGINED);
+                    SmsValidateActivity.this.setResult(MyFragmentDefine.RESULT_CODE_LOGINED);
                     SmsValidateActivity.this.finish();
                 } else {
                     //注册
                     Intent intent = new Intent(SmsValidateActivity.this, SupplementRegisterInfoActivity.class);
                     intent.putExtra("cellphone", cellphone);
-                    startActivityForResult(intent, MyFragment.REQUEST_CODE);
+                    startActivityForResult(intent, MyFragmentDefine.REQUEST_CODE);
                 }
             }
 
@@ -290,8 +293,8 @@ public class SmsValidateActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MyFragment.REQUEST_CODE && resultCode == MyFragment.RESULT_CODE_LOGINED) {
-            setResult(MyFragment.RESULT_CODE_LOGINED, data);
+        if (requestCode == MyFragmentDefine.REQUEST_CODE && resultCode == MyFragmentDefine.RESULT_CODE_LOGINED) {
+            setResult(MyFragmentDefine.RESULT_CODE_LOGINED, data);
             finish();
         }
     }

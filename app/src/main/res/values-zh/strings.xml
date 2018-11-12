@@ -83,6 +83,7 @@
     <string name="pwd_hint">请输入密码</string>
     <string name="register_pwd_text">密码可由字母、数字、英文符号组成</string>
     <string name="level">等级</string>
+    <string name="sign_in">签到</string>
     <string name="sign_in_success">签到成功</string>
 
     <string name="title_btn_comp_news">新闻</string>

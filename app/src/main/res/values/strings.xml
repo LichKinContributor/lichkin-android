@@ -83,6 +83,7 @@
     <string name="pwd_hint">Please enter password</string>
     <string name="register_pwd_text">Passwords can be made up of letters, numbers, symbols.</string>
     <string name="level">Level</string>
+    <string name="sign_in">Sign in</string>
     <string name="sign_in_success">Sign in Success</string>
 
     <string name="title_btn_comp_news">News</string>

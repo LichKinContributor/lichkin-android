@@ -61,6 +61,14 @@ public class CompFragment extends LKTabFragment {
     @BindView(R.id.loading)
     AVLoadingIndicatorView loadingView;
 
+    /** 标题栏 */
+    @BindView(R.id.title)
+    LinearLayout titleContainer;
+
+    /** 标题文字 */
+    @BindView(R.id.titleText)
+    TextView titleText;
+
     /** 动态按钮 */
     @BindView(R.id.btns)
     LinearLayout btnsContainer;
@@ -73,6 +81,8 @@ public class CompFragment extends LKTabFragment {
     private LKAMapLocation location;
     private static int BTN_DIVIDE = 1;
     private static float BTN_ASPECT_RATIO = 16 / 6f;
+
+    private LKDialog tipDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -99,16 +109,17 @@ public class CompFragment extends LKTabFragment {
             }
         });
         btns = Arrays.asList(
-                new LKDynamicButton(R.drawable.btn_comp_news, R.string.title_btn_comp_news, CompNewsActivity.class).addParam("compId", tabId),
-                new LKDynamicButton(R.drawable.btn_approval, R.string.title_btn_approval, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compId", tabId),
-                new LKDynamicButton(R.drawable.btn_punch_the_clock, R.string.title_btn_punch_the_clock, new LKCallback() {
+                new LKDynamicButton(R.drawable.btn_comp_news, null, CompNewsActivity.class).addParam("compId", tabId),
+                new LKDynamicButton(R.drawable.btn_approval, null, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compId", tabId),
+                new LKDynamicButton(R.drawable.btn_punch_the_clock, null, new LKCallback() {
                     @Override
                     public void call() {
                         if (!MainActivity.locationAuth) {
                             new LKDialog(CompFragment.this.getContext(), R.string.can_not_locate).show();
                             return;
                         }
-                        new LKDialog(CompFragment.this.getContext(), String.format(LKAndroidUtils.getString(R.string.invoke_punch_the_clock_wait), LOCATION_MAX_ACCURACY)).show();
+                        tipDialog = new LKDialog(CompFragment.this.getContext(), String.format(LKAndroidUtils.getString(R.string.invoke_punch_the_clock_wait), LOCATION_MAX_ACCURACY));
+                        tipDialog.show();
                         view.findViewWithTag("btn_punch_the_clock").setClickable(false);
                         loadingMaskView.setVisibility(View.VISIBLE);
                         loadingView.setVisibility(View.VISIBLE);
@@ -125,6 +136,8 @@ public class CompFragment extends LKTabFragment {
         view = inflater.inflate(R.layout.comp_fragment, container, false);
 
         unbinder = ButterKnife.bind(this, view);
+
+        titleText.setText(tabName);
 
         btnsContainer.removeAllViews();
         LKDynamicButtonUtils.inflate(btnsContainer, btns, BTN_DIVIDE, BTN_ASPECT_RATIO);
@@ -161,9 +174,8 @@ public class CompFragment extends LKTabFragment {
 
             @Override
             protected void busError(Context context, PunchTheClockIn PunchTheClockIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
-                super.busError(context, PunchTheClockIn, errorCode, errorType, errorBean);
                 afterInvokePunchTheClock();
-                LKDialog.alert(CompFragment.this.getContext(), R.string.invoke_punch_the_clock_failed);
+                LKDialog.alert(CompFragment.this.getContext(), errorBean.getErrorMessage());
             }
 
             @Override
@@ -193,6 +205,7 @@ public class CompFragment extends LKTabFragment {
      * 结束请求打卡
      */
     private void afterInvokePunchTheClock() {
+        tipDialog.close();
         view.findViewWithTag("btn_punch_the_clock").setClickable(true);
         loadingMaskView.setVisibility(View.GONE);
         loadingView.setVisibility(View.GONE);

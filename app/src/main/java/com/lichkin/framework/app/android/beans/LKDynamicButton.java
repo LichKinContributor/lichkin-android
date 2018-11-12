@@ -53,7 +53,7 @@ public class LKDynamicButton {
     private final int btnImgResId;
 
     /** 按钮标题ID */
-    private final int btnTitleResId;
+    private final Integer btnTitleResId;
 
     /** 按钮点击后打开的Activity类型 */
     private final Class<?> toActivityClass;
@@ -79,7 +79,7 @@ public class LKDynamicButton {
      * @param btnTitleResId 按钮标题ID
      * @param url 页面地址
      */
-    public LKDynamicButton(int btnImgResId, int btnTitleResId, String url) {
+    public LKDynamicButton(int btnImgResId, Integer btnTitleResId, String url) {
         this.btnImgResId = btnImgResId;
         this.btnTitleResId = btnTitleResId;
         this.toActivityClass = LKWebViewActivity.class;
@@ -102,7 +102,7 @@ public class LKDynamicButton {
      * @param btnImgResId 按钮图片ID
      * @param btnTitleResId 按钮标题ID
      */
-    public LKDynamicButton(int btnImgResId, int btnTitleResId) {
+    public LKDynamicButton(int btnImgResId, Integer btnTitleResId) {
         this.btnImgResId = btnImgResId;
         this.btnTitleResId = btnTitleResId;
         this.toActivityClass = LKWebViewActivity.class;
@@ -115,7 +115,7 @@ public class LKDynamicButton {
      * @param dialogFragment 弹窗页面对象
      * @param fragmentManager 弹窗对象管理器
      */
-    public LKDynamicButton(int btnImgResId, int btnTitleResId, DialogFragment dialogFragment, FragmentManager fragmentManager) {
+    public LKDynamicButton(int btnImgResId, Integer btnTitleResId, DialogFragment dialogFragment, FragmentManager fragmentManager) {
         this.btnImgResId = btnImgResId;
         this.btnTitleResId = btnTitleResId;
         this.toActivityClass = null;
@@ -129,7 +129,7 @@ public class LKDynamicButton {
      * @param btnTitleResId 按钮标题ID
      * @param callback 回调方法
      */
-    public LKDynamicButton(int btnImgResId, int btnTitleResId, LKCallback callback) {
+    public LKDynamicButton(int btnImgResId, Integer btnTitleResId, LKCallback callback) {
         this.btnImgResId = btnImgResId;
         this.btnTitleResId = btnTitleResId;
         this.toActivityClass = null;
