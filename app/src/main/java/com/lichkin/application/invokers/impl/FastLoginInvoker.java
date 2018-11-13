@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.FastLoginIn;
 import com.lichkin.application.beans.out.impl.FastLoginOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -15,7 +16,7 @@ import retrofit2.http.POST;
  */
 public interface FastLoginInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/FastLogin")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/FastLogin")
     Call<LKResponseBean<FastLoginOut>> invoke(@Body FastLoginIn in);
 
 }

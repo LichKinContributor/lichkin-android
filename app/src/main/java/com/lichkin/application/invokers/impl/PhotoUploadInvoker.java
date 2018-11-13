@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.PhotoUploadIn;
 import com.lichkin.application.beans.out.impl.PhotoUploadOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -15,7 +16,7 @@ import retrofit2.http.POST;
  */
 public interface PhotoUploadInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/PhotoUpload")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/PhotoUpload")
     Call<LKResponseBean<PhotoUploadOut>> invoke(@Body PhotoUploadIn in);
 
 }

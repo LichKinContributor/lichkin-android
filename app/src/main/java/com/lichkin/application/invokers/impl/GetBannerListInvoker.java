@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.GetBannerListIn;
 import com.lichkin.application.beans.out.impl.GetBannerListOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -17,7 +18,7 @@ import retrofit2.http.POST;
  */
 public interface GetBannerListInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/GetBannerList")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/GetBannerList")
     Call<LKResponseBean<List<GetBannerListOut>>> invoke(@Body GetBannerListIn in);
 
 }

@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.SignInIn;
 import com.lichkin.application.beans.out.impl.SignInOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -15,7 +16,7 @@ import retrofit2.http.POST;
  */
 public interface SignInInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/SignIn")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/SignIn")
     Call<LKResponseBean<SignInOut>> invoke(@Body SignInIn in);
 
 }

@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.ScoreIn;
 import com.lichkin.application.beans.out.impl.ScoreOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -15,7 +16,7 @@ import retrofit2.http.POST;
  */
 public interface ScoreInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/Score")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/Score")
     Call<LKResponseBean<ScoreOut>> invoke(@Body ScoreIn in);
 
 }

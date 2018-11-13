@@ -1,5 +1,6 @@
 package com.lichkin.application.invokers.impl;
 
+import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.GetNewsPageIn;
 import com.lichkin.application.beans.out.impl.GetNewsPageOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -16,7 +17,7 @@ import retrofit2.http.POST;
  */
 public interface GetNewsPageInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API_APP_USER + "/GetNewsPage")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/GetNewsPage")
     Call<LKResponseBean<LKPageBean<GetNewsPageOut>>> invoke(@Body GetNewsPageIn in);
 
 }
