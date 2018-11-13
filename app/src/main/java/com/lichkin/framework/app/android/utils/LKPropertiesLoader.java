@@ -18,6 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LKPropertiesLoader {
 
+    /** 客户端令牌 */
+    public static final String appToken;
+
     /** 页面测试 */
     public static final boolean pageTest;
 
@@ -61,6 +64,8 @@ public class LKPropertiesLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        appToken = getString("lichkin.framework.app.token");
 
         pageTest = getBoolean("lichkin.framework.page.test");
         pageBaseUrl = getString("lichkin.framework.page.baseUrl");

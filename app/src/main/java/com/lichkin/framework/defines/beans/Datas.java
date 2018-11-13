@@ -1,5 +1,7 @@
 package com.lichkin.framework.defines.beans;
 
+import com.lichkin.framework.app.android.utils.LKPropertiesLoader;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -28,5 +30,8 @@ class Datas {
 
     /** 登录后获取得 */
     private final String token;
+
+    /** 公司令牌 */
+    private final String compToken = LKPropertiesLoader.appToken;
 
 }
