@@ -158,31 +158,31 @@
             android:layout_height="1px" android:background="#66888888" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/btn_about"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="10dp">
+<!--     <LinearLayout -->
+<!--         android:id="@+id/btn_about" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="48dp" -->
+<!--         android:background="#FFFFFF" -->
+<!--         android:orientation="vertical" -->
+<!--         android:padding="10dp"> -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--         <LinearLayout -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="match_parent"> -->
 
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_about" />
+<!--             <ImageView -->
+<!--                 android:layout_width="28dp" -->
+<!--                 android:layout_height="match_parent" -->
+<!--                 android:background="@drawable/btn_about" /> -->
 
-            <TextView
-                android:gravity="center"
-                android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10dp" android:textSize="14sp" android:textColor="#373837"
-                android:text="@string/title_about" />
+<!--             <TextView -->
+<!--                 android:gravity="center" -->
+<!--                 android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10dp" android:textSize="14sp" android:textColor="#373837" -->
+<!--                 android:text="@string/title_about" /> -->
 
-        </LinearLayout>
+<!--         </LinearLayout> -->
 
-    </LinearLayout>
+<!--     </LinearLayout> -->
 
     <LinearLayout
         android:id="@+id/logined_btns"
@@ -192,31 +192,31 @@
         android:visibility="gone"
         android:layout_marginTop="18dp">
 
-    <LinearLayout
-        android:id="@+id/btn_security_center"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:padding="10dp">
+<!--     <LinearLayout -->
+<!--         android:id="@+id/btn_security_center" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="48dp" -->
+<!--         android:background="#FFFFFF" -->
+<!--         android:orientation="vertical" -->
+<!--         android:padding="10dp"> -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--         <LinearLayout -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="match_parent"> -->
 
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_security_center" />
+<!--             <ImageView -->
+<!--                 android:layout_width="28dp" -->
+<!--                 android:layout_height="match_parent" -->
+<!--                 android:background="@drawable/btn_security_center" /> -->
 
-            <TextView
-                android:gravity="center"
-                android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10dp" android:textSize="14sp" android:textColor="#373837"
-                android:text="@string/title_security_center" />
+<!--             <TextView -->
+<!--                 android:gravity="center" -->
+<!--                 android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10dp" android:textSize="14sp" android:textColor="#373837" -->
+<!--                 android:text="@string/title_security_center" /> -->
 
-        </LinearLayout>
+<!--         </LinearLayout> -->
 
-    </LinearLayout>
+<!--     </LinearLayout> -->
 
     <LinearLayout
         android:layout_width="match_parent"

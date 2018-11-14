@@ -1,16 +1,11 @@
 package com.lichkin.application.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.lichkin.app.android.demo.R;
-import com.lichkin.application.activities.AboutActivity;
-import com.lichkin.framework.app.android.LKAndroidStatics;
-import com.lichkin.framework.app.android.activities.LKWebViewActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,22 +57,22 @@ public class MyListFragment extends MyFragmentDefine {
         dialogFragment.show(fragmentManager, dialogFragment.getTag());
     }
 
-    /** 关于按钮事件 */
-    @OnClick(R.id.btn_about)
-    void btnAboutClick() {
-        Context context = getContext();
-        if (context == null) {
-            return;
-        }
-        Intent intent = new Intent(context, AboutActivity.class);
-        context.startActivity(intent);
-    }
+//    /** 关于按钮事件 */
+//    @OnClick(R.id.btn_about)
+//    void btnAboutClick() {
+//        Context context = getContext();
+//        if (context == null) {
+//            return;
+//        }
+//        Intent intent = new Intent(context, AboutActivity.class);
+//        context.startActivity(intent);
+//    }
 
-    /** 安全中心按钮事件 */
-    @OnClick(R.id.btn_security_center)
-    void btnSecurityCenterClick() {
-        LKWebViewActivity.open(getContext(), LKAndroidStatics.securityCenterUrl());
-    }
+//    /** 安全中心按钮事件 */
+//    @OnClick(R.id.btn_security_center)
+//    void btnSecurityCenterClick() {
+//        LKWebViewActivity.open(getContext(), LKAndroidStatics.securityCenterUrl());
+//    }
 
     /** 退出登录按钮事件 */
     @OnClick(R.id.btn_exit)
