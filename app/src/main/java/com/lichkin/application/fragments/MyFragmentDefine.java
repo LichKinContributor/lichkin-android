@@ -31,9 +31,9 @@ import com.lichkin.application.beans.out.impl.PhotoUploadOut;
 import com.lichkin.application.beans.out.impl.SignInOut;
 import com.lichkin.application.beans.out.impl.TokenLoginOut;
 import com.lichkin.application.invokers.impl.GetDynamicTabsInvoker;
-import com.lichkin.application.invokers.impl.PhotoUploadInvoker;
 import com.lichkin.application.invokers.impl.SignInInvoker;
 import com.lichkin.application.invokers.impl.TokenLoginInvoker;
+import com.lichkin.application.invokers.impl.UploadPhotoInvoker;
 import com.lichkin.application.testers.GetDynamicTabsTester;
 import com.lichkin.application.testers.PhotoUploadTester;
 import com.lichkin.application.testers.SignInTester;
@@ -510,7 +510,7 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
         PhotoUploadIn in = new PhotoUploadIn(LKAndroidStatics.photo());
 
         //创建请求对象
-        final LKRetrofit<PhotoUploadIn, PhotoUploadOut> retrofit = new LKRetrofit<>(this.getActivity(), PhotoUploadInvoker.class);
+        final LKRetrofit<PhotoUploadIn, PhotoUploadOut> retrofit = new LKRetrofit<>(this.getActivity(), UploadPhotoInvoker.class);
 
         //测试代码
         PhotoUploadTester.test(retrofit);

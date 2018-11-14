@@ -14,9 +14,9 @@ import retrofit2.http.POST;
  * 头像上传
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
-public interface PhotoUploadInvoker {
+public interface UploadPhotoInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/PhotoUpload")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/UploadPhoto")
     Call<LKResponseBean<PhotoUploadOut>> invoke(@Body PhotoUploadIn in);
 
 }

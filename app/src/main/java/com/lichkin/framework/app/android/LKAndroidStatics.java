@@ -3,6 +3,7 @@ package com.lichkin.framework.app.android;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.out.LoginOut;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
+import com.lichkin.defines.ActivitiStatics;
 import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
@@ -238,6 +239,7 @@ public class LKAndroidStatics {
      * 保存登录信息
      * @param login 登录信息
      */
+    @SuppressWarnings("deprecation")
     public static void saveLoginInfo(LoginOut login) {
         if (login == null) {
             photo(null);
@@ -251,7 +253,7 @@ public class LKAndroidStatics {
         photo(login.getPhoto());
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
-        activitiUrl(login.getActivitiUrl());
+        activitiUrl(login.getApiServerRootUrl() + ActivitiStatics.ACTIVITI_CENTER_URL);
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());

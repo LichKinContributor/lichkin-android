@@ -23,6 +23,6 @@ public class LoginOut {
     private String securityCenterUrl;
 
     /** 工作流页面地址 */
-    private String activitiUrl;
+    private String apiServerRootUrl;
 
 }
