@@ -15,7 +15,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationListener;
 import com.lichkin.app.android.demo.R;
 import com.lichkin.app.android.demo.activities.MainActivity;
-import com.lichkin.application.activities.CompNewsActivity;
 import com.lichkin.application.beans.in.impl.PunchTheClockIn;
 import com.lichkin.application.beans.out.impl.PunchTheClockOut;
 import com.lichkin.application.invokers.impl.PunchTheClockInvoker;
@@ -109,7 +108,7 @@ public class CompFragment extends LKTabFragment {
             }
         });
         btns = Arrays.asList(
-                new LKDynamicButton(R.drawable.btn_comp_news, null, CompNewsActivity.class).addParam("compId", tabId),
+//                new LKDynamicButton(R.drawable.btn_comp_news, null, CompNewsActivity.class).addParam("compId", tabId),
                 new LKDynamicButton(R.drawable.btn_approval, null, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compId", tabId),
                 new LKDynamicButton(R.drawable.btn_punch_the_clock, null, new LKCallback() {
                     @Override
