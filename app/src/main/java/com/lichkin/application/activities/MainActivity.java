@@ -294,7 +294,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
             @Override
             protected void busError(Context context, GetLastAppVersionIn getLastAppVersionIn, int errorCode, LKErrorMessageBean.TYPE errorType, LKErrorMessageBean errorBean) {
                 switch (errorCode) {
-                    case 49999://应用已下架
+                    case 49999: {//应用已下架
                         String[] errorMessageArr = errorBean.getErrorMessageArr();
                         LKDialog dlg = new LKDialog(context, errorMessageArr[0]).setTitle(errorMessageArr[1]).setCancelable(false);
                         dlg.setPositiveButton(errorMessageArr[2], new LKBtnCallback() {
@@ -304,8 +304,20 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                             }
                         });
                         dlg.show();
+                    }
                         break;
-                    case 40000://没有可用版本，不处理。
+                    case 49998: {//版本非法，提示信息。
+                        String[] errorMessageArr = errorBean.getErrorMessageArr();
+                        LKDialog dlg = new LKDialog(context, errorMessageArr[0]).setTitle(errorMessageArr[1]).setCancelable(false);
+                        dlg.setPositiveButton(errorMessageArr[2], new LKBtnCallback() {
+                            @Override
+                            public void call(Context context, DialogInterface dialog) {
+                            }
+                        });
+                        dlg.show();
+                    }
+                        break;
+                    case 40000://最新版本，不处理。
                         break;
                     case -1://服务器异常
                         break;
