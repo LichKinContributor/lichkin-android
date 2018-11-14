@@ -42,8 +42,8 @@ import butterknife.ButterKnife;
  */
 public class CompNewsActivity extends AppCompatActivity {
 
-    /** 公司ID */
-    private String compId;
+    /** 公司令牌 */
+    private String compToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class CompNewsActivity extends AppCompatActivity {
         //绑定页面
         ButterKnife.bind(this);
 
-        compId = getIntent().getStringExtra("compId");
+        compToken = getIntent().getStringExtra("compToken");
 
         //初始化新闻栏
         initNewsSection();
@@ -278,7 +278,7 @@ public class CompNewsActivity extends AppCompatActivity {
      */
     private void invokeGetCompNewsPage() {
         //请求参数
-        GetCompNewsPageIn in = new GetCompNewsPageIn(pageNumber++, compId);
+        GetCompNewsPageIn in = new GetCompNewsPageIn(pageNumber++, compToken);
 
         //创建请求对象
         final LKRetrofit<GetCompNewsPageIn, LKPageBean<GetCompNewsPageOut>> retrofit = new LKRetrofit<>(CompNewsActivity.this, GetCompNewsPageInvoker.class);

@@ -16,8 +16,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class PunchTheClockIn extends LKRequestBean {
 
-    /** 公司ID */
-    private final String compId;
+    /** 公司令牌 */
+    private final String compToken;
 
     /** 高德定位信息 */
     private final LKAMapLocation amap;

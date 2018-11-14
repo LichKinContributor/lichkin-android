@@ -75,7 +75,7 @@ public class CompFragment extends LKTabFragment {
     /** 按钮列表 */
     List<LKDynamicButton> btns;
 
-    private static final int LOCATION_MAX_ACCURACY = 60;
+    private static final int LOCATION_MAX_ACCURACY = 100;
     private AMapLocationClient aMapLocationClient;
     private LKAMapLocation location;
     private static int BTN_DIVIDE = 1;
@@ -108,8 +108,8 @@ public class CompFragment extends LKTabFragment {
             }
         });
         btns = Arrays.asList(
-//                new LKDynamicButton(R.drawable.btn_comp_news, null, CompNewsActivity.class).addParam("compId", tabId),
-                new LKDynamicButton(R.drawable.btn_approval, null, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compId", tabId),
+//                new LKDynamicButton(R.drawable.btn_comp_news, null, CompNewsActivity.class).addParam("compToken", tabId),
+                new LKDynamicButton(R.drawable.btn_approval, null, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.activitiUrl()).addParam("compToken", tabId),
                 new LKDynamicButton(R.drawable.btn_punch_the_clock, null, new LKCallback() {
                     @Override
                     public void call() {

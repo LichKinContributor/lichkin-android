@@ -11,8 +11,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class GetCompNewsPageIn extends GetNewsPageIn {
 
-    /** 公司ID */
-    private String compId;
+    /** 公司令牌 */
+    private String compToken;
 
     /** 分类编码 */
     private String categoryCode = "";
@@ -20,11 +20,11 @@ public class GetCompNewsPageIn extends GetNewsPageIn {
     /**
      * 构造方法
      * @param pageNumber 页码
-     * @param compId 公司ID
+     * @param compToken 公司令牌
      */
-    public GetCompNewsPageIn(int pageNumber, String compId) {
+    public GetCompNewsPageIn(int pageNumber, String compToken) {
         super(pageNumber, 10);
-        this.compId = compId;
+        this.compToken = compToken;
     }
 
 }
