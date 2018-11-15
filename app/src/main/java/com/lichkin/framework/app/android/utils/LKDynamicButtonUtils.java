@@ -120,7 +120,7 @@ public class LKDynamicButtonUtils {
                         return;
                     }
                     if (activityClass.equals(LKWebViewActivity.class)) {
-                        if (btnUrls.indexOfKey(btnImgResId) != -1) {
+                        if (btnUrls.indexOfKey(btnImgResId) == -1) {
                             String url = button.getUrl();
                             if (url == null || "".equals(url)) {
                                 LKToast.showTip(R.string.error_NOT_FOUND);
