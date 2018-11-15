@@ -4,6 +4,7 @@ import com.lichkin.app.android.demo.R;
 import com.lichkin.application.beans.out.LoginOut;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.defines.ActivitiStatics;
+import com.lichkin.defines.CoreStatics;
 import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
@@ -253,7 +254,7 @@ public class LKAndroidStatics {
         photo(login.getPhoto());
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
-        activitiUrl(login.getApiServerRootUrl() + ActivitiStatics.ACTIVITI_CENTER_URL);
+        activitiUrl(login.getApiServerRootUrl() + CoreStatics.SSO_URL + ActivitiStatics.ACTIVITI_CENTER_URL);
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());
