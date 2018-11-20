@@ -323,7 +323,7 @@ public abstract class MainActivity extends LKAppCompatActivity implements Activi
                         break;
                     default:
                         // 其它错误，待约定与实现。
-                        restart();
+                        // restart();
                         break;
                 }
             }
