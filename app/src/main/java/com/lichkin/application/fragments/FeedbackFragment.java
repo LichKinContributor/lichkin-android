@@ -278,7 +278,7 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
                 .enableReserveRaw(false)
                 .create(), false);
         takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(false).create());
-        CropOptions cropOptions = new CropOptions.Builder().setOutputX(256).setOutputY(256).setWithOwnCrop(false).create();
+        CropOptions cropOptions = new CropOptions.Builder().setOutputX(512).setOutputY(512).setWithOwnCrop(false).create();
         if (fromGralley) {
             takePhoto.onPickFromGalleryWithCrop(uri, cropOptions);
         } else {
