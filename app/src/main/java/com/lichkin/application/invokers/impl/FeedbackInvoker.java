@@ -1,6 +1,5 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.FeedbackIn;
 import com.lichkin.application.beans.out.impl.FeedbackOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -16,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface FeedbackInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/Feedback")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API + "/Feedback")
     Call<LKResponseBean<FeedbackOut>> invoke(@Body FeedbackIn in);
 
 }

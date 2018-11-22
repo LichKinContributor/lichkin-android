@@ -7,7 +7,7 @@ package com.lichkin.framework.defines;
 public class LKFrameworkStatics {
 
     /** 系统默认配置值：API数据请求映射。 */
-    public static final String WEB_MAPPING_API = "API/App";
+    public static final String WEB_MAPPING_API = "API";
 
     /** 系统默认配置值：页面请求映射。 */
     public static final String WEB_MAPPING_PAGES = ".dhtml";

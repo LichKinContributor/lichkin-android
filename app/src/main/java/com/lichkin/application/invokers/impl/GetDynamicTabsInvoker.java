@@ -1,6 +1,5 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.GetDynamicTabsIn;
 import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -18,7 +17,7 @@ import retrofit2.http.POST;
  */
 public interface GetDynamicTabsInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/GetDynamicTabs")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API  + "/GetDynamicTabs")
     Call<LKResponseBean<List<LKDynamicTab>>> invoke(@Body GetDynamicTabsIn in);
 
 }

@@ -1,6 +1,5 @@
 package com.lichkin.application.invokers.impl;
 
-import com.lichkin.application.ApplicationStatics;
 import com.lichkin.application.beans.in.impl.GetSmsSecurityCodeIn;
 import com.lichkin.application.beans.out.impl.GetSmsSecurityCodeOut;
 import com.lichkin.framework.defines.LKFrameworkStatics;
@@ -16,7 +15,7 @@ import retrofit2.http.POST;
  */
 public interface GetSmsSecurityCodeInvoker {
 
-    @POST(LKFrameworkStatics.WEB_MAPPING_API + ApplicationStatics.API_TYPE + "/GetSmsSecurityCode")
+    @POST(LKFrameworkStatics.WEB_MAPPING_API  + "/GetSmsSecurityCode")
     Call<LKResponseBean<GetSmsSecurityCodeOut>> invoke(@Body GetSmsSecurityCodeIn in);
 
 }
