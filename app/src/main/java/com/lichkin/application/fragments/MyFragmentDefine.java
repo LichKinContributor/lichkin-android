@@ -490,11 +490,11 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
     private void takePhoto(boolean fromGralley) {
         Uri uri = Uri.fromFile(new File(imgDir, "/" + System.currentTimeMillis() + ".jpg"));
         takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(102400)
-                .setMaxPixel(256)
+                .setMaxPixel(512)
                 .enableReserveRaw(false)
                 .create(), false);
         takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(false).create());
-        CropOptions cropOptions = new CropOptions.Builder().setOutputX(256).setOutputY(256).setWithOwnCrop(false).create();
+        CropOptions cropOptions = new CropOptions.Builder().setAspectX(512).setAspectY(512).setOutputX(512).setOutputY(512).setWithOwnCrop(false).create();
         if (fromGralley) {
             takePhoto.onPickFromGalleryWithCrop(uri, cropOptions);
         } else {

@@ -274,11 +274,11 @@ public class FeedbackFragment extends DialogFragment implements TakePhoto.TakeRe
     private void takePhoto(boolean fromGralley) {
         Uri uri = Uri.fromFile(new File(imgDir, "/" + System.currentTimeMillis() + ".jpg"));
         takePhoto.onEnableCompress(new CompressConfig.Builder().setMaxSize(102400)
-                .setMaxPixel(256)
+                .setMaxPixel(1024)
                 .enableReserveRaw(false)
                 .create(), false);
         takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(false).create());
-        CropOptions cropOptions = new CropOptions.Builder().setOutputX(512).setOutputY(512).setWithOwnCrop(false).create();
+        CropOptions cropOptions = new CropOptions.Builder().setWithOwnCrop(false).create();
         if (fromGralley) {
             takePhoto.onPickFromGalleryWithCrop(uri, cropOptions);
         } else {
