@@ -34,6 +34,9 @@ public class LKSharedPreferences {
     /** 工作流页面地址键 */
     public static final String ACTIVITI_URL = "lichkin.framework.app.activitiUrl";
 
+    /** 报表页面地址键 */
+    public static final String REPORT_URL = "lichkin.framework.app.reportUrl";
+
     /** 公司列表键 */
     public static final String TABS = "lichkin.framework.app.tabs";
 

@@ -125,7 +125,8 @@ public class CompFragment extends LKTabFragment {
                         //启动定位
                         aMapLocationClient.startLocation();
                     }
-                }).tag("btn_punch_the_clock")
+                }).tag("btn_punch_the_clock"),
+                new LKDynamicButton(R.drawable.btn_report, null, LKPropertiesLoader.pageTest ? "file:///android_asset/test/test.html" : LKAndroidStatics.reportUrl()).addParam("compToken", tabId)
         );
     }
 

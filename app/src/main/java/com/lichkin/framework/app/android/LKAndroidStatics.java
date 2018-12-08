@@ -5,6 +5,7 @@ import com.lichkin.application.beans.out.LoginOut;
 import com.lichkin.application.beans.out.impl.AccountLoginOut;
 import com.lichkin.defines.ActivitiStatics;
 import com.lichkin.defines.CoreStatics;
+import com.lichkin.defines.ReportStatics;
 import com.lichkin.framework.app.android.beans.LKDynamicTab;
 import com.lichkin.framework.app.android.utils.LKAndroidUtils;
 import com.lichkin.framework.app.android.utils.LKSharedPreferences;
@@ -71,6 +72,9 @@ public class LKAndroidStatics {
 
     /** 工作流页面地址 */
     private static String activitiUrl;
+
+    /** 报表页面地址 */
+    private static String reportUrl;
 
     /** 动态TAB页列表 */
     private static List<LKDynamicTab> dynamicTabs;
@@ -247,6 +251,7 @@ public class LKAndroidStatics {
             level(1);
             securityCenterUrl(null);
             activitiUrl(null);
+            reportUrl(null);
             token(null);
             loginName(null);
             return;
@@ -255,6 +260,7 @@ public class LKAndroidStatics {
         level(login.getLevel());
         securityCenterUrl(login.getSecurityCenterUrl());
         activitiUrl(login.getApiServerRootUrl() + CoreStatics.SSO_URL + ActivitiStatics.ACTIVITI_CENTER_URL);
+        reportUrl(login.getApiServerRootUrl() + CoreStatics.SSO_URL + ReportStatics.REPORT_CENTER_URL);
         if (login instanceof AccountLoginOut) {
             token(((AccountLoginOut) login).getToken());
             loginName(((AccountLoginOut) login).getLoginName());
@@ -383,6 +389,26 @@ public class LKAndroidStatics {
     private static void activitiUrl(String activitiUrl) {
         LKAndroidStatics.activitiUrl = activitiUrl;
         LKSharedPreferences.putString(LKSharedPreferences.ACTIVITI_URL, activitiUrl);
+    }
+
+    /**
+     * 设置报表页面地址
+     * @param reportUrl 报表页面地址
+     */
+    private static void reportUrl(String reportUrl) {
+        LKAndroidStatics.reportUrl = reportUrl;
+        LKSharedPreferences.putString(LKSharedPreferences.REPORT_URL, reportUrl);
+    }
+
+    /**
+     * 获取报表页面地址
+     * @return 报表页面地址
+     */
+    public static String reportUrl() {
+        if (reportUrl == null || "".equals(reportUrl)) {
+            reportUrl = LKSharedPreferences.getString(LKSharedPreferences.REPORT_URL, "");
+        }
+        return reportUrl;
     }
 
     /**
