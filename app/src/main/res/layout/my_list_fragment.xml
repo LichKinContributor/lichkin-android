@@ -26,7 +26,7 @@
 
         <LinearLayout
             android:visibility="gone"
-            android:id="@+id/logined"
+            android:id="@+id/afterLoginLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
@@ -55,7 +55,7 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:id="@+id/level"
+                    android:id="@+id/layout_level"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:orientation="horizontal">

@@ -86,7 +86,7 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
 
     /** 登录按钮 */
     @BindView(R.id.btn_login)
-    Button btnLogin;
+    Button btn_login;
 
     /** 登录按钮事件 */
     @OnClick(R.id.btn_login)
@@ -100,12 +100,12 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
     }
 
     /** 登录后布局 */
-    @BindView(R.id.logined)
-    LinearLayout loginedLayout;
+    @BindView(R.id.afterLoginLayout)
+    LinearLayout layout_afterLogin;
 
     /** 头像 */
     @BindView(R.id.photo)
-    ImageView photoView;
+    ImageView view_photo;
 
     /** 头像事件 */
     @OnClick(R.id.photo)
@@ -125,14 +125,14 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
 
     /** 用户名 */
     @BindView(R.id.loginName)
-    TextView loginNameView;
+    TextView tx_loginName;
 
     /** 等级布局 */
-    @BindView(R.id.level)
+    @BindView(R.id.layout_level)
     LinearLayout levelLayout;
 
     /** 等级布局事件 */
-    @OnClick(R.id.level)
+    @OnClick(R.id.layout_level)
     void levelLayoutClick() {
         DialogFragment dialogFragment = new LevelFragment();
         FragmentManager fragmentManager = getFragmentManager();
@@ -144,7 +144,7 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
 
     /** 签到按钮 */
     @BindView(R.id.btn_signIn)
-    ImageView btnSignIn;
+    ImageView btn_signIn;
 
     /** 签到按钮事件 */
     @OnClick(R.id.btn_signIn)
@@ -154,7 +154,7 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
 
     /** 加载 */
     @BindView(R.id.loading)
-    AVLoadingIndicatorView loadingView;
+    AVLoadingIndicatorView btn_signIn_loading;
 
     private boolean fromActivity = false;
 
@@ -278,17 +278,17 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
 
         levelLayout.removeAllViews();
         LevelFragment.inflateLevel(levelLayout, LKAndroidStatics.level());
-        loginNameView.setText(LKAndroidStatics.loginName());
+        tx_loginName.setText(LKAndroidStatics.loginName());
         String photo = LKAndroidStatics.photo();
         if (photo != null && !"".equals(photo)) {
             if ("photo".equals(photo)) {
-                photoView.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.photo));
+                view_photo.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.photo));
             } else {
-                photoView.setImageBitmap(LKBase64.toBitmap(photo));
+                view_photo.setImageBitmap(LKBase64.toBitmap(photo));
             }
         }
-        btnLogin.setVisibility(View.GONE);
-        loginedLayout.setVisibility(View.VISIBLE);
+        btn_login.setVisibility(View.GONE);
+        layout_afterLogin.setVisibility(View.VISIBLE);
     }
 
     protected abstract void initMyInfoExtends();
@@ -357,10 +357,10 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
         LKAndroidStatics.saveLoginInfo(null);
         clearMyInfoExtends();
         levelLayout.removeAllViews();
-        loginNameView.setText("");
-        photoView.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.no_photo));
-        btnLogin.setVisibility(View.VISIBLE);
-        loginedLayout.setVisibility(View.GONE);
+        tx_loginName.setText("");
+        view_photo.setImageDrawable(LKAndroidUtils.getDrawable(R.drawable.no_photo));
+        btn_login.setVisibility(View.VISIBLE);
+        layout_afterLogin.setVisibility(View.GONE);
         MainActivity.activity.handleDynamicTabs(null);
     }
 
@@ -415,16 +415,16 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
      * 开始请求签到
      */
     private void beforeInvokeSignIn() {
-        btnSignIn.setVisibility(View.GONE);
-        loadingView.setVisibility(View.VISIBLE);
+        btn_signIn.setVisibility(View.GONE);
+        btn_signIn_loading.setVisibility(View.VISIBLE);
     }
 
     /**
      * 结束请求签到
      */
     private void afterInvokeSignIn() {
-        btnSignIn.setVisibility(View.VISIBLE);
-        loadingView.setVisibility(View.GONE);
+        btn_signIn.setVisibility(View.VISIBLE);
+        btn_signIn_loading.setVisibility(View.GONE);
     }
 
     private InvokeParam invokeParam;
@@ -469,7 +469,7 @@ public abstract class MyFragmentDefine extends Fragment implements TakePhoto.Tak
         String imgPath = "file:///" + result.getImage().getCompressPath();
         //noinspection deprecation
         LKAndroidStatics.photo(LKBase64.toBase64(imgPath));
-        LKImageLoader.load(imgPath, photoView);
+        LKImageLoader.load(imgPath, view_photo);
         invokePhotoUpload();
     }
 
